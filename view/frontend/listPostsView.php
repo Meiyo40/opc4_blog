@@ -5,7 +5,7 @@
     <div class="news">
         
             <?php 
-                echo "<script>console.log(".json_encode($posts).")</script>";
+
                 for($i = 0; $i < sizeof($posts);$i++){
                      
                     echo "<article>";
