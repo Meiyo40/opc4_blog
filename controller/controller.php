@@ -40,3 +40,9 @@ function addComment($postId, $author, $comment)
 function deleteComment(){
     
 }
+
+function getLoginPage(){
+    //TODO request for user ID from db
+
+    require(__DIR__.'/../view/frontend/loginPage.php');
+}
