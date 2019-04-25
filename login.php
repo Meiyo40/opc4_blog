@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="content/images/dollar2.png">
+    <link rel="icon" href="assets/images/dollar2.png">
 
     <title>BLOG - Authentification</title>
     <!-- Bootstrap core CSS -->
@@ -18,8 +18,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 
     <!-- Custom styles for this template -->
-    <link rel='stylesheet' type='text/css' href="view/css/style.css">
-    <link rel="stylesheet" type="text/css" href="view/css/Login-Form-Dark.css">
+    <link rel='stylesheet' type='text/css' href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/Login-Form-Dark.css">
 
 </head>
 

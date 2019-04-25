@@ -28,14 +28,15 @@ class CommentManager{
 
     public function getComments($postId){
         $db = Database::connect();
-        $statement = $db->prepare("SELECT id, post_id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS date 
+        $statement = $db->prepare('SELECT id, post_id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin\') AS comment_date 
         FROM opc_blog_comment 
-        WHERE post_id = ?");
+        WHERE post_id = ?');
 
         $statement->execute(array($postId));
-        $comment = $statement->fetch();
-
+        $comments = $statement->fetchAll();
+        
         Database::disconnect();
-        return $comment;
+        
+        return $comments;
     }
 }

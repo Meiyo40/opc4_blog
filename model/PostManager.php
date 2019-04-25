@@ -18,10 +18,10 @@ class PostManager{
 
     public function getPost($postId){
         $db = Database::connect();
-        $req = $db->prepare("
-        SELECT id, author, content, DATE_FORMAT(date, \'%d/%m/%Y à %Hh%imin%ss\') AS date 
-        FROM opc_blog_posts 
-        WHERE id = ?");
+        $req = $db->prepare('
+        SELECT id, title, author, content, DATE_FORMAT(date, \'%d/%m/%Y à %Hh%imin\') AS date 
+        FROM opc_blog_posts
+        WHERE id = ?');
         $req->execute(array($postId));
         $post = $req->fetch();
         Database::disconnect();

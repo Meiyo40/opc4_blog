@@ -8,13 +8,13 @@
 
                 for($i = 0; $i < sizeof($posts);$i++){
                      
-                    echo "<article>";
+                    echo "<article><a class='article-link' href='index.php?action=post&id=".$posts[$i]['id']."'>";
                     echo "<h3>". htmlspecialchars($posts[$i]['title']);
                     echo "</h3><p>";
                     echo "<div class='post".$i."'>";
                     echo    "<p class='article-content'>".$posts[$i]['content']."</p>";
-                    echo    "<p class='article-signature'>Rédigé par: ".$posts[$i]['author'].", le [".$posts[$i]['date']."] <em><a href='post.php?id=".$posts[$i]['id']."'>Commentaires</a></em></p><br>";
-                    echo "</div></p></article>";
+                    echo    "<p class='article-signature'>Rédigé par: ".$posts[$i]['author'].", le [".$posts[$i]['date']."] <em><a href='index.php?action=post&id=".$posts[$i]['id']."'>Commentaires</a></em></p><br>";
+                    echo "</div></p></a></article>";
                 }
             
             ?>

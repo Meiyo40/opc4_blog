@@ -19,7 +19,7 @@ function post()
 
     $post = $postManager->getPost($_GET['id']);
     $comments = $commentManager->getComments($_GET['id']);
-
+    
     require(__DIR__.'/../view/frontend/postView.php');
 }
 
