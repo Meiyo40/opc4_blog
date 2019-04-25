@@ -10,14 +10,11 @@
                      
                     echo "<article>";
                     echo "<h3>". htmlspecialchars($posts[$i]['title']);
-                    echo "<em> le ". $posts[$i]['date'] ."</em>";
                     echo "</h3><p>";
                     echo "<div class='post".$i."'>";
                     echo    "<p class='article-content'>".$posts[$i]['content']."</p>";
-                    echo    "<p class='article-signature'>Rédigé par: ".$posts[$i]['author'].", le [".$posts[$i]['date']."]</p><br>";
-                    echo "</div><br />";
-                    echo "<em><a href='post.php?id=".$posts[$i]['id']."'>Commentaires</a></em></p>";
-                    echo "</article>";
+                    echo    "<p class='article-signature'>Rédigé par: ".$posts[$i]['author'].", le [".$posts[$i]['date']."] <em><a href='post.php?id=".$posts[$i]['id']."'>Commentaires</a></em></p><br>";
+                    echo "</div></p></article>";
                 }
             
             ?>
