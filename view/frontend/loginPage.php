@@ -16,31 +16,9 @@
 
 </div>
         
-    <?php
-
-        if(!empty($_POST['password']) && !empty($_POST['username'])){
-            $id = checkInput($_POST['username']);
-            $pwd = checkInput($_POST['password']);
-            
-
-            if($pwd == "banane" && $id == 'admin'){
-                $_SESSION['passwordIsOkay'] = TRUE;
-                echo "<script type='text/javascript'>document.location.replace('adminpanel.php');</script>";
-                exit();
-            }
-            else{
-                echo "<script>alert('Et non!');</script>";
-            }
-
-        }
-
-
-        function checkInput($data){
-            $data = trim($data);
-            $data = stripslashes($data);
-            $data = htmlspecialchars($data);
-            return $data;
-        }
+<?php
+      
 ?>
+
 <?php $content = ob_get_clean(); ?>
 <?php require(__DIR__.'/../template.php'); ?>

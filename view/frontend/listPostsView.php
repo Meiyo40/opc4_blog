@@ -1,5 +1,8 @@
-<?php $title = "My news"; ?>
-
+<?php 
+    $title = "My news";
+    $script = '';
+    $headContent = '';
+?>
 <?php ob_start(); ?>
 <h1>Mes dernières nouvelles</h1>
     <div class="news">
