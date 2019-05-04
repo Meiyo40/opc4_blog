@@ -11,7 +11,7 @@ class UserLogin{
         $statement->execute(array($name));
         $statement = $statement->fetchAll(); 
         Database::disconnect();
-        return $statement;
+        return $statement[0];
     }
 
     private function getHashedPassword(string $name, string $password){
