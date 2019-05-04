@@ -3,12 +3,15 @@ class UserLogin{
 
     private function getUserName(string $name){
         $db = Database::connect();
-        $statement = $db->prepare("SELECT id, name, hash_pwd, DATE_FORMAT(last_connexion, \'%d/%m/%Y à %Hh%imin\') AS last_visit FROM opc_blog_users WHERE name = ?");
-        
+        $statement = $db->prepare("
+            SELECT hash_pwd
+            FROM opc_blog_users
+            WHERE name=?
+        ");
         $statement->execute(array($name));
-        $req = $statement->fetchAll(); 
+        $statement = $statement->fetchAll(); 
         Database::disconnect();
-        return $req;
+        return $statement;
     }
 
     private function getHashedPassword(string $name, string $password){
@@ -24,8 +27,17 @@ class UserLogin{
         return $req;
     }
 
-    private function setPassword(string $name, string $oldPassword){
-
+    private function setPassword(string $name, string $password){
+        $db = Database::connect();
+        $req = $db->prepare("
+        UPDATE `opc_blog_users`
+        SET hash_pwd = ?
+        WHERE name = ?");
+        
+        $req->execute(array(password_hash($password, PASSWORD_BCRYPT), $name));
+        $req = $req->fetch();
+        Database::disconnect();
+        return $req;
     }
 
     private function deleteUser(string $name, string $password){
@@ -42,8 +54,7 @@ class UserLogin{
     private function loginIsValid(string $name, string $password){
         $name = $this->checkInput($name);
         $password = $this->checkInput($password);
-        if($this->getHashedPassword($name, $password))
-        //password_hash($password, PASSWORD_BCRYPT)
+        if(password_verify($password, $this->getUserName($name)[0]))
         {
             return true;
         }
