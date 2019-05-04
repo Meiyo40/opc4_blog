@@ -13,10 +13,13 @@ class UserLogin{
 
     private function getHashedPassword(string $name, string $password){
         $db = Database::connect();
-        $statement = $db->prepare("SELECT id, name, hash_pwd, DATE_FORMAT(last_connexion, \'%d/%m/%Y à %Hh%imin\') AS last_visit FROM opc_blog_users WHERE name = ? AND hash_pwd = ?");
+        $req = $db->prepare("
+        SELECT id, name, hash_pwd, last_connexion 
+        FROM opc_blog_users
+        WHERE name=? and hash_pwd=?");
         
-        $statement->execute(array($name, $password));
-        $req = $statement->fetchAll(); 
+        $req->execute(array($name, $password));
+        $req = $req->fetch();
         Database::disconnect();
         return $req;
     }
@@ -39,8 +42,8 @@ class UserLogin{
     private function loginIsValid(string $name, string $password){
         $name = $this->checkInput($name);
         $password = $this->checkInput($password);
-
-        if($this->getUserName($name) && $this->getHashPassword($name, password_hash($password, PASSWORD_BCRYPT)))
+        if($this->getHashedPassword($name, $password))
+        //password_hash($password, PASSWORD_BCRYPT)
         {
             return true;
         }
