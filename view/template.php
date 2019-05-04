@@ -13,14 +13,14 @@
 
         <!-- Place your stylesheet here-->
         <link href="assets/css/style.css" rel="stylesheet" type="text/css">
-        <?php if(isset($headContent)){$headContent;} ?>
+        <?= $headContent ?>
         <link href="assets/css/custom/skin.min.css">
     </head>
         
     <body>
         <?= $content ?>
         <div id="admin-btn">
-            <a href="./login.php"><button>Administration</button></a>
+            <a href="index.php?action=login"><button>Administration</button></a>
         </div>
         <!-- Bootstrap core JavaScript
         ================================================== -->

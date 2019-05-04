@@ -23,7 +23,7 @@ class Controller{
         }
     }
 
-    public static function listPosts()
+    public function listPosts()
     {
         $postManager = new PostManager(); // Création d'un objet
         $posts = $postManager->getPosts(); // Appel d'une fonction de cet objet
@@ -31,7 +31,7 @@ class Controller{
         require(__DIR__.'/../view/frontend/listPostsView.php');
     }
 
-    public static function post()
+    public function post()
     {
         $postManager = new PostManager();
         $commentManager = new CommentManager();
@@ -42,7 +42,7 @@ class Controller{
         require(__DIR__.'/../view/frontend/postView.php');
     }
 
-    public static function addComment($postId, $author, $comment)
+    public function addComment($postId, $author, $comment)
     {
         $commentManager = new CommentManager();
 
@@ -56,16 +56,26 @@ class Controller{
         }
     }
 
-    public static function deleteComment(){
+    public function deleteComment(){
         
     }
 
-    public static function getLoginPage(){
-        //TODO request for user ID from db
-
+    public function getLoginPage(){
         require(__DIR__.'/../view/frontend/loginPage.php');
+    }
+
+    public function getAdminPanel(){
+        $user = new UserLogin();
+        $result = $user->getLoginPage();
+        if($result == 'login'){
+            require(__DIR__.'/../view/frontend/adminPanel.php');
+        }
+        else{
+            header('Location: index.php?action=loginFail');
+        }
     }
 }
 
+$Controller = new Controller();
 
 

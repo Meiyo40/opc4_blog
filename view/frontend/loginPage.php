@@ -1,11 +1,11 @@
 <?php $title = "BLOG - Authentification"; ?>
-<?php $headContent = "<link rel='stylesheet' type='text/css' href='../css/Login-Form-Dark.css'>"; ?>
+<?php $headContent = "<link rel='stylesheet' type='text/css' href='./assets/css/Login-Form-Dark.css'>"; ?>
 
 <?php ob_start(); ?>
 <h1>Merci de vous identifier pour accéder au panneau d'administration</h1>
 <div style="text-align: center;">
     <div class="login-dark">
-        <form action="#" method="post">
+        <form id="login-form" action="index.php?action=admin" method="post">
             <h2>Admin only</h2>
             <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
             <div class="form-group"><input class="form-control" type="username" name="username" placeholder="ID" required></div>
@@ -15,10 +15,7 @@
     </div>
 
 </div>
-        
-<?php
-      
-?>
 
+<?php $script = "<script src='assets/js/login.js'></script><script>loginFail('".$_REQUEST['action']."')</script>"?>
 <?php $content = ob_get_clean(); ?>
 <?php require(__DIR__.'/../template.php'); ?>

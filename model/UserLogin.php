@@ -1,5 +1,4 @@
 <?php
-
 class UserLogin{
 
     private function getUserName(string $name){
@@ -30,7 +29,7 @@ class UserLogin{
 
     }
 
-    private function checkInput (){
+    private function checkInput ($data){
         $data = trim($data);
         $data = stripslashes($data);
         $data = htmlspecialchars($data);
@@ -51,12 +50,12 @@ class UserLogin{
     }
 
     public function getLoginPage(){
-        if(isset($_REQUEST['username']) && isset($_REQUEST['password'])){
-            if(loginIsValid($_REQUEST['username'], $_REQUEST['password'])){
+        if(isset($_POST['username']) && isset($_POST['password'])){
+            if($this->loginIsValid($_POST['username'], $_POST['password'])){
                 return 'login';
             }
             else{
-                return 'Utilisateur invalide';
+                return 'invalid user';
             }
         }
     }

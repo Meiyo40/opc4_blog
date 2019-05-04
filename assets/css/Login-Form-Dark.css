@@ -1,5 +1,8 @@
+#admin-btn{
+	display: none;
+}
 .login-dark {
-    height: 1000px;
+    height: 600px;
     background: #000;
     background-size: cover;
     position: relative;
