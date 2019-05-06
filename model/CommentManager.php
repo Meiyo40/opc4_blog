@@ -4,8 +4,11 @@ require_once "Database.php";
 
 class CommentManager{
 
-    public function getComment($postId){
+    public function addCommentToPost($postId){
         
+    }
+
+    public function addCommentToComment($postId, $commentId){
 
     }
 

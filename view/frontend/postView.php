@@ -12,7 +12,7 @@
             echo "<p>";
             echo "<div class='post".$post['id']."'>";
             echo    "<p class='article-content'>".$post['content']."</p>";
-            echo    "<p class='article-signature'>Publié par: ".$post['author'].", le [".$post['date']."] <em><a href='post.php?id=".$post['id']."'>Commenter</a></em></p><br>";
+            echo    "<p class='article-signature'>Publié par: ".$post['author'].", le [".$post['date']."] <button id='btnPost' value='".$post['id']."'>Commenter</button></p><br>";
             echo "</div></p></article>";
         ?>
             
@@ -23,15 +23,17 @@
             for($i = 0; $i < sizeof($comments);$i++){
                 echo "<div class='comment post".$i."'>";
                 echo    "<p class='article-content'>".$comments[$i]['comment']."</p>";
-                echo    "<p class='article-signature'>Rédigé par: ".$comments[$i]['author'].", le [".$comments[$i]['comment_date']."] <em><button class='comment-answer' data-comment-id=".$comments[$i]['id'].">Répondre</button></em></p><br>";
+                echo    "<p class='article-signature'>Rédigé par: ".$comments[$i]['author'].", le [".$comments[$i]['comment_date']."] <button onclick='displayForm(".$comments[$i]['id'].")' class='comment-answer' data-comment-id=".$comments[$i]['id'].">Répondre</button></p><br>";
                 echo "</div>";
             }
         }
     ?>
-    <form id='comment-form' class='comment-form' method='POST'>
+    <?php 
+     echo "<form id='comment-form' class='comment-form' method='POST' value=".$post['id'].">";
+    ?>
         <label>Nom/Pseudo: </label>
-        <input type='text' name='Nom' placerholder='Nom/Pseudo' required>
-        <textarea form='comment-form' placeholder='Ecrivez votre commentaire ici...' required></textarea>
+        <input type='text' name='name' placerholder='Nom/Pseudo' required>
+        <textarea form='comment-form' name="commentContent"></textarea>
         <input type='submit' value='Envoyer'>
     </form>
         

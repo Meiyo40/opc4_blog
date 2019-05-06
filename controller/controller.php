@@ -67,7 +67,7 @@ class Controller{
     public function getAdminPanel(){
         $user = new UserLogin();
         $result = $user->getLoginPage();
-        if($result == 'login'){
+        if($result == 'login' || $_SESSION['login']){
             require(__DIR__.'/../view/frontend/adminPanel.php');
         }
         else{

@@ -1,7 +1,7 @@
 <?php
 class UserLogin{
 
-    private function getUserName(string $name){
+    private function getUserPwd(string $name){
         $db = Database::connect();
         $statement = $db->prepare("
             SELECT hash_pwd
@@ -14,17 +14,17 @@ class UserLogin{
         return $statement[0];
     }
 
-    private function getHashedPassword(string $name, string $password){
+    private function getUserId(string $name){
         $db = Database::connect();
         $req = $db->prepare("
-        SELECT id, name, hash_pwd, last_connexion 
+        SELECT id
         FROM opc_blog_users
-        WHERE name=? and hash_pwd=?");
+        WHERE name=?");
         
-        $req->execute(array($name, $password));
+        $req->execute(array($name));
         $req = $req->fetch();
         Database::disconnect();
-        return $req;
+        return $req[0];
     }
 
     private function setPassword(string $name, string $password){
@@ -54,7 +54,7 @@ class UserLogin{
     private function loginIsValid(string $name, string $password){
         $name = $this->checkInput($name);
         $password = $this->checkInput($password);
-        if(password_verify($password, $this->getUserName($name)[0]))
+        if(password_verify($password, $this->getUserPwd($name)[0]))
         {
             return true;
         }
@@ -66,6 +66,8 @@ class UserLogin{
     public function getLoginPage(){
         if(isset($_POST['username']) && isset($_POST['password'])){
             if($this->loginIsValid($_POST['username'], $_POST['password'])){
+                $_SESSION['login'] = $_POST['username'];
+                $_SESSION['user-id'] = $this->getUserId($this->checkInput($_POST['username']))[0];
                 return 'login';
             }
             else{
