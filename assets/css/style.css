@@ -21,9 +21,12 @@ body {
 
 article,
 .comment,
-.subComment{
+.subCommentContainer{
     width: 60%;
     margin: 0 auto;
+}
+article{
+    width: 70%;   
 }
 
 .article-link,
@@ -34,7 +37,8 @@ article,
 
 .article-content,
 .comment,
-.subComment{
+.subComment,
+.subSubComment{
     border: solid 2px #fff;
     border-radius: 10px;
     padding: 5px;
@@ -52,11 +56,13 @@ h6 {
 
 /*COMMENT POST*/
 
-.subComment{
+ul,
+li{
     list-style: none;
 }
 .comment,
-.subComment{
+.subComment,
+.subSubComment{
     margin-bottom: 15px;
 }
 .comment-signature{

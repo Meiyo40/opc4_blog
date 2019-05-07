@@ -55,8 +55,8 @@ class Controller{
         }
     }
     
-    public function addCommentToComment($postId, $author, $content, $commentId){
-        $newComment = $this->CommentManager->addCommentToComment($postId, $author, $content, $commentId);
+    public function addCommentToComment($postId, $author, $content, $commentId, $depth){
+        $newComment = $this->CommentManager->addCommentToComment($postId, $author, $content, $commentId, $depth);
 
         if ($newComment === false) {
             throw new Exception('Impossible d\'ajouter le commentaire !');

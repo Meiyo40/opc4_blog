@@ -19,7 +19,8 @@ if (isset($_GET['action'])) {
             $commentId = $_GET['comment'];
             $commentAuthor = $_POST['name'];
             $content = $_POST['commentContent'];
-            $Controller->addCommentToComment($postId, $commentAuthor, $content, $commentId);
+            $depth = $_POST['depth'];
+            $Controller->addCommentToComment($postId, $commentAuthor, $content, $commentId, $depth);
         }
     }
     if ($_GET['action'] == 'listPosts') {
