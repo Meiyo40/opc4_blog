@@ -8,11 +8,19 @@ require(ROOT.'controller/Controller.php');
 
 if (isset($_GET['action'])) {
     if(isset($_GET['comment'])){
-        $postId = $_GET['id'];
-        $commentId = $_GET['comment'];
-        $commentAuthor = $_POST['name'];
-        $content = $_POST['commentContent'];
-        $Controller->addCommentToComment($postId, $commentAuthor, $content, $commentId);
+        if($_GET['comment'] == 'primary'){
+            $postId = $_GET['id'];
+            $commentAuthor = $_POST['name'];
+            $content = $_POST['commentContent'];
+            $Controller->addComment($postId, $commentAuthor, $content);
+        }
+        else{
+            $postId = $_GET['id'];
+            $commentId = $_GET['comment'];
+            $commentAuthor = $_POST['name'];
+            $content = $_POST['commentContent'];
+            $Controller->addCommentToComment($postId, $commentAuthor, $content, $commentId);
+        }
     }
     if ($_GET['action'] == 'listPosts') {
         $Controller->listPosts();

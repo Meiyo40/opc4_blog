@@ -54,4 +54,7 @@ h6 {
     width: 60%;
     margin: 0 auto;
 }
-
+textarea {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}

@@ -44,9 +44,9 @@ class Controller{
 
     public function addComment($postId, $author, $comment)
     {
-        $affectedLines = $this->CommentManager->postComment($postId, $author, $comment);
+        $newComment = $this->CommentManager->addCommentToPost($postId, $author, $comment);
 
-        if ($affectedLines === false) {
+        if ($newComment === false) {
             throw new Exception('Impossible d\'ajouter le commentaire !');
         }
         else {
@@ -56,6 +56,13 @@ class Controller{
     
     public function addCommentToComment($postId, $author, $content, $commentId){
         $newComment = $this->CommentManager->addCommentToComment($postId, $author, $content, $commentId);
+
+        if ($newComment === false) {
+            throw new Exception('Impossible d\'ajouter le commentaire !');
+        }
+        else {
+            header('Location: index.php?action=post&id=' . $postId);
+        }
     }
 
     public function deleteComment(){

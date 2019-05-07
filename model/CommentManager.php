@@ -4,16 +4,21 @@ require_once "Database.php";
 
 class CommentManager{
 
-    public function addCommentToPost($postId){
-        
+    public function addCommentToPost($postId, $author, $content){
+        $db = Database::connect();
+        $author = $this->checkInput($author);
+        $content = $this->checkInput($content);
+        $statement = $db->prepare("INSERT INTO opc_blog_comment (post_id, author, comment, comment_date) VALUES (?,?,?,?)");
+        $dateOfCom = date("Y-m-d H:i:s");
+        $statement->execute(array($postId, $author, $content, $dateOfCom));
+        Database::disconnect();
     }
 
     public function addCommentToComment($postId, $author, $content, $commentId){
         $db = Database::connect();
         $author = $this->checkInput($author);
-        $content = htmlspecialchars($content);
-        
-        str_replace("<p>","",$content);
+        $content = $this->checkInput($content);
+        $content = preg_replace("/\s|&nbsp;/",'',$content);
         $statement = $db->prepare("INSERT INTO opc_blog_comment (post_id, comment_parent, author, comment, comment_date) VALUES (?,?,?,?,?)");
         $dateOfCom = date("Y-m-d H:i:s");
         $statement->execute(array($postId, $commentId, $author, $content, $dateOfCom));
