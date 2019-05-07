@@ -39,7 +39,7 @@
                         echo    "<p class='comment-content'>".$comments[$j]['comment']."</p>";
                         echo    "<p class='comment-signature'>Rédigé par: <strong>".$comments[$j]['author']."</strong>, le [".$comments[$j]['comment_date']."] <button onclick='displayForm(".$comments[$j]['id'].",".$comments[$j]['depth'].")' class='comment-answer' data-comment-id=".$comments[$j]['id'].">Répondre</button></p><br>";
                         echo    "</div>";
-                        echo "<ul>";
+                        echo "<ul>"; 
                         for($k = 0; $k < sizeof($comments);$k++){
                             if(($comments[$k]['comment_parent'] == $comments[$j]['id'] || $comments[$k]['comment_parent'] == $comments[$k]['id']) && $comments[$k]['depth'] == 2){
                                 echo "<li>";
@@ -49,6 +49,17 @@
                                 echo    "<p class='comment-signature'>Rédigé par: <strong>".$comments[$k]['author']."</strong>, le [".$comments[$k]['comment_date']."] <button onclick='displayForm(".$comments[$k]['id'].",".$comments[$k]['depth'].")' class='comment-answer' data-comment-id=".$comments[$k]['id'].">Répondre</button></p><br>";
                                 echo    "</div>";
                                 echo "</li>";
+                            }
+                            for($x = 0; $x < sizeof($comments);$x++){
+                                if($comments[$x]['comment_parent'] == $comments[$k]['id'] && $comments[$k]['depth'] == 2){
+                                    echo "<li>";
+                                    echo    "<div class='subSubComment node-depth-".$comments[$x]['depth']."' id='post".$comments[$x]['id']."'>";
+                                    echo    "<p>En réponse à <strong>".$comments[$k]['author']."</strong></p>";
+                                    echo    "<p class='comment-content'>".$comments[$x]['comment']."</p>";
+                                    echo    "<p class='comment-signature'>Rédigé par: <strong>".$comments[$x]['author']."</strong>, le [".$comments[$x]['comment_date']."] <button onclick='displayForm(".$comments[$x]['id'].",".$comments[$x]['depth'].")' class='comment-answer' data-comment-id=".$comments[$x]['id'].">Répondre</button></p><br>";
+                                    echo    "</div>";
+                                    echo "</li>";
+                                }
                             }
                         }
                         echo "</ul>"; 
