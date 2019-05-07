@@ -29,6 +29,7 @@
         }
     ?>
     <?php 
+    
      echo "<form id='comment-form' class='comment-form' method='POST' value=".$post['id'].">";
     ?>
         <label>Nom/Pseudo: </label>

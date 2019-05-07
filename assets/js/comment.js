@@ -26,3 +26,4 @@ function formAction(){
         commentArea.action = "index.php?action=post&id=" + id + "&comment=" + commentId; 
     }
 }
+

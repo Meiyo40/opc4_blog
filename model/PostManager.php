@@ -16,6 +16,13 @@ class PostManager{
         
     }
 
+    private function checkInput ($data){
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
     public function getPost($postId){
         $db = Database::connect();
         $req = $db->prepare('
