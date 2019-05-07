@@ -20,7 +20,8 @@ body {
 /* ARTICLE */
 
 article,
-.comment {
+.comment,
+.subComment{
     width: 60%;
     margin: 0 auto;
 }
@@ -31,7 +32,9 @@ article,
     text-decoration: none;
 }
 
-.article-content {
+.article-content,
+.comment,
+.subComment{
     border: solid 2px #fff;
     border-radius: 10px;
     padding: 5px;
@@ -47,6 +50,18 @@ h6 {
     margin-top: 0;
 }
 
+/*COMMENT POST*/
+
+.subComment{
+    list-style: none;
+}
+.comment,
+.subComment{
+    margin-bottom: 15px;
+}
+.comment-signature{
+    margin-bottom: 0;
+}
 
 /*COMMENT FORM*/
 

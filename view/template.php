@@ -21,6 +21,7 @@
         <?= $content ?>
         <div id="admin-btn">
             <a href="index.php?action=login"><button>Administration</button></a>
+            <a href="index.php"><button>Accueil</button></a>
         </div>
         <!-- Bootstrap core JavaScript
         ================================================== -->

@@ -49,9 +49,21 @@ class CommentManager{
         return $comment; 
     }
 
+    public function getNbComments(){
+        $db = Database::connect();
+        $statement = $db->prepare('SELECT post_id, COUNT(*) AS nbComments FROM opc_blog_comment GROUP BY post_id');
+
+        $statement->execute();
+        $comments = $statement->fetchAll();
+        
+        Database::disconnect();
+        
+        return $comments;
+    }
+
     public function getComments($postId){
         $db = Database::connect();
-        $statement = $db->prepare('SELECT id, post_id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin\') AS comment_date 
+        $statement = $db->prepare('SELECT id, post_id, author,comment_parent, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin\') AS comment_date 
         FROM opc_blog_comment 
         WHERE post_id = ?');
 

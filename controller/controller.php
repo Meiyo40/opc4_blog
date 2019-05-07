@@ -30,6 +30,7 @@ class Controller{
     public function listPosts()
     {
         $posts = $this->PostManager->getPosts(); // Appel d'une fonction de cet objet
+        $comments = $this->CommentManager->getNbComments();
         
         require(__DIR__.'/../view/frontend/listPostsView.php');
     }

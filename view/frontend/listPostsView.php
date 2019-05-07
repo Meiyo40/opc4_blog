@@ -16,7 +16,7 @@
                     echo "</h3><p>";
                     echo "<div class='post".$i."'>";
                     echo    "<p class='article-content'>".$posts[$i]['content']."</p>";
-                    echo    "<p class='article-signature'>Rédigé par: ".$posts[$i]['author'].", le [".$posts[$i]['date']."] <em><a href='index.php?action=post&id=".$posts[$i]['id']."'>Commentaires</a></em></p><br>";
+                    echo    "<p class='article-signature'>Rédigé par: ".$posts[$i]['author'].", le [".$posts[$i]['date']."] <em><a href='index.php?action=post&id=".$posts[$i]['id']."'>[".$comments[$i]['nbComments']."] Commentaires</a></em></p><br>";
                     echo "</div></p></a></article>";
                 }
             
