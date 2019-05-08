@@ -76,6 +76,9 @@ class Controller{
 
     public function getAdminPanel(){
         $user = new UserLogin();
+        $posts = $this->PostManager->getLastPosts();
+        $comments = $this->CommentManager->getLastComments();
+
         $result = $user->getLoginPage();
         if($result == 'login' || $_SESSION['login']){
             require(__DIR__.'/../view/frontend/adminPanel.php');

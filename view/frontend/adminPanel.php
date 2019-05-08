@@ -1,39 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Admin panel">
-    <meta name="author" content="Meiyo">
-    <link rel="icon" href="../../../../favicon.ico">
-    <title>Panneau d'administration</title>
-    
-    <!--Template based on URL below-->
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/starter-template/">
-
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-    <!-- Place your stylesheet here-->
-    <link href="./assets/css/adminpanel.css" rel="stylesheet" type="text/css">
-</head>
-
-<body>
-
-    <h1 class="center"> Panneau d'administration </h1>
+<?php 
+    $title = "Page d'administration";
+    $script = "<script src='./assets/js/admin.js'></script>";
+    $headContent = "<link href='./assets/css/adminpanel.css' rel='stylesheet' type='text/css'>";
+?>
+<?php ob_start(); ?>
+<h1 class="center"> Panneau d'administration </h1>
     
     <div id="admin-options">
         <a href="edit.php"><button>Modifier un article</button></a>
         <a href="create.php"><button>Créer nouvel article</button></a>
         <a href="users.php"><button>Gestion des utilisateurs</button></a>
     </div>
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-</body>
-</html>
+    
+    <div id='blog-infos'>
+        
+            <table>
+                <th>Les 5 derniers articles</th>
+                <th>Les 10 derniers commentaires</th>
+            <?php 
+                
+                //display last 5 posts loop
+                echo "<tr><td id='displayPosts'>";
+                for($i = 0; $i < sizeof($posts);$i++){
+                     
+                    echo "<article><button class='displayContent' onclick='toggleContent(".$posts[$i]['id'].")'>Afficher l'article</button><a class='article-link' href='index.php?action=post&id=".$posts[$i]['id']."'>";
+                    echo "<h3>". htmlspecialchars($posts[$i]['title']);
+                    echo "</h3><p>";
+                    echo "<div class='post".$i."'>";
+                    echo    "<p class='article-content' id='article-".$posts[$i]['id']."'>".$posts[$i]['content']."</p>";
+                    echo    "<p class='article-signature'>Rédigé par: ".$posts[$i]['author'].", le [".$posts[$i]['date']."] <em><a href='index.php?action=post&id=".$posts[$i]['id']."'>Commentaires</a></em></p><br>";
+                    echo "</div></p></a></article>";
+                }
+                echo "</td>";
+                echo "<td id='displayComments'>";
+                //display last 10 comments loop
+                for($x = 0; $x < sizeof($comments);$x++){
+                    echo    "<div class='subSubComment node-depth-".$comments[$x]['depth']."' id='post".$comments[$x]['id']."'>";
+                    echo    "<p>En réponse à <strong>".$comments[$x]['author']."</strong></p>";
+                    echo    "<p class='comment-content'>".$comments[$x]['comment']."</p>";
+                    echo    "<p class='comment-signature'>Rédigé par: <strong>".$comments[$x]['author']."</strong>, le [".$comments[$x]['comment_date']."] <button onclick='displayForm(".$comments[$x]['id'].",".$comments[$x]['depth'].")' class='comment-answer' data-comment-id=".$comments[$x]['id'].">Répondre</button></p><br>";
+                    echo    "</div>";
+                }
+                echo "</td></tr>";
+            
+            ?>
+            </table>
+            
+        </p>
+    </div>
+<?php $content = ob_get_clean(); ?>
+<?php require(__DIR__.'/../template.php'); ?>

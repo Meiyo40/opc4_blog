@@ -16,6 +16,20 @@ class PostManager{
         
     }
 
+    public function getLastPosts(){
+        //display last 5 posted article on blog
+        
+        $db = Database::connect();
+        $statement = $db->prepare('SELECT*FROM opc_blog_posts ORDER BY (date) LIMIT 5');
+
+        $statement->execute();
+        $posts = $statement->fetchAll();
+        
+        Database::disconnect();
+        
+        return $posts;
+    }
+
     private function checkInput ($data){
         $data = trim($data);
         $data = stripslashes($data);
