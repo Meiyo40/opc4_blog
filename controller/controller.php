@@ -43,6 +43,17 @@ class Controller{
         require(__DIR__.'/../view/frontend/postView.php');
     }
 
+    public function addPost($title, $content, $author){
+        $newPost = $this->PostManager->addPost($title, $content, $author);
+
+        if ($newPost === false) {
+            throw new Exception('Impossible d\'ajouter le post !');
+        }
+        else {
+            header('Location: index.php?action=admin&addPost=success');
+        }
+    }
+
     public function addComment($postId, $author, $comment)
     {
         $newComment = $this->CommentManager->addCommentToPost($postId, $author, $comment);
@@ -75,13 +86,25 @@ class Controller{
     }
 
     public function getAdminPanel(){
-        $user = new UserLogin();
         $posts = $this->PostManager->getLastPosts();
         $comments = $this->CommentManager->getLastComments();
+        $result = $this->login->getLoginPage();
 
-        $result = $user->getLoginPage();
         if($result == 'login' || $_SESSION['login']){
             require(__DIR__.'/../view/frontend/adminPanel.php');
+        }
+        else{
+            header('Location: index.php?action=loginFail');
+        }
+    }
+
+    public function getCreatePage(){
+
+        $usersList = $this->login->getUsers();
+        $result = $this->login->getLoginPage();
+        
+        if($result == 'login' || $_SESSION['login']){
+            require(__DIR__.'/../view/frontend/create.php');
         }
         else{
             header('Location: index.php?action=loginFail');

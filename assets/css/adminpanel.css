@@ -45,3 +45,13 @@ table{
 article > .displayContent{
     text-align: center;
 }
+
+/*CREATE*/
+#addPost{
+    padding-top: 30px;
+    width: 85%;
+    margin: 0 auto;
+}
+#article-title{
+    width: 300px;
+}

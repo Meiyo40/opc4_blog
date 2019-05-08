@@ -50,8 +50,16 @@ class PostManager{
         
     }
 
-    public function addPost(){
+    public function addPost($title, $content, $author){
+        $db = Database::connect();
+        $author = $this->checkInput($author);
+        $title = $this->checkInput($title);
+        $content = $this->checkInput($content);
+        $postDate = date("Y-m-d H:i:s");
 
+        $statement = $db->prepare("INSERT INTO opc_blog_posts (author, content, title, date) VALUES (?,?,?,?)");        
+        $statement->execute(array($author, $content, $title, $postDate));
+        Database::disconnect();
     }
 
     public function editPost(){

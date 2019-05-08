@@ -8,7 +8,7 @@
     
     <div id="admin-options">
         <a href="edit.php"><button>Modifier un article</button></a>
-        <a href="create.php"><button>Créer nouvel article</button></a>
+        <a href="index.php?action=create"><button>Créer nouvel article</button></a>
         <a href="users.php"><button>Gestion des utilisateurs</button></a>
     </div>
     

@@ -63,6 +63,19 @@ class UserLogin{
         }
     }
 
+    public function getUsers(){
+        //display users/author list
+        $db = Database::connect();
+        $statement = $db->prepare('SELECT*FROM opc_blog_users');
+
+        $statement->execute();
+        $users = $statement->fetchAll();
+        
+        Database::disconnect();
+        
+        return $users;
+    }
+
     public function getLoginPage(){
         if(isset($_POST['username']) && isset($_POST['password'])){
             if($this->loginIsValid($_POST['username'], $_POST['password'])){
