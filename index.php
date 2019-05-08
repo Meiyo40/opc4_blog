@@ -8,6 +8,7 @@ require(ROOT.'controller/Controller.php');
 
 if (isset($_GET['action'])) {
     if(isset($_GET['comment'])){
+        
         if($_GET['comment'] == 'primary'){
             $postId = $_GET['id'];
             $commentAuthor = $_POST['name'];

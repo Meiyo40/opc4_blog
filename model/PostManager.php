@@ -5,7 +5,7 @@ class PostManager{
 
     public function getPosts(){
         $db = Database::connect();
-        $statement = $db->prepare('SELECT id, title, author, content, DATE_FORMAT(date, \'%d/%m/%Y à %Hh%imin\') AS date FROM opc_blog_posts ORDER BY date DESC LIMIT 0, 5');
+        $statement = $db->prepare('SELECT id, title, author, content, nb_comments, DATE_FORMAT(date, \'%d/%m/%Y à %Hh%imin\') AS date FROM opc_blog_posts ORDER BY date DESC LIMIT 0, 5');
         
         
         $statement->execute();

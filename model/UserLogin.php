@@ -44,6 +44,17 @@ class UserLogin{
 
     }
 
+    private function updateLastUserConnexion($name){
+        $db = Database::connect();
+        $statement = $db->prepare("UPDATE `opc_blog_users` SET `last_connexion` = ? WHERE `name` = ?");
+
+        $date = date("Y-m-d H:i:s");
+        $statement->execute(array($date,$name));
+        $users = $statement->fetchAll();
+        
+        Database::disconnect();
+    }
+
     private function checkInput ($data){
         $data = trim($data);
         $data = stripslashes($data);
@@ -56,6 +67,7 @@ class UserLogin{
         $password = $this->checkInput($password);
         if(password_verify($password, $this->getUserPwd($name)[0]))
         {
+            $this->updateLastUserConnexion($name);
             return true;
         }
         else{

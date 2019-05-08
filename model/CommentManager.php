@@ -8,9 +8,18 @@ class CommentManager{
         $db = Database::connect();
         $author = $this->checkInput($author);
         $content = $this->checkInput($content);
-        $statement = $db->prepare("INSERT INTO opc_blog_comment (post_id, author, depth,comment, comment_date) VALUES (?,?,?,?,?,?)");
+        $statement = $db->prepare("INSERT INTO opc_blog_comment (post_id, author, depth, comment, comment_date) VALUES (?,?,?,?,?)");
         $dateOfCom = date("Y-m-d H:i:s");
         $statement->execute(array($postId, $author, 0, $content, $dateOfCom));
+
+        $this->addCommentcounter($postId);
+        Database::disconnect();
+    }
+
+    private function addCommentcounter($postId){
+        $db = Database::connect();
+        $statement = $db->prepare("UPDATE `opc_blog_posts` SET `nb_comments` = `nb_comments` + 1 WHERE `id` = ? ");
+        $statement->execute(array($postId));
         Database::disconnect();
     }
 
@@ -22,6 +31,8 @@ class CommentManager{
         $statement = $db->prepare("INSERT INTO opc_blog_comment (post_id, comment_parent, depth, author, comment, comment_date) VALUES (?,?,?,?,?,?)");
         $dateOfCom = date("Y-m-d H:i:s");
         $statement->execute(array($postId, $commentId, $depth,$author, $content, $dateOfCom));
+        
+        $this->addCommentcounter($postId);
         Database::disconnect();
     }
 
@@ -61,18 +72,6 @@ class CommentManager{
 
         Database::disconnect();
         return $comment; 
-    }
-
-    public function getNbComments(){
-        $db = Database::connect();
-        $statement = $db->prepare('SELECT post_id, COUNT(*) AS nbComments FROM opc_blog_comment GROUP BY post_id DESC');
-
-        $statement->execute();
-        $comments = $statement->fetchAll();
-        
-        Database::disconnect();
-        
-        return $comments;
     }
 
     public function getComments($postId){
