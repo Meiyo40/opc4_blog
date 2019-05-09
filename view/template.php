@@ -20,8 +20,8 @@
     <body>
         <?= $content ?>
         <div id="admin-btn">
-            <a href="index.php?action=login"><button>Administration</button></a>
-            <a href="index.php"><button>Accueil</button></a>
+            <a href="index.php?action=login"><button class="btn btn-info">Administration</button></a>
+            <a href="index.php" ><button class="btn btn-info">Accueil</button></a>
         </div>
         <!-- Bootstrap core JavaScript
         ================================================== -->

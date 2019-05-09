@@ -20,7 +20,7 @@ function Ajax(url) {
         return xhr;
     }
     
-    this.ajaxGet = (Map) => {
+    this.ajaxGet = () => {
         var oXhr = this.getXMLHttpRequest();
 
         oXhr.onerror = function (data) {
@@ -28,13 +28,8 @@ function Ajax(url) {
         };
 
         oXhr.open("GET", this.url, true);
-        oXhr.responseType = 'json';
         oXhr.send();
 
-        oXhr.onload = function () {
-            let setStation = new Station(this.response[0]);
-            setStation.setStations(this.response, Map);
-            
-        }
+        oXhr.onreadystatechange = function() {  };
     }
 }

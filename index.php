@@ -32,6 +32,10 @@ if (isset($_GET['action'])) {
             $Controller->addPost($title, $content, $author);
         }
     }
+    if(isset($_GET['report'])){
+        $commentId = $_GET['report'];
+        $Controller->reportComment($commentId);
+    }
     switch($_GET['action']){
         case 'listPosts':
             $Controller->listPosts();
@@ -60,26 +64,7 @@ if (isset($_GET['action'])) {
             $Controller->getCreatePage();
             break;
     }
-    /*
-    if ($_GET['action'] == 'listPosts') {
-        $Controller->listPosts();
-    }
-    elseif ($_GET['action'] == 'post') {
-        if (isset($_GET['id']) && $_GET['id'] > 0) {
-            $Controller->post();
-        }
-        else {
-            echo 'Erreur : aucun identifiant de billet envoyé';
-        }
-    }
-    elseif ($_GET['action'] == 'login' || $_GET['action'] == 'loginFail'){
-        $Controller->getLoginPage();
-    }
-    elseif ($_GET['action'] == 'admin'){
-        $Controller->getAdminPanel();
-    }
-    elseif ()
-    */
+
 }
 else {
     $Controller->listPosts();

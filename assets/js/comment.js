@@ -27,3 +27,8 @@ function displayForm(commentId, node_depth){
     commentArea.action = "index.php?action=post&id=" + pageId + "&comment=" + commentId; 
 }
 
+function reportComment(commentId, pageId){
+    let url = "index.php?action=post&id" + pageId + "&report=" + commentId;
+    let ajax = new Ajax(url);
+    ajax.ajaxGet();
+}

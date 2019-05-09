@@ -111,6 +111,16 @@ class Controller{
             header('Location: index.php?action=loginFail');
         }
     }
+
+    public function reportComment($commentId){
+        
+        $report = $this->CommentManager->reportComment($commentId);
+        
+        if ($report === false) {
+            throw new Exception('Impossible de signaler le commentaire !');
+        }
+        
+    }
 }
 
 $Controller = new Controller();

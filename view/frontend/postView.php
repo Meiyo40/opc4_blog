@@ -1,7 +1,7 @@
 <?php 
     $title = "My news";
-    $script = "<script src='assets/js/comment.js'></script>";
-    $headContent = '';
+    $script = "<script src='assets/js/ajax.js'></script><script src='assets/js/comment.js'></script>";
+    $headContent = '<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">';
 ?>
 <?php ob_start(); ?>
 <?php echo "<h1>".htmlspecialchars($post['title'])."</h1>" ?>
@@ -12,7 +12,7 @@
             echo "<p>";
             echo "<div class='post".$post['id']."'>";
             echo    "<p class='article-content'>".$post['content']."</p>";
-            echo    "<p class='article-signature'>Publié par: ".$post['author'].", le [".$post['date']."] <button id='btnPost' value='".$post['id']."'>Commenter</button></p><br>";
+            echo    "<p class='article-signature'>Publié par: ".$post['author'].", le [".$post['date']."] <button id='btnPost' class='btn btn-primary' value='".$post['id']."'>Commenter</button></p><br>";
             echo "</div></p></article>";
         ?>
             
@@ -26,7 +26,7 @@
                 echo "<div class='commentGroup'>";
                     echo "<div class='comment node-depth-".$comments[$i]['depth']."' id='post".$comments[$i]['id']."'>";
                     echo    "<p class='comment-content'>".$comments[$i]['comment']."</p>";
-                    echo    "<p class='comment-signature'>Rédigé par: <strong>".$comments[$i]['author']."</strong>, le [".$comments[$i]['comment_date']."] <button onclick='displayForm(".$comments[$i]['id'].",".$comments[$i]['depth'].")' class='comment-answer' data-comment-id=".$comments[$i]['id'].">Répondre</button></p><br>";
+                    echo    "<p class='comment-signature'>Rédigé par: <strong>".$comments[$i]['author']."</strong>, le [".$comments[$i]['comment_date']."] <button onclick='displayForm(".$comments[$i]['id'].",".$comments[$i]['depth'].")' class='comment-answer btn btn-primary' data-comment-id=".$comments[$i]['id'].">Répondre</button><button onclick='reportComment(".$comments[$i]['id'].",".$post['id'].")' class='btn-report btn btn-warning'><i class='far fa-bell'></i> Signaler</button></p><br>";
                     echo "</div>";
                 echo "<ul>";
                 }
@@ -37,7 +37,7 @@
                         echo    "<div class='subComment node-depth-".$comments[$j]['depth']."' id='post".$comments[$j]['id']."'";
                         echo    "<p>En réponse à <strong>".$comments[$i]['author']."</strong></p>";
                         echo    "<p class='comment-content'>".$comments[$j]['comment']."</p>";
-                        echo    "<p class='comment-signature'>Rédigé par: <strong>".$comments[$j]['author']."</strong>, le [".$comments[$j]['comment_date']."] <button onclick='displayForm(".$comments[$j]['id'].",".$comments[$j]['depth'].")' class='comment-answer' data-comment-id=".$comments[$j]['id'].">Répondre</button></p><br>";
+                        echo    "<p class='comment-signature'>Rédigé par: <strong>".$comments[$j]['author']."</strong>, le [".$comments[$j]['comment_date']."] <button onclick='displayForm(".$comments[$j]['id'].",".$comments[$j]['depth'].")' class='comment-answer btn btn-primary' data-comment-id=".$comments[$j]['id'].">Répondre</button><button onclick='reportComment(".$comments[$j]['id'].",".$post['id'].")'  class='btn-report btn btn-warning'><i class='far fa-bell'></i> Signaler</button></p><br>";
                         echo    "</div>";
                         echo "<ul>"; 
                         for($k = 0; $k < sizeof($comments);$k++){
@@ -46,7 +46,7 @@
                                 echo    "<div class='subSubComment node-depth-".$comments[$k]['depth']."' id='post".$comments[$k]['id']."'>";
                                 echo    "<p>En réponse à <strong>".$comments[$j]['author']."</strong></p>";
                                 echo    "<p class='comment-content'>".$comments[$k]['comment']."</p>";
-                                echo    "<p class='comment-signature'>Rédigé par: <strong>".$comments[$k]['author']."</strong>, le [".$comments[$k]['comment_date']."] <button onclick='displayForm(".$comments[$k]['id'].",".$comments[$k]['depth'].")' class='comment-answer' data-comment-id=".$comments[$k]['id'].">Répondre</button></p><br>";
+                                echo    "<p class='comment-signature'>Rédigé par: <strong>".$comments[$k]['author']."</strong>, le [".$comments[$k]['comment_date']."] <button onclick='displayForm(".$comments[$k]['id'].",".$comments[$k]['depth'].")' class='comment-answer btn btn-primary' data-comment-id=".$comments[$k]['id'].">Répondre</button><button onclick='reportComment(".$comments[$k]['id'].",".$post['id'].")'  class='btn-report btn btn-warning'><i class='far fa-bell'></i> Signaler</button></p><br>";
                                 echo    "</div>";
                                 echo "</li>";
                             }
@@ -56,7 +56,7 @@
                                     echo    "<div class='subSubComment node-depth-".$comments[$x]['depth']."' id='post".$comments[$x]['id']."'>";
                                     echo    "<p>En réponse à <strong>".$comments[$k]['author']."</strong></p>";
                                     echo    "<p class='comment-content'>".$comments[$x]['comment']."</p>";
-                                    echo    "<p class='comment-signature'>Rédigé par: <strong>".$comments[$x]['author']."</strong>, le [".$comments[$x]['comment_date']."] <button onclick='displayForm(".$comments[$x]['id'].",".$comments[$x]['depth'].")' class='comment-answer' data-comment-id=".$comments[$x]['id'].">Répondre</button></p><br>";
+                                    echo    "<p class='comment-signature'>Rédigé par: <strong>".$comments[$x]['author']."</strong>, le [".$comments[$x]['comment_date']."] <button onclick='displayForm(".$comments[$x]['id'].",".$comments[$x]['depth'].")' class='comment-answer btn btn-primary' data-comment-id=".$comments[$x]['id'].">Répondre</button><button onclick='reportComment(".$comments[$x]['id'].",".$post['id'].")'  class='btn-report btn btn-warning'><i class='far fa-bell'></i> Signaler</button></p><br>";
                                     echo    "</div>";
                                     echo "</li>";
                                 }
