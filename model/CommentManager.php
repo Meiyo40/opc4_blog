@@ -1,5 +1,7 @@
 <?php
 
+namespace Meiyo\blog\model;
+
 require_once "Database.php";
 
 class CommentManager{
@@ -48,10 +50,24 @@ class CommentManager{
     }
 
     public function getLastComments(){
-        //display last 10 posted comments on blog
+        //return last 10 posted comments on blog
         
         $db = Database::connect();
         $statement = $db->prepare('SELECT*FROM opc_blog_comment ORDER BY (comment_date) LIMIT 8');
+
+        $statement->execute();
+        $comments = $statement->fetchAll();
+        
+        Database::disconnect();
+        
+        return $comments;
+    }
+
+    public function getAllcomments(){
+        //return all comments
+        
+        $db = Database::connect();
+        $statement = $db->prepare('SELECT*FROM opc_blog_comment ORDER BY (comment_date)');
 
         $statement->execute();
         $comments = $statement->fetchAll();

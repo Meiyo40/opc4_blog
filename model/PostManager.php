@@ -1,4 +1,7 @@
 <?php
+
+namespace Meiyo\blog\model;
+
 require_once ('Database.php');
 
 class PostManager{

@@ -1,5 +1,7 @@
 <?php
 
+namespace Meiyo\blog\model;
+
 class Database{
     private static $db_user = 'OPC4_PHP_BLOG';
     private static $db_pwd = 'azerty';
@@ -8,7 +10,7 @@ class Database{
 
     public static function connect(){
         try {
-            self::$connection_db = new PDO(self::$dsn, self::$db_user, self::$db_pwd);
+            self::$connection_db = new \PDO(self::$dsn, self::$db_user, self::$db_pwd);
         }
         catch (PDOException $e)
         {

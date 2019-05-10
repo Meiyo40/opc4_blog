@@ -63,6 +63,10 @@ if (isset($_GET['action'])) {
         case 'create':
             $Controller->getCreatePage();
             break;
+
+        case 'moderation':
+            $Controller->getModerationPage();
+            break;
     }
 
 }

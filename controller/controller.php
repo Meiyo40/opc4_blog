@@ -11,9 +11,9 @@ class Controller{
 
     public function __construct()
     {
-        $this->login = new UserLogin();
-        $this->PostManager = new PostManager();
-        $this->CommentManager = new CommentManager();
+        $this->login = new \Meiyo\blog\model\UserLogin();
+        $this->PostManager = new \Meiyo\blog\model\PostManager();
+        $this->CommentManager = new \Meiyo\blog\model\CommentManager();
     }
 
     public function loginPage(){
@@ -120,6 +120,23 @@ class Controller{
             throw new Exception('Impossible de signaler le commentaire !');
         }
         
+    }
+
+    public function getModerationPage(){
+
+        $usersList = $this->login->getUsers();
+        $result = $this->login->getLoginPage();
+        $comments = $this->CommentManager->getAllComments();
+        $nbPage = ceil(sizeof($comments)/10);
+
+        file_put_contents('debug.sql', $nbPage);
+        
+        if($result == 'login' || $_SESSION['login']){
+            require(__DIR__.'/../view/frontend/moderationPage.php');
+        }
+        else{
+            header('Location: index.php?action=loginFail');
+        }
     }
 }
 

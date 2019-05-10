@@ -55,3 +55,8 @@ article > .displayContent{
 #article-title{
     width: 300px;
 }
+/*MODERATION*/
+#nav-Pagination{
+    display: flex;
+    justify-content: center;
+}

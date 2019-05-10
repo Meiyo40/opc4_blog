@@ -30,6 +30,6 @@ function Ajax(url) {
         oXhr.open("GET", this.url, true);
         oXhr.send();
 
-        oXhr.onreadystatechange = function() {  };
+        oXhr.onreadystatechange = function() { alert("Commentaire signalé, il sera vérifié par l'administration") };
     }
 }

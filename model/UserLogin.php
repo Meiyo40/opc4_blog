@@ -1,5 +1,11 @@
 <?php
+
+namespace Meiyo\blog\model;
+
+require_once ('Database.php');
+
 class UserLogin{
+
 
     private function getUserPwd(string $name){
         $db = Database::connect();

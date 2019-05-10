@@ -32,3 +32,30 @@ function reportComment(commentId, pageId){
     let ajax = new Ajax(url);
     ajax.ajaxGet();
 }
+
+function positionForm(element){
+    let form = document.createElement("form");
+    form.setAttribute('method',"post");
+    let formAction = "index.php?action=post&id=";
+    form.setAttribute('action',"submit.php");
+    form.setAttribute('id', 'comment-form');
+    
+    let name = document.createElement("input");
+    name.setAttribute('type',"text");
+    name.setAttribute('name',"name");
+    name.setAttribute('placeholder', 'nom/pseudo');
+    
+    let textarea = document.createElement("textarea");
+    textarea.setAttribute('form',"comment-form");
+    textarea.setAttribute('name',"commentContent");
+
+    let submit = document.createElement("input");
+    submit.setAttribute('type',"submit");
+    submit.setAttribute('value',"Envoyer");
+    
+    form.appendChild(name);
+    form.appendChild(textarea);
+    form.appendChild(submit);
+
+    element.appendChild(form);
+}

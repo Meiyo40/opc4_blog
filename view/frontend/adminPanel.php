@@ -1,15 +1,17 @@
 <?php 
     $title = "Page d'administration";
-    $script = "<script src='./assets/js/admin.js'></script>";
-    $headContent = "<link href='./assets/css/adminpanel.css' rel='stylesheet' type='text/css'>";
+    $script = "<script src='./assets/js/admin.js'></script><script src='assets/js/ajax.js'></script><script src='assets/js/comment.js'></script>";
+    $headContent = "<link href='./assets/css/adminpanel.css' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.2/css/all.css' integrity='sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay' crossorigin='anonymous'>";
 ?>
 <?php ob_start(); ?>
 <h1 class="center"> Panneau d'administration </h1>
     
     <div id="admin-options">
-        <a href="edit.php"><button>Modifier un article</button></a>
-        <a href="index.php?action=create"><button>Créer nouvel article</button></a>
-        <a href="users.php"><button>Gestion des utilisateurs</button></a>
+        <a href="index.php?action=create"><button><i class="far fa-newspaper"></i> Créer nouvel article</button></a>
+        <a href="index.php?action=editarticle"><button><i class="far fa-edit"></i> Modifier un article</button></a>        
+        <a href="index.php?action=moderation"><button><i class="far fa-comment-dots"></i> Gestion des commentaires</button></a>
+        <a href="index.php?action=users"><button><i class="fas fa-user-graduate"></i> Gestion des utilisateurs</button></a>
     </div>
     
     <div id='blog-infos'>
