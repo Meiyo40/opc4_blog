@@ -33,6 +33,7 @@ function reportComment(commentId, pageId){
     ajax.ajaxGet();
 }
 
+//TODO OR NOT DYNAMIC FORM
 function positionForm(element){
     let form = document.createElement("form");
     form.setAttribute('method',"post");

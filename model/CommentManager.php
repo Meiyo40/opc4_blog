@@ -67,7 +67,7 @@ class CommentManager{
         //return all comments
         
         $db = Database::connect();
-        $statement = $db->prepare('SELECT*FROM opc_blog_comment ORDER BY (comment_date)');
+        $statement = $db->prepare('SELECT*FROM opc_blog_comment ORDER BY (comment_date) DESC');
 
         $statement->execute();
         $comments = $statement->fetchAll();
@@ -75,6 +75,24 @@ class CommentManager{
         Database::disconnect();
         
         return $comments;
+    }
+
+    public function setPages($comments, $nbPage, $sizePage){
+        $setPage = array(array(),array());
+        
+        for($i = 0; $i < sizeof($comments) ; $i++){
+
+        }
+        for($i = 0; $i < $nbPage; $i++){
+            for($j = 1; $j < $sizePage*($i+1); $j++){
+                if(array_key_exists($j, $comments)){
+                    $setPage[$i][$j%$sizePage] = $comments[$j];
+                }
+            }
+        }
+
+        
+        return $setPage;
     }
 
     private function checkInput ($data){

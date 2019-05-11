@@ -127,9 +127,11 @@ class Controller{
         $usersList = $this->login->getUsers();
         $result = $this->login->getLoginPage();
         $comments = $this->CommentManager->getAllComments();
-        $nbPage = ceil(sizeof($comments)/10);
+        $sizePage = 10;
+        $nbPage = ceil(sizeof($comments)/$sizePage);
+        $setPages = $this->CommentManager->setPages($comments, $nbPage, $sizePage);
 
-        file_put_contents('debug.sql', $nbPage);
+        
         
         if($result == 'login' || $_SESSION['login']){
             require(__DIR__.'/../view/frontend/moderationPage.php');
