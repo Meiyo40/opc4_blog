@@ -142,6 +142,6 @@ class Controller{
     }
 }
 
-$Controller = new \controller\Controller();
+$Controller = new Controller();
 
 

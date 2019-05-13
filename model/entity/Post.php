@@ -1,12 +1,15 @@
 <?php
 
-namespace model\entity;
+namespace entity;
+
+use services\Database;
 
 class Post{
-    public $id;
-    public $author;
-    public $title;
-    public $content;
+    private $id;
+    private $author;
+    private $title;
+    private $content;
+    private $date;
 
     public function getContent(){
         return $this->content;
@@ -21,26 +24,49 @@ class Post{
     }
 
     public function getAuthor(){
-
+        return $this->author;
     }
 
-    public function setContent(){
-
+    public function getDate(){
+        return $this->date;
     }
 
-    public function setTitle(){
-
+    public function setContent($newContent){
+        $this->content = $newContent;
     }
 
-    public function setAuthor(){
+    public function setTitle($newTitle){
+        $this->title = $newTitle;
+    }
 
+    public function setAuthor($newAuthor){
+        $this->author = $newAuthor;
+    }
+
+    public function setDate($newDate){
+        $this->date = $newDate;
     }
 
     public function addPost(){
-
+        $db = Database::connect();
+        $statement = $db->prepare("INSERT INTO opc_blog_posts (author, content, title, date) VALUES (?,?,?,?)");        
+        $statement->execute(array($this->author, $this->content, $this->title, $this->date));
+        Database::disconnect();
     }
 
     public function deletePost(){
 
+    }
+
+    public function properties(){ 
+        return get_object_vars($this); 
+    }
+
+    public function properties_names(){
+        return array_keys(get_object_vars($this)); 
+    }
+
+    public function to_string() { 
+        return "id : $this->id, author : $this->author, title : $this->title, content : $this->content, date : $this->date"; 
     }
 }

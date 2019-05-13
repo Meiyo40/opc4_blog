@@ -1,5 +1,7 @@
 <?php
-namespace model\entity;
+namespace entity;
+
+use services\Database;
 
 class Comment{
     private $content;

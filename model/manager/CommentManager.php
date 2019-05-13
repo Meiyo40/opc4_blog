@@ -3,13 +3,17 @@
 namespace manager;
 
 use services\Database;
+use services\Helper;
+use entity\Comment;
+
+
 
 class CommentManager{
 
     public function addCommentToPost($postId, $author, $content){
         $db = Database::connect();
-        $author = $this->checkInput($author);
-        $content = $this->checkInput($content);
+        $author = Helper::validateContent($author);
+        $content = Helper::validateContent($content);
         $statement = $db->prepare("INSERT INTO opc_blog_comment (post_id, author, depth, comment, comment_date) VALUES (?,?,?,?,?)");
         $dateOfCom = date("Y-m-d H:i:s");
         $statement->execute(array($postId, $author, 0, $content, $dateOfCom));
@@ -27,8 +31,8 @@ class CommentManager{
 
     public function addCommentToComment($postId, $author, $content, $commentId, $depth){
         $db = Database::connect();
-        $author = $this->checkInput($author);
-        $content = $this->checkInput($content);
+        $author = Helper::validateContent($author);
+        $content = Helper::validateContent($content);
         $content = preg_replace("/\s|&nbsp;/",'',$content);
         $statement = $db->prepare("INSERT INTO opc_blog_comment (post_id, comment_parent, depth, author, comment, comment_date) VALUES (?,?,?,?,?,?)");
         $dateOfCom = date("Y-m-d H:i:s");
@@ -76,13 +80,7 @@ class CommentManager{
         
         return $comments;
     }
-    private function checkInput ($data){
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
-
+    
     public function updateComment($commentId, $newContent){
         $db = Database::connect();
         $statement = $db->prepare("UPDATE opc_blog_comment

@@ -2,6 +2,8 @@
 namespace manager;
 
 use services\Database;
+use services\Helper;
+use entity\Post;
 
 class PostManager{
 
@@ -32,13 +34,6 @@ class PostManager{
         return $posts;
     }
 
-    private function checkInput ($data){
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
-
     public function getPost($postId){
         $db = Database::connect();
         $req = $db->prepare('
@@ -53,15 +48,17 @@ class PostManager{
     }
 
     public function addPost($title, $content, $author){
-        $db = Database::connect();
-        $author = $this->checkInput($author);
-        $title = $this->checkInput($title);
-        $content = $this->checkInput($content);
-        $postDate = date("Y-m-d H:i:s");
 
-        $statement = $db->prepare("INSERT INTO opc_blog_posts (author, content, title, date) VALUES (?,?,?,?)");        
-        $statement->execute(array($author, $content, $title, $postDate));
-        Database::disconnect();
+        $post = new Post();
+        $author = Helper::validateContent($author);
+        $content = Helper::validateContent($content);
+        $title = Helper::validateContent($title);
+        $post->setTitle($author);
+        $post->setContent($content);
+        $post->setAuthor($author);
+        $post->setDate(date("Y-m-d H:i:s"));
+        
+        $post->addPost();
     }
 
     public function editPost(){
