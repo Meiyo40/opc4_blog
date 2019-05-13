@@ -1,8 +1,8 @@
 <?php
 
-namespace Meiyo\blog\model;
+namespace manager;
 
-require_once ('Database.php');
+use services\Database;
 
 class UserLogin{
 

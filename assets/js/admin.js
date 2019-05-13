@@ -20,3 +20,18 @@ for (let i = 0; i < parts.length; i++) {
 if($_GET.addPost === 'success'){
     alert('Votre article a bien été posté !');
 }
+
+if($_GET.action === 'moderation'){
+    if($_GET.page){
+        let pageLinkId = "page-link-" + $_GET.page;
+        let pageLink = document.getElementById(pageLinkId);
+
+        pageLink.classList.add('active');
+    }
+    else{
+        let pageLinkId = "page-link-1";
+        let pageLink = document.getElementById(pageLinkId);
+
+        pageLink.classList.add('active');
+    }
+}

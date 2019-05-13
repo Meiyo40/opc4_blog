@@ -1,8 +1,8 @@
 <?php
 
-namespace Meiyo\blog\model;
+namespace manager;
 
-require_once "Database.php";
+use services\Database;
 
 class CommentManager{
 
@@ -76,25 +76,6 @@ class CommentManager{
         
         return $comments;
     }
-
-    public function setPages($comments, $nbPage, $sizePage){
-        $setPage = array(array(),array());
-        
-        for($i = 0; $i < sizeof($comments) ; $i++){
-
-        }
-        for($i = 0; $i < $nbPage; $i++){
-            for($j = 1; $j < $sizePage*($i+1); $j++){
-                if(array_key_exists($j, $comments)){
-                    $setPage[$i][$j%$sizePage] = $comments[$j];
-                }
-            }
-        }
-
-        
-        return $setPage;
-    }
-
     private function checkInput ($data){
         $data = trim($data);
         $data = stripslashes($data);

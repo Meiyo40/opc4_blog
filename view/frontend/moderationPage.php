@@ -30,7 +30,7 @@
                     echo "<div class='commentGroup'>";
                         echo "<div class='comment node-depth-".$comments[$i]['depth']."' id='post".$comments[$i]['id']."'>";
                         echo    "<p class='comment-content'>".$comments[$i]['comment']."</p>";
-                        echo    "<p class='comment-signature'>Rédigé par: <strong>".$comments[$i]['author']."</strong>, le [".$comments[$i]['comment_date']."] <button onclick='displayForm(".$comments[$i]['id'].",".$comments[$i]['depth'].")' class='comment-answer btn btn-primary' data-comment-id=".$comments[$i]['id'].">Répondre</button><button)' class='btn-report btn btn-warning'><i class='far fa-bell'></i> Signaler</button></p><br>";
+                        echo    "<p class='comment-signature'>Rédigé par: <strong>".$comments[$i]['author']."</strong>, le [".$comments[$i]['comment_date']."] <div class='comment-control-panel'><button onclick='displayForm(".$comments[$i]['id'].",".$comments[$i]['depth'].")' class='comment-answer btn btn-primary' data-comment-id=".$comments[$i]['id'].">Répondre</button><button class='btn btn-danger'><i class='far fa-times-circle'></i> Supprimer</button></div><br>";
                     echo "</div>";
                 }
             }
@@ -42,7 +42,7 @@
                 <li class="page-item"><a class="page-link" href="#">Previous</a></li>
                 <?php
                 for($i = 1; $i <= $nbPage ;$i++){
-                    echo "<li class='page-item'><a class='page-link' href='index.php?action=moderation&page=".$i."'>".$i."</a></li>";
+                    echo "<li id='page-link-".$i."' class='page-item'><a class='page-link' href='index.php?action=moderation&page=".$i."'>".$i."</a></li>";
                 }
                 ?>
                 <li class="page-item"><a class="page-link" href="#">Next</a></li>

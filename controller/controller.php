@@ -1,8 +1,10 @@
 <?php
 
-require_once(__DIR__.'/../model/CommentManager.php');
-require_once(__DIR__.'/../model/PostManager.php');
-require_once(__DIR__.'/../model/UserLogin.php');
+namespace controller;
+
+use manager\CommentManager;
+use manager\PostManager;
+use manager\UserLogin;
 
 class Controller{
     private $login;
@@ -11,9 +13,9 @@ class Controller{
 
     public function __construct()
     {
-        $this->login = new \Meiyo\blog\model\UserLogin();
-        $this->PostManager = new \Meiyo\blog\model\PostManager();
-        $this->CommentManager = new \Meiyo\blog\model\CommentManager();
+        $this->login = new UserLogin();
+        $this->PostManager = new PostManager();
+        $this->CommentManager = new CommentManager();
     }
 
     public function loginPage(){
@@ -29,8 +31,7 @@ class Controller{
 
     public function listPosts()
     {
-        $posts = $this->PostManager->getPosts(); // Appel d'une fonction de cet objet
-
+        $posts = $this->PostManager->getPosts();
        
         
         require(__DIR__.'/../view/frontend/listPostsView.php');
@@ -129,7 +130,6 @@ class Controller{
         $comments = $this->CommentManager->getAllComments();
         $sizePage = 10;
         $nbPage = ceil(sizeof($comments)/$sizePage);
-        $setPages = $this->CommentManager->setPages($comments, $nbPage, $sizePage);
 
         
         
@@ -142,6 +142,6 @@ class Controller{
     }
 }
 
-$Controller = new Controller();
+$Controller = new \controller\Controller();
 
 

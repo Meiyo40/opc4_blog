@@ -17,12 +17,15 @@
         <form id="new-article-form" action="index.php?action=create&addPost=true" method="POST">
             <label for="article-title">Titre de l'article</label>
             <input id="article-title" type="text" name='title' required>
+            <label>Image</label>
+            <input name="image">
             <select name="author">
             <?php 
                 for($i = 0; $i < sizeof($usersList); $i++){
                     echo "<option value='".$usersList[$i]['name']."'>".$usersList[$i]['name']."</option>";
                 }
             ?>
+            <option value="test">test</option>
             </select>
             <textarea form="new-article-form" name='content'></textarea>
             <input type="submit" value="Poster l'article">

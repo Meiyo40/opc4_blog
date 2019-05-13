@@ -60,3 +60,9 @@ article > .displayContent{
     display: flex;
     justify-content: center;
 }
+.comment-control-panel{
+    margin-top: 5px;
+}
+.btn{
+    margin-right: 5px;
+}

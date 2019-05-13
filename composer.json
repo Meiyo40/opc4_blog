@@ -1,0 +1,16 @@
+{
+    "name": "meiyo/opc4_blog",
+    "description": "simple blog engine for learning purposes (php)",
+    "type": "project",
+    "authors": [{
+        "name": "Meiyo",
+        "email": "meiyo40@gmail.com"
+    }],
+    "minimum-stability": "stable",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "": "model"
+        }
+    }
+}

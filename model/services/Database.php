@@ -1,6 +1,6 @@
 <?php
 
-namespace Meiyo\blog\model;
+namespace services;
 
 class Database{
     private static $db_user = 'OPC4_PHP_BLOG';
