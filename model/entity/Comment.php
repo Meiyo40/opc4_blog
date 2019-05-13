@@ -8,8 +8,8 @@ class Comment{
     private $author;
     private $date;
     private $report;
-    private $commentPost;
-    private $commentParent;
+    private $parentPost;
+    private $parentComment;
     private $id;
     private $depth;
 
@@ -17,8 +17,8 @@ class Comment{
         $this->content = preg_replace("/\s|&nbsp;/",'',$content);;
         $this->author = $author;
         $this->date = date("Y-m-d H:i:s");;
-        $this->commentParent = $commentParent;
-        $this->commentPost = $commentPost;
+        $this->parentPost = $commentParent;
+        $this->parentComment = $commentPost;
         $this->$depth = $depth;
     }
 
@@ -28,7 +28,7 @@ class Comment{
         FROM opc_blog_comment 
         WHERE post_id = ?');
 
-        $statement->execute(array($postId));
+        $statement->execute(array($parentComment));
         $comments = $statement->fetchAll();
         
         Database::disconnect();
@@ -94,7 +94,51 @@ class Comment{
         $this->author =  $newAuthor;
     }
 
+    public function setDate($newDate){
+        $this->date = $newDate;
+    }
+
+    public function setParentPost($newParentPost){
+       $this->parentPost = $newParentPost; 
+    }
+
+    public function setParentComment($newParentCom){
+        $this->parentCom = $newParentCom;
+    }
+
+    public function setId($newId){
+        $this->id = $newId;
+    }
+
+    public function setDepth($newDepth){
+        $this->depth = $newDepth;
+    }
+
     public function getContent(){
         return $this->content;
+    }
+
+    public function getAuthor(){
+        return $this->author;
+    }
+
+    public function getDate(){
+        return $this->date;
+    }
+
+    public function getParentPost(){
+       return $this->parentPost; 
+    }
+
+    public function getParentComment(){
+        return $this->parentCom;
+    }
+
+    public function getId(){
+        return $this->id;
+    }
+
+    public function getDepth(){
+        return $this->depth;
     }
 }

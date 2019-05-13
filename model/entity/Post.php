@@ -54,8 +54,18 @@ class Post{
         Database::disconnect();
     }
 
-    public function deletePost(){
+    public function updatePost(){
+        $db = Database::connect();
+        $statement = $db->prepare("UPDATE `opc_blog_posts` SET `author` = ?, `content` = ?, `title` = ? WHERE `id` = ? ");
+        $statement->execute(array($this->author, $this->content, $this->title, $this->id));
+        Database::disconnect();
+    }
 
+    public function deletePost(){
+        $db = Database::connect();
+        $statement = $db->prepare("DELETE FROM `opc_blog_posts` WHERE `id` = ? ");
+        $statement->execute(array($this->id));
+        Database::disconnect();
     }
 
     public function properties(){ 

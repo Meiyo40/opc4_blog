@@ -11,12 +11,10 @@ class PostManager{
         $db = Database::connect();
         $statement = $db->prepare('SELECT id, title, author, content, nb_comments, DATE_FORMAT(date, \'%d/%m/%Y à %Hh%imin\') AS date FROM opc_blog_posts ORDER BY date DESC LIMIT 0, 5');
         
-        
         $statement->execute();
         $req = $statement->fetchAll(); 
         Database::disconnect();
-        return $req;
-        
+        return $req;        
         
     }
 
@@ -53,7 +51,7 @@ class PostManager{
         $author = Helper::validateContent($author);
         $content = Helper::validateContent($content);
         $title = Helper::validateContent($title);
-        $post->setTitle($author);
+        $post->setTitle($title);
         $post->setContent($content);
         $post->setAuthor($author);
         $post->setDate(date("Y-m-d H:i:s"));
@@ -61,12 +59,28 @@ class PostManager{
         $post->addPost();
     }
 
-    public function editPost(){
+    public function editPost($id, $newContent, $newTitle, $newAuthor){
+        $post = new Post();
+        
+        $author = Helper::validateContent($newAuthor);
+        $content = Helper::validateContent($newContent);
+        $title = Helper::validateContent($newTitle);
 
+        $post->setId($id);
+        $post->setTitle($title);
+        $post->setContent($content);
+        $post->setAuthor($author);
+        $post->setDate(date("Y-m-d H:i:s"));
+        
+        $post->editPost();
     }
 
-    public function deletePost(){
-        
+    public function deletePost($id){
+        $post = new Post();
+
+        $post->setId($id);
+
+        $post->deletePost();
     }
 
 }
