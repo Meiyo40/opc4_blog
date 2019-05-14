@@ -5,6 +5,7 @@ define('ROOT', str_replace('index.php', '', $_SERVER['SCRIPT_FILENAME']));
 
 require_once __DIR__.'/vendor/autoload.php';
 require(ROOT.'controller/Controller.php');
+require(ROOT.'controller/LoginController.php');
 
 
 if (isset($_GET['action'])) {
@@ -30,7 +31,8 @@ if (isset($_GET['action'])) {
             $title = $_POST['title'];
             $content = $_POST['content'];
             $author = $_POST['author'];
-            $Controller->addPost($title, $content, $author);
+            $img_name = $_FILES['image']['name'];
+            $Controller->addPost($title, $content, $author, $img_name);
         }
     }
     if(isset($_GET['report'])){

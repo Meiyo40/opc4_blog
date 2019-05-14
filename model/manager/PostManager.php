@@ -9,7 +9,7 @@ class PostManager{
 
     public function getPosts(){
         $db = Database::connect();
-        $statement = $db->prepare('SELECT id, title, author, content, nb_comments, DATE_FORMAT(date, \'%d/%m/%Y à %Hh%imin\') AS date FROM opc_blog_posts ORDER BY date DESC LIMIT 0, 5');
+        $statement = $db->prepare('SELECT id, title, author, content, nb_comments, DATE_FORMAT(date, \'%d/%m/%Y à %Hh%imin\') AS date, img_content, img_ext FROM opc_blog_posts ORDER BY date DESC LIMIT 0, 5');
         
         $statement->execute();
         $req = $statement->fetchAll(); 
@@ -45,23 +45,42 @@ class PostManager{
         
     }
 
-    public function addPost($title, $content, $author){
+    public function addPost($title, $content, $author, $img_name){
 
-        $post = new Post();
-        $author = Helper::validateContent($author);
-        $content = Helper::validateContent($content);
-        $title = Helper::validateContent($title);
-        $post->setTitle($title);
-        $post->setContent($content);
-        $post->setAuthor($author);
-        $post->setDate(date("Y-m-d H:i:s"));
+        $pattern = '/(gif|png|jpeg|jpg)$/i';
+        $extension = pathinfo($img_name, PATHINFO_EXTENSION);
+        $extension = preg_match($pattern, $extension);
+
+        if($_FILES['image']['size'] < 4194304 && $extension){
+            $post = new Post();
+            $author = Helper::validateContent($author);
+            $content = Helper::validateContent($content);
+            $title = Helper::validateContent($title);
+            $post->setTitle($title);
+            $post->setContent($content);
+            $post->setAuthor($author);
+            $post->setDate(date("Y-m-d H:i:s"));
+
+            $post->setImg($img_name);            
+            $post->addPost();
+        }
+        else{
+            if(!$extension){
+                $extension = 'Extension de fichier : '.$extension.'<br>';
+                file_put_contents('debug.html', $extension, FILE_APPEND);
+            }
+            elseif($_FILES['image']['size'] > 4194304){
+                $file_size = 'Taille du fichier trop importante <br>';
+                file_put_contents('debug.html', $file_size, FILE_APPEND);
+            }
+            return false;
+        }
         
-        $post->addPost();
     }
 
     public function editPost($id, $newContent, $newTitle, $newAuthor){
         $post = new Post();
-        
+
         $author = Helper::validateContent($newAuthor);
         $content = Helper::validateContent($newContent);
         $title = Helper::validateContent($newTitle);

@@ -4,6 +4,7 @@ namespace manager;
 
 use services\Database;
 use services\Helper;
+use entity\Post;
 use entity\Comment;
 
 
@@ -18,14 +19,7 @@ class CommentManager{
         $dateOfCom = date("Y-m-d H:i:s");
         $statement->execute(array($postId, $author, 0, $content, $dateOfCom));
 
-        $this->addCommentcounter($postId);
-        Database::disconnect();
-    }
-
-    private function addCommentcounter($postId){
-        $db = Database::connect();
-        $statement = $db->prepare("UPDATE `opc_blog_posts` SET `nb_comments` = `nb_comments` + 1 WHERE `id` = ? ");
-        $statement->execute(array($postId));
+        Post::addCommentcounter($postId);
         Database::disconnect();
     }
 
@@ -38,7 +32,7 @@ class CommentManager{
         $dateOfCom = date("Y-m-d H:i:s");
         $statement->execute(array($postId, $commentId, $depth,$author, $content, $dateOfCom));
         
-        $this->addCommentcounter($postId);
+        Post::addCommentcounter($postId);
         Database::disconnect();
     }
 

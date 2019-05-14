@@ -10,6 +10,9 @@ class Post{
     private $title;
     private $content;
     private $date;
+    private $image;
+    private $uniqueImgId;
+    private $imgExt;
 
     public function getContent(){
         return $this->content;
@@ -31,6 +34,47 @@ class Post{
         return $this->date;
     }
 
+    public function setImg($img_name){
+        $this->image = $img_name;
+        $this->setImgUniqueId();
+    }
+
+    private function createImgFile($imgId){
+        $path = 'resources/img/'.$imgId;
+        mkdir($path, 0777, true);
+        $path = $path."/".$imgId.".".pathinfo($this->image, PATHINFO_EXTENSION)."";
+        $move = move_uploaded_file($_FILES['image']['tmp_name'], $path);
+        $err = $this->date.": Erreur lors du deplacement de l'image <strong>name</strong>= [".$this->image."] <strong>path</strong>= [".$path."]<br>";
+        if(!$move){
+            file_put_contents('debug.html', $err, FILE_APPEND);
+        }
+        else{
+            $this->uniqueImgId = $imgId;
+            $this->imgExt = pathinfo($this->image, PATHINFO_EXTENSION);
+        }
+    }
+
+    public function setImgUniqueId(){
+        $newImgId = md5(uniqid(rand(), true));
+        $this->uniqueId_image = $this->ImgIdExist($newImgId);
+    }
+
+    private function ImgIdExist($imgId){
+        $db = Database::connect();
+        $statement = $db->prepare("SELECT img_content WHERE img_content = ?");        
+        $statement->execute(array($imgId));
+        $imgList = $statement->fetchAll();
+        Database::disconnect();
+
+        if(sizeof($imgList)){
+            $this->setImgUniqueId();
+        }
+        else{
+            $this->createImgFile($imgId);
+            return $imgId;            
+        }
+    }
+
     public function setContent($newContent){
         $this->content = $newContent;
     }
@@ -49,8 +93,8 @@ class Post{
 
     public function addPost(){
         $db = Database::connect();
-        $statement = $db->prepare("INSERT INTO opc_blog_posts (author, content, title, date) VALUES (?,?,?,?)");        
-        $statement->execute(array($this->author, $this->content, $this->title, $this->date));
+        $statement = $db->prepare("INSERT INTO opc_blog_posts (author, content, title, date, img_content, img_ext) VALUES (?,?,?,?,?,?)");        
+        $statement->execute(array($this->author, $this->content, $this->title, $this->date, $this->uniqueImgId, $this->imgExt));
         Database::disconnect();
     }
 
@@ -65,6 +109,13 @@ class Post{
         $db = Database::connect();
         $statement = $db->prepare("DELETE FROM `opc_blog_posts` WHERE `id` = ? ");
         $statement->execute(array($this->id));
+        Database::disconnect();
+    }
+
+    public static function addCommentcounter($postId){
+        $db = Database::connect();
+        $statement = $db->prepare("UPDATE `opc_blog_posts` SET `nb_comments` = `nb_comments` + 1 WHERE `id` = ? ");
+        $statement->execute(array($postId));
         Database::disconnect();
     }
 
