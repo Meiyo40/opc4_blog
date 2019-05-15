@@ -29,8 +29,7 @@ if (isset($_GET['action'])) {
         }
     }
     if(isset($_GET['addPost'])){
-        if($_GET['addPost'] == 'true'){
-            $id = $_GET['article'];
+        if($_GET['addPost'] == 'true'){            
             $title = $_POST['title'];
             $content = $_POST['content'];
             $author = $_POST['author'];
@@ -43,11 +42,15 @@ if (isset($_GET['action'])) {
         $Controller->reportComment($commentId);
     }
     if(isset($_GET['edit'])){
-        $title = $_POST['title'];
-        $content = $_POST['content'];
-        $author = $_POST['author'];
-        $img_name = $_FILES['image']['name'] ? $_FILES['image']['name'] : null;
-        $Controller->updatePost($title, $content, $author, $img_name);
+        if($_GET['edit'] == 'true'){
+            $id = $_GET['article'];
+            $title = $_POST['title'];
+            $content = $_POST['content'];
+            $author = $_POST['author'];
+            $img_name = $_FILES['image']['name'] ? $_FILES['image']['name'] : null;
+            $Controller->updatePost($id, $title, $content, $author, $img_name);
+        }
+        
     }
     switch($_GET['action']){
         case 'listPosts':
@@ -92,7 +95,6 @@ if (isset($_GET['action'])) {
         case 'getArticleContent':
             $PostManager = new PostManager();
             $Post = $PostManager->getPost($_GET['article']);
-            file_put_contents('debug.html', json_encode($Post));
             echo json_encode($Post);
             break;
     }

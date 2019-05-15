@@ -91,6 +91,10 @@ class Post{
         $this->date = $newDate;
     }
 
+    public function setId($id){
+        $this->id = $id;
+    }
+
     public function addPost(){
         $db = Database::connect();
         $statement = $db->prepare("INSERT INTO opc_blog_posts (author, content, title, date, img_key, img_ext) VALUES (?,?,?,?,?,?)");        

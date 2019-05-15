@@ -47,7 +47,6 @@ class Controller{
 
     public function updatePost($id, $title, $content, $author, $img_name){
         $update = $this->PostManager->updatePost($id, $title, $content, $author, $img_name);
-
         if ($update === false) {
             throw new Exception('Impossible de mettre a jour le post !');
         }

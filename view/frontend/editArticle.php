@@ -30,7 +30,7 @@
             <option value="test">test</option>
             </select>
             <textarea id="editor" form="new-article-form" name='content' value="test"></textarea>
-            <input type="submit" value="Poster l'article">
+            <input type="submit" value="Modifier l'article">
         </form>
             
             
