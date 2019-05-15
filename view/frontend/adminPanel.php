@@ -8,8 +8,8 @@
 <h1 class="center"> Panneau d'administration </h1>
     
     <div id="admin-options">
-        <a href="index.php?action=create"><button><i class="far fa-newspaper"></i> Créer nouvel article</button></a>
-        <a href="index.php?action=editarticle"><button><i class="far fa-edit"></i> Modifier un article</button></a>        
+        <a href="index.php?action=create"><button><i class="far fa-newspaper"></i> Créer nouvel article</button></a>      
+        <a href='index.php?action=listArticles'><button class='edit-btn'><i class='far fa-edit'></i> Editer article</button></a>
         <a href="index.php?action=moderation"><button><i class="far fa-comment-dots"></i> Gestion des commentaires</button></a>
         <a href="index.php?action=users"><button><i class="fas fa-user-graduate"></i> Gestion des utilisateurs</button></a>
     </div>
@@ -24,14 +24,20 @@
                 //display last 5 posts loop
                 echo "<tr><td id='displayPosts'>";
                 for($i = 0; $i < sizeof($posts);$i++){
-                     
-                    echo "<article><button class='displayContent' onclick='toggleContent(".$posts[$i]['id'].")'>Afficher l'article</button><a class='article-link' href='index.php?action=post&id=".$posts[$i]['id']."'>";
+                    echo "<div class='btn-control'> <button class='displayContent' onclick='toggleContent(".$posts[$i]['id'].")'><i class='far fa-eye-slash'></i> Afficher l'article</button> <a href='index.php?action=editarticle&article=".$posts[$i]['id']."'><button class='edit-btn'><i class='far fa-edit'></i> Editer article</button></a> </div>";
+                    echo "<div class='article'>";
+                    if($posts[$i]['img_key']){
+                        echo "<div><img class='smallImg' src='./resources/img/".$posts[$i]['img_key']."/".$posts[$i]['img_key'].".".$posts[$i]['img_ext']."'></img></div>";
+                    }
+
+                    echo "<article><a class='article-link' href='index.php?action=post&id=".$posts[$i]['id']."'>";
                     echo "<h3>". htmlspecialchars($posts[$i]['title']);
-                    echo "</h3><p>";
+                    echo "</h3>";
                     echo "<div class='post".$i."'>";
                     echo    "<p class='article-content' id='article-".$posts[$i]['id']."'>".$posts[$i]['content']."</p>";
                     echo    "<p class='article-signature'>Rédigé par: ".$posts[$i]['author'].", le [".$posts[$i]['date']."] <em><a href='index.php?action=post&id=".$posts[$i]['id']."'>Commentaires</a></em></p><br>";
-                    echo "</div></p></a></article>";
+                    echo "</div></a></article>";
+                    echo "<div class='divider'></div></div>";
                 }
                 echo "</td>";
                 echo "<td id='displayComments'>";

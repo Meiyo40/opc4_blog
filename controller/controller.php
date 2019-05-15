@@ -18,17 +18,6 @@ class Controller{
         $this->CommentManager = new CommentManager();
     }
 
-    public function loginPage(){
-        $result = $this->login->getLoginPage();
-
-        if($result){
-            require(__DIR__.'/../view/frontend/adminPanel.php');
-        }
-        else{
-            require(__DIR__.'/../view/frontend/loginPage.php');
-        }
-    }
-
     public function listPosts()
     {
         $posts = $this->PostManager->getPosts();
@@ -83,36 +72,6 @@ class Controller{
         
     }
 
-    public function getLoginPage(){
-        require(__DIR__.'/../view/frontend/loginPage.php');
-    }
-
-    public function getAdminPanel(){
-        $posts = $this->PostManager->getLastPosts();
-        $comments = $this->CommentManager->getLastComments();
-        $result = $this->login->getLoginPage();
-
-        if($result == 'login' || $_SESSION['login']){
-            require(__DIR__.'/../view/frontend/adminPanel.php');
-        }
-        else{
-            header('Location: index.php?action=loginFail');
-        }
-    }
-
-    public function getCreatePage(){
-
-        $usersList = $this->login->getUsers();
-        $result = $this->login->getLoginPage();
-        
-        if($result == 'login' || $_SESSION['login']){
-            require(__DIR__.'/../view/frontend/create.php');
-        }
-        else{
-            header('Location: index.php?action=loginFail');
-        }
-    }
-
     public function reportComment($commentId){
         
         $report = $this->CommentManager->reportComment($commentId);
@@ -123,23 +82,7 @@ class Controller{
         
     }
 
-    public function getModerationPage(){
-
-        $usersList = $this->login->getUsers();
-        $result = $this->login->getLoginPage();
-        $comments = $this->CommentManager->getAllComments();
-        $sizePage = 10;
-        $nbPage = ceil(sizeof($comments)/$sizePage);
-
-        
-        
-        if($result == 'login' || $_SESSION['login']){
-            require(__DIR__.'/../view/frontend/moderationPage.php');
-        }
-        else{
-            header('Location: index.php?action=loginFail');
-        }
-    }
+   
 }
 
 $Controller = new Controller();

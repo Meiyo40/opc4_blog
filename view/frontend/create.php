@@ -17,9 +17,9 @@
         <form id="new-article-form" action="index.php?action=create&addPost=true" method="POST" enctype="multipart/form-data">
             <label for="article-title">Titre de l'article: </label>
             <input id="article-title" type="text" name='title' required>
-            <label>Image(Max 4Mo): </label>
+            <label>Image(Max 10Mo): </label>
             <input type="file" name="image">
-            <input type="hidden" name="MAX_FILE_SIZE" value="4194304" />
+            <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
             <select name="author">
             <?php 
                 for($i = 0; $i < sizeof($usersList); $i++){

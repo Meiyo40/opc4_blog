@@ -1,7 +1,7 @@
 <?php 
     $title = "My news";
     $script = "<script src='assets/js/ajax.js'></script><script src='assets/js/comment.js'></script>";
-    $headContent = '<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">';
+    $headContent = '<link rel="stylesheet" href="assets/css/postview.css"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">';
 ?>
 <?php ob_start(); ?>
 <?php echo "<h1>".htmlspecialchars($post['title'])."</h1>" ?>
@@ -9,11 +9,10 @@
     <div class="news">
         <?php
             echo "<article>";
-            echo "<p>";
             echo "<div class='post".$post['id']."'>";
-            echo    "<p class='article-content'>".$post['content']."</p>";
+            echo    "<div class='article-content'>".$post['content']."</div>";
             echo    "<p class='article-signature'>Publié par: ".$post['author'].", le [".$post['date']."] <button id='btnPost' class='btn btn-primary' value='".$post['id']."'>Commenter</button></p><br>";
-            echo "</div></p></article>";
+            echo "</div></article>";
         ?>
             
     </div>

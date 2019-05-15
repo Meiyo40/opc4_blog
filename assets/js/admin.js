@@ -1,12 +1,26 @@
 function toggleContent(postId){
     let article = "article-" + postId;
     let content = document.getElementById(article);
+    let container = document.getElementsByClassName('article');
+    let subcontainer = document.getElementsByTagName('article');
     
     if(content.style.display == 'block'){
         content.style.display = "none";
+        for(let i = 0; i < container.length; i++){
+            container[i].style.height = "250px";
+        }
+        for(let i = 0; i < container.length; i++){
+            subcontainer[i].style.height = "250px";
+        }        
     }
     else{
         content.style.display = "block";
+        for(let i = 0; i < container.length; i++){
+            container[i].style.height = "auto";
+        }
+        for(let i = 0; i < container.length; i++){
+            subcontainer[i].style.height = "auto";
+        }        
     }
 }
 

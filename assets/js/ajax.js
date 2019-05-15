@@ -21,7 +21,7 @@ function Ajax(url) {
     }
     
     this.ajaxGet = () => {
-        var oXhr = this.getXMLHttpRequest();
+        let oXhr = this.getXMLHttpRequest();
 
         oXhr.onerror = function (data) {
             console.log('Erreur... ');
@@ -32,4 +32,32 @@ function Ajax(url) {
 
         oXhr.onreadystatechange = function() { alert("Commentaire signalé, il sera vérifié par l'administration") };
     }
+    
+    this.ajaxPost = () => {
+        let oXhr = this.getXMLHttpRequest();
+        
+        oXhr.onerror = function (data) {
+            console.log('Erreur... ');
+        };
+
+        oXhr.open("POST", this.url, true);
+        oXhr.send();
+        
+        oXhr.onreadystatechange = () => {
+            let DONE = 4;
+            let OK = 200;
+            
+            if(oXhr.readyState === DONE){
+                if(oXhr.status === OK){
+                    console.log('okay');
+                }
+                else{
+                    console.log('Error: '+ oXhr.status);
+                }
+            }
+        }
+        oXhr.success = (data) => {
+            console.log(data);
+        }
+    }   
 }

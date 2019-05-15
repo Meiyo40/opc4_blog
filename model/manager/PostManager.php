@@ -9,7 +9,7 @@ class PostManager{
 
     public function getPosts(){
         $db = Database::connect();
-        $statement = $db->prepare('SELECT id, title, author, content, nb_comments, DATE_FORMAT(date, \'%d/%m/%Y à %Hh%imin\') AS date, img_content, img_ext FROM opc_blog_posts ORDER BY date DESC LIMIT 0, 5');
+        $statement = $db->prepare('SELECT id, title, author, content, nb_comments, DATE_FORMAT(date, \'%d/%m/%Y à %Hh%imin\') AS date, img_key, img_ext FROM opc_blog_posts ORDER BY date DESC LIMIT 0, 5');
         
         $statement->execute();
         $req = $statement->fetchAll(); 
@@ -22,7 +22,7 @@ class PostManager{
         //display last 5 posted article on blog
         
         $db = Database::connect();
-        $statement = $db->prepare('SELECT*FROM opc_blog_posts ORDER BY (date) LIMIT 5');
+        $statement = $db->prepare('SELECT*FROM opc_blog_posts ORDER BY (date) DESC LIMIT 5');
 
         $statement->execute();
         $posts = $statement->fetchAll();
@@ -35,14 +35,13 @@ class PostManager{
     public function getPost($postId){
         $db = Database::connect();
         $req = $db->prepare('
-        SELECT id, title, author, content, DATE_FORMAT(date, \'%d/%m/%Y à %Hh%imin\') AS date 
+        SELECT * 
         FROM opc_blog_posts
         WHERE id = ?');
         $req->execute(array($postId));
         $post = $req->fetch();
         Database::disconnect();
-        return $post;
-        
+        return $post; 
     }
 
     public function addPost($title, $content, $author, $img_name){
@@ -51,7 +50,7 @@ class PostManager{
         $extension = pathinfo($img_name, PATHINFO_EXTENSION);
         $extension = preg_match($pattern, $extension);
 
-        if($_FILES['image']['size'] < 4194304 && $extension){
+        if($_FILES['image']['size'] < 10485760 && $extension){
             $post = new Post();
             $author = Helper::validateContent($author);
             $content = Helper::validateContent($content);

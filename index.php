@@ -5,7 +5,9 @@ define('ROOT', str_replace('index.php', '', $_SERVER['SCRIPT_FILENAME']));
 
 require_once __DIR__.'/vendor/autoload.php';
 require(ROOT.'controller/Controller.php');
-require(ROOT.'controller/LoginController.php');
+require(ROOT.'controller/AdminController.php');
+
+use manager\PostManager;
 
 
 if (isset($_GET['action'])) {
@@ -56,19 +58,34 @@ if (isset($_GET['action'])) {
 
         case 'login':
         case 'loginFail':
-            $Controller->getLoginPage();
+            $AdminController->getLoginPage();
             break;
 
         case 'admin':
-            $Controller->getAdminPanel();
+            $AdminController->getAdminPanel();
             break;
 
         case 'create':
-            $Controller->getCreatePage();
+            $AdminController->getCreatePage();
             break;
 
         case 'moderation':
-            $Controller->getModerationPage();
+            $AdminController->getModerationPage();
+            break;
+
+        case 'editarticle':
+            $AdminController->getPostEditPage();
+            break;
+
+        case 'listArticles':
+            $AdminController->getListsPostsToEdit();
+            break;
+
+        case 'getArticleContent':
+            $PostManager = new PostManager();
+            $Post = $PostManager->getPost($_GET['article']);
+            file_put_contents('debug.html', json_encode($Post));
+            echo json_encode($Post);
             break;
     }
 

@@ -11,8 +11,8 @@ class Post{
     private $content;
     private $date;
     private $image;
-    private $uniqueImgId;
-    private $imgExt;
+    private $img_key;
+    private $img_ext;
 
     public function getContent(){
         return $this->content;
@@ -49,8 +49,8 @@ class Post{
             file_put_contents('debug.html', $err, FILE_APPEND);
         }
         else{
-            $this->uniqueImgId = $imgId;
-            $this->imgExt = pathinfo($this->image, PATHINFO_EXTENSION);
+            $this->img_key = $imgId;
+            $this->img_ext = pathinfo($this->image, PATHINFO_EXTENSION);
         }
     }
 
@@ -61,7 +61,7 @@ class Post{
 
     private function ImgIdExist($imgId){
         $db = Database::connect();
-        $statement = $db->prepare("SELECT img_content WHERE img_content = ?");        
+        $statement = $db->prepare("SELECT img_key WHERE img_key = ?");        
         $statement->execute(array($imgId));
         $imgList = $statement->fetchAll();
         Database::disconnect();
@@ -94,7 +94,7 @@ class Post{
     public function addPost(){
         $db = Database::connect();
         $statement = $db->prepare("INSERT INTO opc_blog_posts (author, content, title, date, img_content, img_ext) VALUES (?,?,?,?,?,?)");        
-        $statement->execute(array($this->author, $this->content, $this->title, $this->date, $this->uniqueImgId, $this->imgExt));
+        $statement->execute(array($this->author, $this->content, $this->title, $this->date, $this->img_key, $this->img_ext));
         Database::disconnect();
     }
 
