@@ -45,6 +45,17 @@ class Controller{
         }
     }
 
+    public function updatePost($id, $title, $content, $author, $img_name){
+        $update = $this->PostManager->updatePost($id, $title, $content, $author, $img_name);
+
+        if ($update === false) {
+            throw new Exception('Impossible de mettre a jour le post !');
+        }
+        else {
+            header('Location: index.php?action=admin&edit=success');
+        }
+    }
+
     public function addComment($postId, $author, $comment)
     {
         $newComment = $this->CommentManager->addCommentToPost($postId, $author, $comment);

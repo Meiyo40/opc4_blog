@@ -34,6 +34,9 @@ for (let i = 0; i < parts.length; i++) {
 if($_GET.addPost === 'success'){
     alert('Votre article a bien été posté !');
 }
+if($_GET.edit === 'success'){
+    alert('Votre article a bien été mis à jour !');
+}
 
 if($_GET.action === 'moderation'){
     if($_GET.page){

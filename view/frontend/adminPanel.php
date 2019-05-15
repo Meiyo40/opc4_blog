@@ -34,7 +34,7 @@
                     echo "<h3>". htmlspecialchars($posts[$i]['title']);
                     echo "</h3>";
                     echo "<div class='post".$i."'>";
-                    echo    "<p class='article-content' id='article-".$posts[$i]['id']."'>".$posts[$i]['content']."</p>";
+                    echo    "<div class='article-content' id='article-".$posts[$i]['id']."'>".$posts[$i]['content']."</div>";
                     echo    "<p class='article-signature'>Rédigé par: ".$posts[$i]['author'].", le [".$posts[$i]['date']."] <em><a href='index.php?action=post&id=".$posts[$i]['id']."'>Commentaires</a></em></p><br>";
                     echo "</div></a></article>";
                     echo "<div class='divider'></div></div>";

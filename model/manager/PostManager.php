@@ -77,20 +77,23 @@ class PostManager{
         
     }
 
-    public function editPost($id, $newContent, $newTitle, $newAuthor){
+    public function updatePost($id, $title, $content, $author, $img_name){
         $post = new Post();
 
-        $author = Helper::validateContent($newAuthor);
-        $content = Helper::validateContent($newContent);
-        $title = Helper::validateContent($newTitle);
+        $author = Helper::validateContent($author);
+        $content = Helper::validateContent($content);
+        $title = Helper::validateContent($title);
 
         $post->setId($id);
         $post->setTitle($title);
         $post->setContent($content);
         $post->setAuthor($author);
-        $post->setDate(date("Y-m-d H:i:s"));
+
+        if($img_name != null){
+            $post->setImg($img_name);
+        }
         
-        $post->editPost();
+        $post->updatePost();
     }
 
     public function deletePost($id){

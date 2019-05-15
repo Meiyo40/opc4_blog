@@ -30,6 +30,7 @@ if (isset($_GET['action'])) {
     }
     if(isset($_GET['addPost'])){
         if($_GET['addPost'] == 'true'){
+            $id = $_GET['article'];
             $title = $_POST['title'];
             $content = $_POST['content'];
             $author = $_POST['author'];
@@ -40,6 +41,13 @@ if (isset($_GET['action'])) {
     if(isset($_GET['report'])){
         $commentId = $_GET['report'];
         $Controller->reportComment($commentId);
+    }
+    if(isset($_GET['edit'])){
+        $title = $_POST['title'];
+        $content = $_POST['content'];
+        $author = $_POST['author'];
+        $img_name = $_FILES['image']['name'] ? $_FILES['image']['name'] : null;
+        $Controller->updatePost($title, $content, $author, $img_name);
     }
     switch($_GET['action']){
         case 'listPosts':

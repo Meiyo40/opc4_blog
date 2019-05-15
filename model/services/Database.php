@@ -5,7 +5,7 @@ namespace services;
 class Database{
     private static $db_user = 'OPC4_PHP_BLOG';
     private static $db_pwd = 'azerty';
-    private static $dsn = 'mysql:host=localhost;dbname=OPC4_blog';
+    private static $dsn = 'mysql:host=localhost;dbname=OPC4_blog;charset=utf8';
     private static $connection_db = null;
 
     public static function connect(){

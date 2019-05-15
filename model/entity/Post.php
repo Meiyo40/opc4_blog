@@ -44,11 +44,11 @@ class Post{
         mkdir($path, 0777, true);
         $path = $path."/".$imgId.".".pathinfo($this->image, PATHINFO_EXTENSION)."";
         $move = move_uploaded_file($_FILES['image']['tmp_name'], $path);
-        $err = $this->date.": Erreur lors du deplacement de l'image <strong>name</strong>= [".$this->image."] <strong>path</strong>= [".$path."]<br>";
         if(!$move){
+            $err = $this->date.": Erreur lors du deplacement de l'image <strong>name</strong>= [".$this->image."] <strong>path</strong>= [".$path."]<br>";
             file_put_contents('debug.html', $err, FILE_APPEND);
         }
-        else{
+        else{                
             $this->img_key = $imgId;
             $this->img_ext = pathinfo($this->image, PATHINFO_EXTENSION);
         }
@@ -93,15 +93,24 @@ class Post{
 
     public function addPost(){
         $db = Database::connect();
-        $statement = $db->prepare("INSERT INTO opc_blog_posts (author, content, title, date, img_content, img_ext) VALUES (?,?,?,?,?,?)");        
+        $statement = $db->prepare("INSERT INTO opc_blog_posts (author, content, title, date, img_key, img_ext) VALUES (?,?,?,?,?,?)");        
         $statement->execute(array($this->author, $this->content, $this->title, $this->date, $this->img_key, $this->img_ext));
+        $err = $this->author."<br>".$this->content."<br>".$this->title."<br>".$this->date."<br>".$this->img_key."<br>".$this->img_ext;
+            file_put_contents('debug.html', $err, FILE_APPEND);
         Database::disconnect();
     }
 
     public function updatePost(){
         $db = Database::connect();
-        $statement = $db->prepare("UPDATE `opc_blog_posts` SET `author` = ?, `content` = ?, `title` = ? WHERE `id` = ? ");
-        $statement->execute(array($this->author, $this->content, $this->title, $this->id));
+        if($this->image != null){
+            $statement = $db->prepare("UPDATE `opc_blog_posts` SET `author` = ?, `content` = ?, `title` = ?, `img_key` = ?, `img_ext` = ?  WHERE `id` = ? ");
+            $statement->execute(array($this->author, $this->content, $this->title, $this->img_key, $this->img_ext, $this->id));
+        }
+        else{
+            $statement = $db->prepare("UPDATE `opc_blog_posts` SET `author` = ?, `content` = ?, `title` = ?  WHERE `id` = ? ");
+            $statement->execute(array($this->author, $this->content, $this->title, $this->id));
+        }
+        
         Database::disconnect();
     }
 
