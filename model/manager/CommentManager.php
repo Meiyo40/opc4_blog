@@ -48,7 +48,7 @@ class CommentManager{
     }
 
     public function getLastComments(){
-        //return last 10 posted comments on blog
+        //return last 8 posted comments on blog
         
         $db = Database::connect();
         $statement = $db->prepare('SELECT*FROM opc_blog_comment ORDER BY (comment_date) LIMIT 8');
@@ -62,10 +62,22 @@ class CommentManager{
     }
 
     public function getAllcomments(){
-        //return all comments
         
         $db = Database::connect();
         $statement = $db->prepare('SELECT*FROM opc_blog_comment ORDER BY (comment_date) DESC');
+
+        $statement->execute();
+        $comments = $statement->fetchAll();
+        
+        Database::disconnect();
+        
+        return $comments;
+    }
+
+    public function getAllReportedcomments(){
+        
+        $db = Database::connect();
+        $statement = $db->prepare('SELECT*FROM opc_blog_comment WHERE report > 0 ORDER BY (comment_date) DESC');
 
         $statement->execute();
         $comments = $statement->fetchAll();

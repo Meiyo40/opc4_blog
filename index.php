@@ -53,8 +53,40 @@ if (isset($_GET['action'])) {
         
     }
     switch($_GET['action']){
+
+        case 'admin':
+            $AdminController->getAdminPanel();
+            break;
+
+        case 'create':
+            $AdminController->getCreatePage();
+            break;
+
+        case 'editarticle':
+            $AdminController->getPostEditPage();
+            break;
+
+        case 'getArticleContent':
+            $PostManager = new PostManager();
+            $Post = $PostManager->getPost($_GET['article']);
+            echo json_encode($Post);
+            break;
+
+        case 'listArticles':
+            $AdminController->getListsPostsToEdit();
+            break;
+
         case 'listPosts':
             $Controller->listPosts();
+            break;        
+
+        case 'login':
+        case 'loginFail':
+            $AdminController->getLoginPage();
+            break;
+
+        case 'moderation':
+            $AdminController->getModerationPage('list');
             break;
 
         case 'post':
@@ -66,36 +98,9 @@ if (isset($_GET['action'])) {
                 echo 'Erreur : aucun identifiant de billet envoyé';
                 break;
             }
-
-        case 'login':
-        case 'loginFail':
-            $AdminController->getLoginPage();
-            break;
-
-        case 'admin':
-            $AdminController->getAdminPanel();
-            break;
-
-        case 'create':
-            $AdminController->getCreatePage();
-            break;
-
-        case 'moderation':
-            $AdminController->getModerationPage();
-            break;
-
-        case 'editarticle':
-            $AdminController->getPostEditPage();
-            break;
-
-        case 'listArticles':
-            $AdminController->getListsPostsToEdit();
-            break;
-
-        case 'getArticleContent':
-            $PostManager = new PostManager();
-            $Post = $PostManager->getPost($_GET['article']);
-            echo json_encode($Post);
+            
+        case 'report':
+            $AdminController->getModerationPage('priority');
             break;
     }
 

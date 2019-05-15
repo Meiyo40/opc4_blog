@@ -64,15 +64,17 @@ class AdminController{
         }
     }
 
-    public function getModerationPage(){
+    public function getModerationPage($mode, $sizePage = 10){
 
         $usersList = $this->UserLogin->getUsers();
         $result = $this->UserLogin->getLoginPage();
-        $comments = $this->CommentManager->getAllComments();
-        $sizePage = 10;
-        $nbPage = ceil(sizeof($comments)/$sizePage);
-
-        
+        if($mode == 'list'){
+            $comments = $this->CommentManager->getAllComments();
+        }
+        elseif($mode == 'priority'){
+            $comments = $this->CommentManager->getAllReportedcomments();
+        }
+        $nbPage = ceil(sizeof($comments)/$sizePage);        
         
         if($result == 'login' || $_SESSION['login']){
             require(__DIR__.'/../view/frontend/moderationPage.php');
