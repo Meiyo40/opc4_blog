@@ -5,6 +5,7 @@ use services\Database;
 
 class Comment{
     private $content;
+    private $post_id;
     private $author;
     private $date;
     private $report;
@@ -13,29 +14,39 @@ class Comment{
     private $id;
     private $depth;
 
+   /*
     public function __construct($author, $content, $commentPost, $commentParent, $depth){
-        $this->content = preg_replace("/\s|&nbsp;/",'',$content);;
+        $this->content = preg_replace("/\s|&nbsp;/",'',$content);
         $this->author = $author;
-        $this->date = date("Y-m-d H:i:s");;
+        $this->date = date("Y-m-d H:i:s");
         $this->parentPost = $commentParent;
         $this->parentComment = $commentPost;
         $this->$depth = $depth;
     }
+   */
 
-    public static function initComment(){
+    public static function initComment($id){
         $db = Database::connect();
-        $statement = $db->prepare('SELECT id, post_id, author, comment_parent, depth, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin\') AS comment_date 
+        $statement = $db->prepare('SELECT id, post_id, author, comment_parent, depth, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin\') AS date, report 
         FROM opc_blog_comment 
-        WHERE post_id = ?');
+        WHERE id = ?');
 
-        $statement->execute(array($parentComment));
-        $comments = $statement->fetchAll();
+        $statement->execute(array($id));
+        $comment = $statement->fetch();
         
         Database::disconnect();
 
-        $obj = new Comment($comments['id'], $comments['author'], $comments['comment'], $comments['post_id'], $comments['comment_parent'], $comments['depth'], $comments['comment_date'], $comments['report']);
+        $obj = new Comment();
+        $obj->id = $comment['id'];
+        $obj->post_id  = $comment['post_id'];
+        $obj->author  = $comment['author'];
+        $obj->parentComment  = $comment['comment_parent'];
+        $obj->depth = $comment['depth'];
+        $obj->content  = $comment['comment'];
+        $obj->date  = $comment['date'];
+        $obj->report = $comment['report'];
         
-        return $comments;
+        return $obj;
     }
 
     public function addNewComment(){

@@ -62,6 +62,10 @@ if (isset($_GET['action'])) {
             $AdminController->getCreatePage();
             break;
 
+        case 'delete':
+            $Controller->deleteComment($_POST['delComment']);
+            break;
+
         case 'editarticle':
             $AdminController->getPostEditPage();
             break;

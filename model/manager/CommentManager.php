@@ -37,7 +37,90 @@ class CommentManager{
     }
 
     public function deleteComment($commentId){
+        
+        $this->childControl($commentId);
+        $db = Database::connect();
+        $statement = $db->prepare("DELETE FROM `opc_blog_posts` WHERE `id` = ? ");
+        $statement->execute(array($commentId));
+        Database::disconnect();
+        
+    }
 
+    public function childControl($commentId){
+        
+        if(is_array($commentId)){
+            for($i = 0; $i < sizeof($commentId); $i++){
+                $parent = $this->hasParent($commentId[$i]);
+                $childrens = $this->hasChildren($commentId[$i]);
+                if($parent && $childrens){
+                    
+                    if($childrens){
+                        $this->setNewParent($childrens, $parent);
+                    }
+                }
+            }
+        }
+        else{
+            
+            $parent = $this->hasParent($commentId);
+            file_put_contents('debug.html', 'TEST');
+            $childrens = $this->hasChildren($commentId);
+            
+            if($parent && $childrens){    
+                            
+                $this->setNewParent($childrens, $parent);
+            }
+            else{
+                
+                $this->setNewparent($childrens, null);
+                
+            }
+        }
+    }
+
+    public function setNewparent($comments, $newParent){
+        if(sizeof($comments) == 1){
+            $db = Database::connect();
+            $statement = $db->prepare("UPDATE `opc_blog_comment` SET `comment_parent` = ?, `depth` = `depth`-1 WHERE `id` = ? ");
+            $statement->execute(array($comments['id']));
+            Database::disconnect();
+        }
+        else{
+            $ids = "id = ".$comments[0]['id'];
+            for($i = 1; $i < sizeof($comments); $i++){
+                $ids = $ids." OR id = ".$comments[$i]['id'];
+                $this->childControl($comments[$i]['id']);
+            }
+
+            
+            $db = Database::connect();
+            $statement = $db->prepare("UPDATE `opc_blog_comment` SET `comment_parent` = ?, `depth` = `depth`-1 WHERE ?");
+            $statement->execute(array($ids));
+            Database::disconnect();
+
+            
+            $this->childControl($comments);
+        }
+    }
+
+    public function hasChildren($parent){
+        $db = Database::connect();
+        $statement = $db->prepare('SELECT*FROM opc_blog_comment WHERE comment_parent = ?');
+
+        $statement->execute(array($parent));
+        $comments = $statement->fetchAll();
+
+        return $comments;
+    }
+
+    public function hasParent($commentId){
+        $result = Comment::initComment($commentId);
+        if($result['comment_parent']){
+            return $result['comment_parent'];
+        }
+        else{
+            return "null";
+        }
     }
 
     public function reportComment($commentId){

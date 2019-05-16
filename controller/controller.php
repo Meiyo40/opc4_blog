@@ -78,8 +78,11 @@ class Controller{
         }
     }
 
-    public function deleteComment(){
-        
+    public function deleteComment($id){
+        $result = $this->CommentManager->deleteComment($_POST['comment']);
+        if ($result === false) {
+            throw new Exception('Impossible de supprimer le commentaire !');
+        }
     }
 
     public function reportComment($commentId){

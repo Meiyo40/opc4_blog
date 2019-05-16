@@ -24,6 +24,13 @@ function toggleContent(postId){
     }
 }
 
+function requestDel(commentId){
+    let url = "index.php?action=delete&delComment="+commentId;
+        $.post(url,null,function(data){ 
+            alert('Commentaire supprimé');
+        });
+}
+
 let $_GET = [];
 let parts = window.location.search.substr(1).split("&");
 for (let i = 0; i < parts.length; i++) {
