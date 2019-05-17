@@ -160,7 +160,7 @@ class CommentManager{
     public function getAllReportedcomments(){
         
         $db = Database::connect();
-        $statement = $db->prepare('SELECT*FROM opc_blog_comment WHERE report > 0 ORDER BY (comment_date) DESC');
+        $statement = $db->prepare('SELECT*FROM opc_blog_comment WHERE report > 0 ORDER BY report DESC');
 
         $statement->execute();
         $comments = $statement->fetchAll();
