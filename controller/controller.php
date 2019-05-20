@@ -5,10 +5,12 @@ namespace controller;
 use manager\CommentManager;
 use manager\PostManager;
 use manager\UserLogin;
+use services\DAO;
 
 class Controller{
     private $login;
     private $PostManager;
+    private $DAO;
     private $CommentManager; 
 
     public function __construct()
@@ -16,6 +18,7 @@ class Controller{
         $this->login = new UserLogin();
         $this->PostManager = new PostManager();
         $this->CommentManager = new CommentManager();
+        $this->DAO = new DAO();
     }
 
     public function listPosts()
@@ -29,7 +32,8 @@ class Controller{
     public function post()
     {
         $post = $this->PostManager->getPost($_GET['id']);
-        $comments = $this->CommentManager->getComments($_GET['id']);
+        //$comments = $this->CommentManager->getComments($_GET['id']);
+        $comments = $this->DAO->getAllCommentsPost($_GET['id']);
         
         require(__DIR__.'/../view/frontend/postView.php');
     }

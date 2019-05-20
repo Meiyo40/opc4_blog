@@ -10,10 +10,8 @@ $(document).ready(function(){
     async function updateEditor(article){
         let title = document.getElementById('article-title');
         title.value = article.title;
-        await sleep(1000);
-        //tinymce.activeEditor.setContent(article.content, {format: 'html'});
-        let content = tinymce.activeEditor.getBody();
-        console.log(article.content);
+        await sleep(500);
+        let content = tinymce.activeEditor.getBody();;
         content.innerHTML = article.content;
     }
 

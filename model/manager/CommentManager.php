@@ -52,8 +52,7 @@ class CommentManager{
             for($i = 0; $i < sizeof($commentId); $i++){
                 $parent = $this->hasParent($commentId[$i]);
                 $childrens = $this->hasChildren($commentId[$i]);
-                if($parent && $childrens){
-                    
+                if($parent && $childrens){                    
                     if($childrens){
                         $this->setNewParent($childrens, $parent);
                     }
@@ -88,8 +87,8 @@ class CommentManager{
         else{
             $ids = "id = ".$comments[0]['id'];
             for($i = 1; $i < sizeof($comments); $i++){
-                $ids = $ids." OR id = ".$comments[$i]['id'];
-                $this->childControl($comments[$i]['id']);
+                $ids = $ids." OR id = ".$comments[$i]->getId();
+                $this->childControl($comments[$i]->getId());
             }
 
             
@@ -161,7 +160,7 @@ class CommentManager{
         
         $db = Database::connect();
         $statement = $db->prepare('SELECT*FROM opc_blog_comment WHERE report > 0 ORDER BY report DESC');
-
+-
         $statement->execute();
         $comments = $statement->fetchAll();
         

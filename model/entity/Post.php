@@ -11,8 +11,21 @@ class Post{
     private $content;
     private $date;
     private $image;
+    private $nb_comments;
     private $img_key;
     private $img_ext;
+
+    public function __construct($id, $author, $content, $date, $title, $nb_comments, $img_key, $img_ext)
+    {
+        $this->id = $id;
+        $this->author = $author;
+        $this->content = $content;
+        $this->date = $date;
+        $this->title = $title;
+        $this->$nb_comments = $nb_comments;
+        $this->img_key = $img_key;
+        $this->img_ext = $img_ext;
+    }
 
     public function getContent(){
         return $this->content;

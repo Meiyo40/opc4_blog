@@ -28,9 +28,9 @@
             for($i = 0+($sizePage*($page-1)); $i < $sizePage*$page; $i++){
                 if(array_key_exists($i, $comments)){
                     echo "<div class='commentGroup'>";
-                        echo "<div class='comment node-depth-".$comments[$i]['depth']."' id='post".$comments[$i]['id']."'>";
+                        echo "<div class='comment node-depth-".$comments[$i]->getDepth()."' id='post".$comments[$i]->getId()."'>";
                         echo    "<p class='comment-content'>".$comments[$i]['comment']."</p>";
-                        echo    "<p class='comment-signature'>Rédigé par: <strong>".$comments[$i]['author']."</strong>, le [".$comments[$i]['comment_date']."] <div class='comment-control-panel'><button onclick='displayForm(".$comments[$i]['id'].",".$comments[$i]['depth'].")' class='comment-answer btn btn-primary' data-comment-id=".$comments[$i]['id'].">Répondre</button><button class='btn btn-danger'><i class='far fa-times-circle'></i> Supprimer</button></div><br>";
+                        echo    "<p class='comment-signature'>Rédigé par: <strong>".$comments[$i]->getAuthor()."</strong>, le [".$comments[$i]->getComment_date()."] <div class='comment-control-panel'><button onclick='displayForm(".$comments[$i]->getId().",".$comments[$i]->getDepth().")' class='comment-answer btn btn-primary' data-comment-id=".$comments[$i]->getId().">Répondre</button><button class='btn btn-danger'><i class='far fa-times-circle'></i> Supprimer</button></div><br>";
                     echo "</div>";
                 }
             }

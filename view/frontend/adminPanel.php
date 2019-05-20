@@ -43,10 +43,10 @@
                 echo "<td id='displayComments'>";
                 //display last 10 comments loop
                 for($x = 0; $x < sizeof($comments);$x++){
-                    echo    "<div class='subSubComment node-depth-".$comments[$x]['depth']."' id='post".$comments[$x]['id']."'>";
-                    echo    "<p>En réponse à <strong>".$comments[$x]['author']."</strong></p>";
-                    echo    "<p class='comment-content'>".$comments[$x]['comment']."</p>";
-                    echo    "<p class='comment-signature'>Rédigé par: <strong>".$comments[$x]['author']."</strong>, le [".$comments[$x]['comment_date']."] <button onclick='displayForm(".$comments[$x]['id'].",".$comments[$x]['depth'].")' class='comment-answer' data-comment-id=".$comments[$x]['id'].">Répondre</button></p><br>";
+                    echo    "<div class='subSubComment node-depth-".$comments[$x]->getDepth()."' id='post".$comments[$x]->getId()."'>";
+                    echo    "<p>En réponse à <strong>".$comments[$x]->getAuthor()."</strong></p>";
+                    echo    "<p class='comment-content'>".$comments[$x]->getComment()."</p>";
+                    echo    "<p class='comment-signature'>Rédigé par: <strong>".$comments[$x]->getAuthor()."</strong>, le [".$comments[$x]->getComment_date()."] <button onclick='displayForm(".$comments[$x]->getId().",".$comments[$x]->getDepth().")' class='comment-answer' data-comment-id=".$comments[$x]->getId().">Répondre</button></p><br>";
                     echo    "</div>";
                 }
                 echo "</td></tr>";

@@ -32,12 +32,12 @@
             for($i = 0+($sizePage*($page-1)); $i < $sizePage*$page; $i++){
                 if(array_key_exists($i, $comments)){
                     echo "<div class='commentGroup'>";
-                        echo "<div class='comment node-depth-".$comments[$i]['depth']."' id='post".$comments[$i]['id']."'>";
+                        echo "<div class='comment node-depth-".$comments[$i]->getDepth()."' id='post".$comments[$i]->getId()."'>";
                         echo    "<p class='comment-content'>".$comments[$i]['comment']."</p>";
-                        echo    "<p class='comment-signature'>Rédigé par: <strong>".$comments[$i]['author']."</strong>, le [".$comments[$i]['comment_date']."] 
+                        echo    "<p class='comment-signature'>Rédigé par: <strong>".$comments[$i]->getAuthor()."</strong>, le [".$comments[$i]->getComment_date()."] 
                         <div class='comment-control-panel'>
-                            <button onclick='displayForm(".$comments[$i]['id'].",".$comments[$i]['depth'].")' class='comment-answer btn btn-primary' data-comment-id=".$comments[$i]['id'].">Répondre</button>
-                            <button onclick='requestDel(".$comments[$i]['id'].")' class='btn btn-danger'><i class='far fa-times-circle'></i> Supprimer</button>
+                            <button onclick='displayForm(".$comments[$i]->getId().",".$comments[$i]->getDepth().")' class='comment-answer btn btn-primary' data-comment-id=".$comments[$i]->getId().">Répondre</button>
+                            <button onclick='requestDel(".$comments[$i]->getId().")' class='btn btn-danger'><i class='far fa-times-circle'></i> Supprimer</button>
                             <button class='reportCount' disabled><strong>Signalements: <i class='countNb'>".$comments[$i]['report']."</i></strong></button>
                             </div><br>";
                     echo "</div>";
