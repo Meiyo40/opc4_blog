@@ -36,7 +36,7 @@ class DAO{
             $db = Database::connect(); 
             $db->exec("set names utf8");
             $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-            $statement = $db->prepare("SELECT*FROM opc_blog_comment");
+            $statement = $db->prepare("SELECT*FROM opc_blog_posts ORDER BY date DESC");
             $statement->execute();
 
             $Count = $statement->rowCount(); 

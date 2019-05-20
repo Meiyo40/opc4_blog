@@ -47,6 +47,18 @@ class Post{
         return $this->date;
     }
 
+    public function getImg_key(){
+        return $this->img_key;
+    }
+
+    public function getImg_ext(){
+        return $this->img_ext;
+    }
+
+    public function getNb_comments(){
+        return $this->nb_comments;
+    }
+
     public function setImg($img_name){
         $this->image = $img_name;
         $this->setImgUniqueId();
@@ -107,6 +119,15 @@ class Post{
     public function setId($id){
         $this->id = $id;
     }
+
+    public function setNb_comments($nb){
+        $this->nb_comments = $nb;
+    }
+
+    public function IncrementNb_comments(){
+        $this->nb_comments += 1;
+    }
+
 
     public function addPost(){
         $db = Database::connect();

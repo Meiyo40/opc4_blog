@@ -21,9 +21,11 @@ class Controller{
         $this->DAO = new DAO();
     }
 
-    public function listPosts()
+    public function listPosts($sizePage  = 5)
     {
-        $posts = $this->PostManager->getPosts();
+        //$posts = $this->PostManager->getPosts();
+        $posts = $this->DAO->getPosts();
+        $nbPage = ceil(sizeof($posts)/$sizePage);
        
         
         require(__DIR__.'/../view/frontend/listPostsView.php');
