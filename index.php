@@ -8,6 +8,8 @@ require(ROOT.'controller/Controller.php');
 require(ROOT.'controller/AdminController.php');
 
 use manager\PostManager;
+use entity\Comment;
+use services\DAO;
 
 
 if (isset($_GET['action'])) {

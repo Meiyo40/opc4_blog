@@ -9,8 +9,9 @@
     <div class="news">
         <?php
             echo "<article>";
-            echo "<div class='post".$post['id']."'>";
-            echo    "<div class='article-content'>".$post['content']."</div>";
+            echo "<div id='post' class='post".$post['id']."'>";
+            echo "<img class='smallImg' src='./resources/img/".$post['img_key'].".".$post['img_ext']."'></img>";
+            echo    "<div class='article-content'>".htmlspecialchars_decode($post['content'])."</div>";
             echo    "<p class='article-signature'>Publié par: ".$post['author'].", le [".$post['date']."] <button id='btnPost' class='btn btn-primary' value='".$post['id']."'>Commenter</button></p><br>";
             echo "</div></article>";
         ?>

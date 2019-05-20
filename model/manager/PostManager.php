@@ -53,16 +53,15 @@ class PostManager{
         $extension = preg_match($pattern, $extension);
 
         if($_FILES['image']['size'] < IMG_MAXSIZE && $extension){
-            $post = new Post();
             $author = Helper::validateContent($author);
             $content = Helper::validateContent($content);
             $title = Helper::validateContent($title);
-            $post->setTitle($title);
-            $post->setContent($content);
-            $post->setAuthor($author);
-            $post->setDate(date("Y-m-d H:i:s"));
+            $date = date("Y-m-d H:i:s");
+            $nb_comments = 0;
 
-            $post->setImg($img_name);            
+                      
+            $post = new Post(null, $author, $content, $date, $title, $nb_comments);  
+            $post->setImg($img_name);
             $post->addPost();
         }
         else{

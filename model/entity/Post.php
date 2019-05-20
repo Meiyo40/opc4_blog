@@ -15,7 +15,7 @@ class Post{
     private $img_key;
     private $img_ext;
 
-    public function __construct($id, $author, $content, $date, $title, $nb_comments, $img_key, $img_ext)
+    public function __construct($id, $author, $content, $date, $title, $nb_comments, $img_key = '', $img_ext = '')
     {
         $this->id = $id;
         $this->author = $author;
@@ -65,18 +65,23 @@ class Post{
     }
 
     private function createImgFile($imgId){
-        $path = 'resources/img/'.$imgId;
+        $path = 'resources/img';
         mkdir($path, 0777, true);
-        $path = $path."/".$imgId.".".pathinfo($this->image, PATHINFO_EXTENSION)."";
+        $this->toFileName($this->title);
+        $path = $path."/".$this->img_key.'.'.pathinfo($this->image, PATHINFO_EXTENSION);
         $move = move_uploaded_file($_FILES['image']['tmp_name'], $path);
         if(!$move){
             $err = $this->date.": Erreur lors du deplacement de l'image <strong>name</strong>= [".$this->image."] <strong>path</strong>= [".$path."]<br>";
             file_put_contents('debug.html', $err, FILE_APPEND);
         }
         else{                
-            $this->img_key = $imgId;
             $this->img_ext = pathinfo($this->image, PATHINFO_EXTENSION);
         }
+    }
+    
+    private function toFileName($fileName){
+        $string = preg_replace("/\s+/", '', $fileName);
+        $this->img_key = $string;
     }
 
     public function setImgUniqueId(){

@@ -22,10 +22,10 @@
                     echo "</h3>";
                     
                     if($posts[$i]->getImg_key()){
-                        echo "<img class='smallImg' src='./resources/img/".$posts[$i]->getImg_key()."/".$posts[$i]->getImg_key().".".$posts[$i]->getImg_ext()."'></img>";
+                        echo "<img class='smallImg' src='./resources/img/".$posts[$i]->getImg_key().".".$posts[$i]->getImg_ext()."'></img>";
                     }
                     echo "<div class='post".$i."'>";
-                    echo    "<div class='article-content'>".$posts[$i]->getContent()."</div>";
+                    echo    "<div class='article-content'>".htmlspecialchars_decode($posts[$i]->getContent())."</div>";
                     echo    "<p class='article-signature'>Rédigé par: ".$posts[$i]->getAuthor().", le [".$posts[$i]->getDate()."] <em><a href='index.php?action=post&id=".$posts[$i]->getId()."'>[".$posts[$i]->getNb_comments()."] Commentaires</a></em></p><br>";
                     echo "</div></a></article>";
                 }
