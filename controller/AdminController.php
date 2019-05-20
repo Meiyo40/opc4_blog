@@ -6,6 +6,7 @@ use entity\User;
 use manager\UserLogin;
 use manager\CommentManager;
 use manager\PostManager;
+use services\DAO;
 
 
 class AdminController{
@@ -14,10 +15,12 @@ class AdminController{
     private $UserLogin;
     private $PostManager;
     private $CommentManager;
+    private $DAO;
 
     public function __construct()
     {
         $this->User = new User();
+        $this->DAO = new DAO();
         $this->UserLogin = new UserLogin();
         $this->PostManager = new PostManager();
         $this->CommentManager = new CommentManager();
@@ -39,8 +42,9 @@ class AdminController{
     }
 
     public function getAdminPanel(){
-        $posts = $this->PostManager->getLastPosts();
-        $comments = $this->CommentManager->getLastComments();
+        $posts = $this->DAO->getPosts(5);
+        $commentLimit = 10;
+        $comments = $this->DAO->getAllCommentsPost(0, $commentLimit);
         $result = $this->UserLogin->getLoginPage();
 
         if($result == 'login' || $_SESSION['login']){

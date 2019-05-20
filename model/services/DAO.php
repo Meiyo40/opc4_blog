@@ -9,13 +9,20 @@ use services\Database;
 
 class DAO{
 
-    public function getAllCommentsPost($postId){    
+    public function getAllCommentsPost($postId = 0, $limit = 0){    
         try { 
             $db = Database::connect(); 
             $db->exec("set names utf8");
             $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-            $statement = $db->prepare("SELECT*FROM opc_blog_comment WHERE post_id = ?");
-            $statement->execute(array($postId));
+            
+            if($postId > 0){
+                $statement = $db->prepare("SELECT*FROM opc_blog_comment WHERE post_id = ?");
+                $statement->execute(array($postId));
+            }
+            else{
+                $statement = $db->prepare("SELECT*FROM opc_blog_comment ORDER BY comment_date DESC LIMIT ".$limit);
+                $statement->execute();
+            }
 
             $Count = $statement->rowCount(); 
             if ($Count  > 0){
@@ -31,13 +38,20 @@ class DAO{
         }
     }
 
-    public function getPosts(){
+    public function getPosts( $limit = 0 ){
         try { 
             $db = Database::connect(); 
             $db->exec("set names utf8");
             $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-            $statement = $db->prepare("SELECT*FROM opc_blog_posts ORDER BY date DESC");
-            $statement->execute();
+            
+            if($limit > 0){
+                $statement = $db->prepare("SELECT*FROM opc_blog_posts ORDER BY date DESC LIMIT ".$limit);
+                $statement->execute();
+            }
+            else{
+                $statement = $db->prepare("SELECT*FROM opc_blog_posts ORDER BY date DESC");
+                $statement->execute();
+            }            
 
             $Count = $statement->rowCount(); 
             if ($Count  > 0){

@@ -19,39 +19,48 @@
             <table>
                 <th>Les 5 derniers articles</th>
                 <th>Les 10 derniers commentaires</th>
-            <?php 
-                
-                //display last 5 posts loop
-                echo "<tr><td id='displayPosts'>";
+            
+                <tr><td id='displayPosts'>
+                <?php 
                 for($i = 0; $i < sizeof($posts);$i++){
-                    echo "<div class='btn-control'> <button class='displayContent' onclick='toggleContent(".$posts[$i]['id'].")'><i class='far fa-eye-slash'></i> Afficher l'article</button> <a href='index.php?action=editarticle&article=".$posts[$i]['id']."'><button class='edit-btn'><i class='far fa-edit'></i> Editer article</button></a> </div>";
-                    echo "<div class='article'>";
-                    if($posts[$i]['img_key']){
-                        echo "<div><img class='smallImg' src='./resources/img/".$posts[$i]['img_key']."/".$posts[$i]['img_key'].".".$posts[$i]['img_ext']."'></img></div>";
+                    echo "<div class='btn-control'> 
+                            <button class='displayContent' onclick='toggleContent(".$posts[$i]->getId().")'><i class='far fa-eye-slash'></i> Afficher l'article</button> <a href='index.php?action=editarticle&article=".$posts[$i]->getId()."'>
+                            <button class='edit-btn'><i class='far fa-edit'></i> Editer article</button></a> 
+                        </div>
+                    <div class='article'>";
+                    if($posts[$i]->getImg_key()){
+                        echo "<div><img class='smallImg' src='./resources/img/".$posts[$i]->getImg_key().".".$posts[$i]->getImg_ext()."'></img></div>";
                     }
 
-                    echo "<article><a class='article-link' href='index.php?action=post&id=".$posts[$i]['id']."'>";
-                    echo "<h3>". htmlspecialchars($posts[$i]['title']);
-                    echo "</h3>";
-                    echo "<div class='post".$i."'>";
-                    echo    "<div class='article-content' id='article-".$posts[$i]['id']."'>".$posts[$i]['content']."</div>";
-                    echo    "<p class='article-signature'>Rédigé par: ".$posts[$i]['author'].", le [".$posts[$i]['date']."] <em><a href='index.php?action=post&id=".$posts[$i]['id']."'>Commentaires</a></em></p><br>";
-                    echo "</div></a></article>";
-                    echo "<div class='divider'></div></div>";
+                    echo "<article>
+                        <a class='article-link' href='index.php?action=post&id=".$posts[$i]->getId()."'>
+                        <h3>".htmlspecialchars($posts[$i]->getTitle())."</h3>
+                        
+                        <div class='post".$i."'>
+                            <div class='article-content' id='article-".$posts[$i]->getId()."'>
+                                ".$posts[$i]->getContent()."
+                            </div>
+                            <p class='article-signature'>
+                                Rédigé par: ".$posts[$i]->getAuthor().", le [".$posts[$i]->getDate()."] <em><a href='index.php?action=post&id=".$posts[$i]->getId()."'>Commentaires</a></em>
+                            </p>
+                            <br>
+                        </div></a></article>
+                        <div class='divider'></div>
+                    </div>";
                 }
-                echo "</td>";
-                echo "<td id='displayComments'>";
-                //display last 10 comments loop
+                echo "</td>
+                <td id='displayComments'>";
                 for($x = 0; $x < sizeof($comments);$x++){
-                    echo    "<div class='subSubComment node-depth-".$comments[$x]->getDepth()."' id='post".$comments[$x]->getId()."'>";
-                    echo    "<p>En réponse à <strong>".$comments[$x]->getAuthor()."</strong></p>";
-                    echo    "<p class='comment-content'>".$comments[$x]->getComment()."</p>";
-                    echo    "<p class='comment-signature'>Rédigé par: <strong>".$comments[$x]->getAuthor()."</strong>, le [".$comments[$x]->getComment_date()."] <button onclick='displayForm(".$comments[$x]->getId().",".$comments[$x]->getDepth().")' class='comment-answer' data-comment-id=".$comments[$x]->getId().">Répondre</button></p><br>";
-                    echo    "</div>";
+                    echo"<div class='subSubComment node-depth-".$comments[$x]->getDepth()."' id='post".$comments[$x]->getId()."'>
+                            <p>En réponse à <strong>".$comments[$x]->getAuthor()."</strong></p>
+                            <p class='comment-content'>".$comments[$x]->getComment()."</p>
+                            <p class='comment-signature'>Rédigé par: <strong>".$comments[$x]->getAuthor()."</strong>, le [".$comments[$x]->getComment_date()."] <button onclick='displayForm(".$comments[$x]->getId().",".$comments[$x]->getDepth().")' class='comment-answer' data-comment-id=".$comments[$x]->getId().">Répondre</button></p><br>
+                        </div>";
                 }
-                echo "</td></tr>";
+                ?>
+                </td></tr>
             
-            ?>
+            
             </table>
             
         </p>
