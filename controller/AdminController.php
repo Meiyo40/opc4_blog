@@ -3,6 +3,7 @@
 namespace controller;
 
 use entity\User;
+use entity\Comment;
 use manager\UserLogin;
 use manager\CommentManager;
 use manager\PostManager;
@@ -73,10 +74,10 @@ class AdminController{
         $usersList = $this->UserLogin->getUsers();
         $result = $this->UserLogin->getLoginPage();
         if($mode == 'list'){
-            $comments = $this->CommentManager->getAllComments();
+            $comments = Comment::getAllComments();
         }
         elseif($mode == 'priority'){
-            $comments = $this->CommentManager->getAllReportedcomments();
+            $comments = Comment::getReportedComments();
         }
         $nbPage = ceil(sizeof($comments)/$sizePage);        
         
@@ -104,9 +105,12 @@ class AdminController{
         }
     }
 
-    public function getListsPostsToEdit(){
+    public function getListsPostsToEdit($sizePage = 10){
         $usersList = $this->UserLogin->getUsers();
         $result = $this->UserLogin->getLoginPage();
+
+        $posts = $this->DAO->getPosts();
+        $nbPage = ceil(sizeof($posts)/$sizePage);
         
         if($result == 'login' || $_SESSION['login']){
             require(__DIR__.'/../view/frontend/listArticles.php');
@@ -114,6 +118,11 @@ class AdminController{
         else{
             header('Location: index.php?action=loginFail');
         }
+    }
+
+    public function deletePost($id){
+        $post = Post::initPost($id);
+        $post->deletePost();
     }
 }
 

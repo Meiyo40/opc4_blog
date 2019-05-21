@@ -6,12 +6,14 @@ use manager\CommentManager;
 use manager\PostManager;
 use manager\UserLogin;
 use services\DAO;
+use entity\Comment;
 
 class Controller{
     private $login;
     private $PostManager;
     private $DAO;
     private $CommentManager; 
+    private $Comment;
 
     public function __construct()
     {
@@ -23,7 +25,6 @@ class Controller{
 
     public function listPosts($sizePage  = 5)
     {
-        //$posts = $this->PostManager->getPosts();
         $posts = $this->DAO->getPosts();
         $nbPage = ceil(sizeof($posts)/$sizePage);
        
@@ -34,7 +35,6 @@ class Controller{
     public function post()
     {
         $post = $this->PostManager->getPost($_GET['id']);
-        //$comments = $this->CommentManager->getComments($_GET['id']);
         $comments = $this->DAO->getAllCommentsPost($_GET['id']);
         
         require(__DIR__.'/../view/frontend/postView.php');
@@ -93,7 +93,9 @@ class Controller{
 
     public function reportComment($commentId){
         
-        $report = $this->CommentManager->reportComment($commentId);
+        $comment = Comment::initComment($commentId);
+
+        $report = $comment->reportComment();
         
         if ($report === false) {
             throw new Exception('Impossible de signaler le commentaire !');

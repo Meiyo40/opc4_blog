@@ -122,13 +122,6 @@ class CommentManager{
         }
     }
 
-    public function reportComment($commentId){
-        $db = Database::connect();
-        $statement = $db->prepare("UPDATE `opc_blog_comment` SET `report` = `report` + 1 WHERE `id` = ? ");
-        $statement->execute(array($commentId));
-        Database::disconnect();
-    }
-
     public function getLastComments(){
         //return last 8 posted comments on blog
         

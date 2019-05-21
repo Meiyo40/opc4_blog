@@ -31,6 +31,13 @@ function requestDel(commentId){
         });
 }
 
+function applyModeration(commentId){
+    let url = "index.php?action=applymoderation&Comment="+commentId;
+        $.post(url,null,function(data){ 
+            alert('Commentaire modéré');
+        });
+}
+
 let $_GET = [];
 let parts = window.location.search.substr(1).split("&");
 for (let i = 0; i < parts.length; i++) {

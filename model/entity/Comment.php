@@ -128,4 +128,96 @@ class Comment{
     public function getDepth(){
         return $this->depth;
     }
+
+    public function getReport(){
+        return $this->report;
+    }
+
+    public static function getReportedComments($limit = 0){
+        try { 
+            $db = Database::connect(); 
+            $db->exec("set names utf8");
+            $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+
+            if($limit == 0){
+                $statement = $db->prepare("SELECT*FROM opc_blog_comment WHERE report > 0 ORDER BY report DESC");
+            }
+            else{
+                $statement = $db->prepare("SELECT*FROM opc_blog_comment WHERE report > 0 ORDER BY report DESC LIMIT ".$limit);
+            }
+
+            $statement->execute();
+
+            
+
+            $Count = $statement->rowCount(); 
+            if ($Count  > 0){
+                $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "entity\Comment", array("id", "post_id", "comment_parent", "depth", "author", "comment", "comment_date", "report"));
+                Database::disconnect();
+                return $obj = $statement->fetchAll();                     
+            }
+
+        }
+        catch (PDOException $e) {
+            echo 'Connection failed: ' . $e->getMessage();
+        }
+    }
+
+    public function reportComment(){
+        $db = Database::connect();
+        $statement = $db->prepare("UPDATE `opc_blog_comment` SET `report` = `report` + 1 WHERE `id` = ? ");
+        $statement->execute(array($this->id));
+        Database::disconnect();
+    }
+
+    public static function getAllComments($limit = 0){    
+        try { 
+            $db = Database::connect(); 
+            $db->exec("set names utf8");
+            $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+
+            if($limit == 0){
+                $statement = $db->prepare("SELECT*FROM opc_blog_comment ORDER BY comment_date DESC");
+            }
+            else{
+                $statement = $db->prepare("SELECT*FROM opc_blog_comment ORDER BY comment_date DESC LIMIT ".$limit);
+            }
+
+            $statement->execute();
+
+            
+
+            $Count = $statement->rowCount(); 
+            if ($Count  > 0){
+                $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "entity\Comment", array("id", "post_id", "comment_parent", "depth", "author", "comment", "comment_date", "report"));
+                Database::disconnect();
+                return $obj = $statement->fetchAll();                     
+            }
+
+        }
+        catch (PDOException $e) {
+            echo 'Connection failed: ' . $e->getMessage();
+        }
+    }
+
+    public static function deleteCom($id){
+        $db = Database::connect();
+        $statement = $db->prepare("DELETE FROM `opc_blog_comment` WHERE `id` = ? ");
+        $statement->execute(array($id));
+        Database::disconnect();
+    }
+
+    public static function initComment($id){
+        $db = Database::connect();
+        $statement = $db->prepare("SELECT*FROM opc_blog_comment WHERE id = ?");
+        $statement->execute(array($id));
+
+        $obj = $statement->fetch();
+        
+        $obj = new Comment($obj['id'], $obj['post_id'], $obj['comment_parent'], $obj['depth'], $obj['author'], $obj['comment'], $obj['comment_date'], $obj['report']);
+        
+        return $obj;
+
+        Database::disconnect();
+    }
 }

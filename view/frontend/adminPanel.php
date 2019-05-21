@@ -24,8 +24,9 @@
                 <?php 
                 for($i = 0; $i < sizeof($posts);$i++){
                     echo "<div class='btn-control'> 
-                            <button class='displayContent' onclick='toggleContent(".$posts[$i]->getId().")'><i class='far fa-eye-slash'></i> Afficher l'article</button> <a href='index.php?action=editarticle&article=".$posts[$i]->getId()."'>
-                            <button class='edit-btn'><i class='far fa-edit'></i> Editer article</button></a> 
+                            <button class='displayContent' onclick='toggleContent(".$posts[$i]->getId().")'><i class='far fa-eye-slash'></i> Afficher l'article</button> 
+                            <a href='index.php?action=editarticle&article=".$posts[$i]->getId()."'><button class='edit-btn'><i class='far fa-edit'></i> Editer article</button></a> 
+                            <a href='index.php?action=deletearticle&article=".$posts[$i]->getId()."'><button class='deletePost-btn'><i class='far fa-trash-alt'></i> Supprimer article</button></a>
                         </div>
                     <div class='article'>";
                     if($posts[$i]->getImg_key()){

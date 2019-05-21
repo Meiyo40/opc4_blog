@@ -146,10 +146,12 @@ class Post{
     public function updatePost(){
         $db = Database::connect();
         if($this->image != null){
+
             $statement = $db->prepare("UPDATE `opc_blog_posts` SET `author` = ?, `content` = ?, `title` = ?, `img_key` = ?, `img_ext` = ?  WHERE `id` = ? ");
             $statement->execute(array($this->author, $this->content, $this->title, $this->img_key, $this->img_ext, $this->id));
         }
         else{
+
             $statement = $db->prepare("UPDATE `opc_blog_posts` SET `author` = ?, `content` = ?, `title` = ?  WHERE `id` = ? ");
             $statement->execute(array($this->author, $this->content, $this->title, $this->id));
         }
@@ -181,5 +183,19 @@ class Post{
 
     public function to_string() { 
         return "id : $this->id, author : $this->author, title : $this->title, content : $this->content, date : $this->date"; 
+    }
+
+    public static function initPost($id){
+        $db = Database::connect();
+        $statement = $db->prepare("SELECT*FROM opc_blog_posts WHERE id = ?");
+        $statement->execute(array($id));
+
+        $obj = $statement->fetch();
+
+        $obj = new Post($obj['id'], $obj['author'], $obj['content'], $obj['date'], $obj['title'], $obj['nb_comments'], $obj['img_key'], $obj['img_ext']);
+        
+        return $obj;
+
+        Database::disconnect();
     }
 }

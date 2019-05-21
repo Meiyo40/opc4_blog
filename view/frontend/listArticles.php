@@ -26,12 +26,22 @@
                 $page = 1;
             }
             for($i = 0+($sizePage*($page-1)); $i < $sizePage*$page; $i++){
-                if(array_key_exists($i, $comments)){
-                    echo "<div class='commentGroup'>";
-                        echo "<div class='comment node-depth-".$comments[$i]->getDepth()."' id='post".$comments[$i]->getId()."'>";
-                        echo    "<p class='comment-content'>".$comments[$i]['comment']."</p>";
-                        echo    "<p class='comment-signature'>Rédigé par: <strong>".$comments[$i]->getAuthor()."</strong>, le [".$comments[$i]->getComment_date()."] <div class='comment-control-panel'><button onclick='displayForm(".$comments[$i]->getId().",".$comments[$i]->getDepth().")' class='comment-answer btn btn-primary' data-comment-id=".$comments[$i]->getId().">Répondre</button><button class='btn btn-danger'><i class='far fa-times-circle'></i> Supprimer</button></div><br>";
-                    echo "</div>";
+                 
+                if(array_key_exists($i, $posts)){
+                    echo "<article class='smallArticle'>
+                    <a class='article-link' href='index.php?action=post&id=".$posts[$i]->getId()."'>
+                        <h3>". htmlspecialchars($posts[$i]->getTitle())."</h3>
+                        <div class='post".$i."'>
+                            <div class='article-content' style='display: block'>
+                                ".html_entity_decode(htmlspecialchars_decode($posts[$i]->getContent()))."
+                            </div>
+                            <p class='article-signature'>
+                                Rédigé par: ".$posts[$i]->getAuthor().", le [".$posts[$i]->getDate()."] <em><a href='index.php?action=post&id=".$posts[$i]->getId()."'>[".$posts[$i]->getNb_comments()."] Commentaires</a></em>
+                            </p>
+                            <br>
+                        </div>
+                    </a>
+                    </article>";
                 }
             }
         ?>
