@@ -140,12 +140,15 @@ class User{
                 if($this->rank > 3){
                     $this->rank = 3;
                 }
-                $statement = $db->prepare("UPDATE `opc_blog_user` SET `rank` = ? WHERE `id` = ? ");
+                elseif($this->rank < 0){
+                    $this->rank = 0;
+                }          
+                $statement = $db->prepare("UPDATE `opc_blog_users` SET `rank` = ? WHERE `id` = ? ");
                 $statement->execute(array($this->rank,$this->id));
                 break;
             
             case 'last_connexion':
-                $statement = $db->prepare("UPDATE `opc_blog_user` SET `last_connexion` = ? WHERE `id` = ? ");
+                $statement = $db->prepare("UPDATE `opc_blog_users` SET `last_connexion` = ? WHERE `id` = ? ");
                 $statement->execute(array($this->last_connexion,$this->id));
                 break;
 
@@ -164,11 +167,6 @@ class User{
         Database::disconnect();
     }
 
-    /*
-    $date = date("Y-m-d H:i:s");
-    file_put_contents('debug.html', $date.'<br> name: '.$_POST['name'].'<br> raw_pwd: '.$_POST['raw_pwd'].'<br> email: '.$_POST['email'].'<br> rank: '.$_POST['rank']);
-    */
-
     public static function createUser($userName, $userRawPwd, $userMail, $userRank){
         $last_connexion = date("Y-m-d H:i:s");
         $hash_pwd = password_hash($userRawPwd, PASSWORD_BCRYPT);
@@ -186,7 +184,7 @@ class User{
 
     public static function initUser($id){
         $db = Database::connect();
-        $statement = $db->prepare("SELECT*FROM opc_blog_user WHERE id = ?");
+        $statement = $db->prepare("SELECT*FROM opc_blog_users WHERE id = ?");
         $statement->execute(array($id));
 
         $obj = $statement->fetch();

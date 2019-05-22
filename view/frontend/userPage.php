@@ -2,7 +2,6 @@
     $title = "Gest. Utilisateurs";
     $script = "<script src='./assets/js/admin.js'></script>
             <script src='assets/js/ajax.js'></script>
-            <script src='assets/js/comment.js'></script>
             <script src='assets/js/userPage.js'></script>";
     $headContent = "<link href='./assets/css/adminpanel.css' rel='stylesheet' type='text/css'>
     <link href='./assets/css/userPage.css' rel='stylesheet' type='text/css'>
@@ -95,8 +94,9 @@
                         <td>".$users[$i]['articles']."</td>
                         <td>".$users[$i]['mail']."</td>
                         <td>
-                            <button onclick='rankUser('promote', ".$users[$i]['id'].")' data-toggle='tooltip' title='Promouvoir utilisateur'><i class='fas fa-plus'></i></button> 
-                            <button onclick='rankUser('demote', ".$users[$i]['id'].")' data-toggle='tooltip' title='Retrograder utilisateur'><i class='fas fa-minus'></i></button>
+                        
+                            <button onclick='rankUser(true,".$users[$i]['id'].")' data-toggle='tooltip' title='Promouvoir utilisateur'><i class='fas fa-plus'></i></button> 
+                            <button onclick='rankUser(false, ".$users[$i]['id'].")' data-toggle='tooltip' title='Retrograder utilisateur'><i class='fas fa-minus'></i></button>
                             <button onclick='manageUser('del', ".$users[$i]['id'].")' data-toggle='tooltip' title='Supprimer utilisateur'><i class='fas fa-user-minus'></i></button>
                             <button onclick='mailUser()' data-toggle='tooltip' title='MailTo utilisateur'><i class='fas fa-envelope-open-text'></i></button>
                         </td>

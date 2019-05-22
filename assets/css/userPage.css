@@ -10,9 +10,18 @@
     padding: 8px;
 }
 
-#userstable tr:nth-child(even){background-color: #f2f2f2;}
+#userstable tr{
+    background-color: cadetblue;
+}
 
-#userstable tr:hover {background-color: #ddd;}
+#userstable tr:nth-child(even){
+    background-color: #0c8999;
+}
+
+#userstable tr:hover {
+    background-color: #ddd;
+    color: #000;
+}
 
 #userstable th {
     padding-top: 12px;

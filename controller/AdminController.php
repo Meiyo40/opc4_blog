@@ -158,16 +158,18 @@ class AdminController{
     }
 
     public function manageUser($action, $userId){
+        $user = User::initUser($userId);
+        $userRank = (int)$user->getRank();
+
         if($action == 'promote'){
-            $user = User::initUser($userId);
-            $userRank = (int)$user->getRank();
-            $userRank += 1;
-            $user->setRank($userRank);
-            $user->updateUser('rank');
+            $userRank += 1;            
         }
         elseif($action == 'demote'){
-
+            $userRank -= 1;
         }
+
+        $user->setRank($userRank);
+        $user->updateUser('rank');
     }
 
     public function newUser(){
