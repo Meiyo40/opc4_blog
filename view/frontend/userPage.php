@@ -9,7 +9,7 @@
     <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.2/css/all.css' integrity='sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay' crossorigin='anonymous'>";
 ?>
 <?php ob_start(); ?>
-<h1 class="center"> Gestion des commentaires </h1>
+<h1 class="center"> Gestion des utilisateurs </h1>
 
 
     
@@ -18,7 +18,7 @@
         <a href="index.php?action=editarticle"><button><i class="far fa-edit"></i> Modifier un article</button></a>        
         <a href="index.php?action=moderation"><button><i class="far fa-comment-dots"></i> Gestion des commentaires</button></a>
         <a href="index.php?action=users"><button><i class="fas fa-user-graduate"></i> Gestion des utilisateurs</button></a>
-        <a href="index.php?action=create"><button><i class="fas fa-user-plus"></i> Ajouter un utilisateur</button></a>
+        <a href="index.php?action=adduser"><button><i class="fas fa-user-plus"></i> Ajouter un utilisateur</button></a>
     </div>
 
     <table id='userstable'>
@@ -44,10 +44,10 @@
                         <td>".$users[$i]['articles']."</td>
                         <td>".$users[$i]['mail']."</td>
                         <td>
-                            <button data-toggle='tooltip' title='Promouvoir utilisateur'><i class='fas fa-plus'></i></button> 
-                            <button data-toggle='tooltip' title='Retrograder utilisateur'><i class='fas fa-minus'></i></button>
-                            <button data-toggle='tooltip' title='Supprimer utilisateur'><i class='fas fa-user-minus'></i></button>
-                            <button data-toggle='tooltip' title='MailTo utilisateur'><i class='fas fa-envelope-open-text'></i></button>
+                            <button onclick='rankUser('promote', ".$users[$i]['id'].")' data-toggle='tooltip' title='Promouvoir utilisateur'><i class='fas fa-plus'></i></button> 
+                            <button onclick='rankUser('demote', ".$users[$i]['id'].")' data-toggle='tooltip' title='Retrograder utilisateur'><i class='fas fa-minus'></i></button>
+                            <button onclick='manageUser('del', ".$users[$i]['id'].")' data-toggle='tooltip' title='Supprimer utilisateur'><i class='fas fa-user-minus'></i></button>
+                            <button onclick='mailUser()' data-toggle='tooltip' title='MailTo utilisateur'><i class='fas fa-envelope-open-text'></i></button>
                         </td>
                     </tr>";
                 }

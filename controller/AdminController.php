@@ -156,6 +156,19 @@ class AdminController{
             header('Location: index.php?action=loginFail');
         }
     }
+
+    public function manageUser($action, $userId){
+        if($action == 'promote'){
+            $user = User::initUser($userId);
+            $userRank = (int)$user->getRank();
+            $userRank += 1;
+            $user->setRank($userRank);
+            $user->updateUser('rank');
+        }
+        elseif($action == 'demote'){
+
+        }
+    }
 }
 
 $AdminController = new AdminController();

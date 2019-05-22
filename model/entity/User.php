@@ -133,6 +133,37 @@ class User{
         return "id : $this->id, author : $this->author, content : $this->content, date : $this->date, report : $this->report"; 
     }
 
+    public function updateUser($action){
+        $db = Database::connect();
+        switch($action){
+            case 'rank':
+                if($this->rank > 3){
+                    $this->rank = 3;
+                }
+                $statement = $db->prepare("UPDATE `opc_blog_user` SET `rank` = ? WHERE `id` = ? ");
+                $statement->execute(array($this->rank,$this->id));
+                break;
+            
+            case 'last_connexion':
+                $statement = $db->prepare("UPDATE `opc_blog_user` SET `last_connexion` = ? WHERE `id` = ? ");
+                $statement->execute(array($this->last_connexion,$this->id));
+                break;
+
+            case 'comments':
+                break;
+
+            case 'articles':
+                break;
+
+            case 'mail':
+                break;
+
+            case 'pwd':
+                break;
+        }
+        Database::disconnect();
+    }
+
     public static function initUser($id){
         $db = Database::connect();
         $statement = $db->prepare("SELECT*FROM opc_blog_user WHERE id = ?");

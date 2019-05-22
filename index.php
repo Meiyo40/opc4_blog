@@ -95,6 +95,10 @@ if (isset($_GET['action'])) {
             $AdminController->getLoginPage();
             break;
 
+        case 'manageuser':
+            $AdminController->manageUser($_GET['rankaction'] ,$_GET['user']);
+            break;
+
         case 'moderation':
             $AdminController->getModerationPage('list');
             break;
