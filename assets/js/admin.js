@@ -25,17 +25,25 @@ function toggleContent(postId){
 }
 
 function requestDel(commentId){
-    let url = "index.php?action=delete&delComment="+commentId;
+    let url = "index.php?action=deletecomment&delComment="+commentId;
         $.post(url,null,function(data){ 
             alert('Commentaire supprimé');
         });
 }
 
-function applyModeration(commentId){
-    let url = "index.php?action=applymoderation&Comment="+commentId;
+function applyModeration(commentId, mode){
+    if(mode){
+        let url = "index.php?action=applymoderation&mod=true&Comment="+commentId;
         $.post(url,null,function(data){ 
             alert('Commentaire modéré');
         });
+    }
+    else{
+        let url = "index.php?action=applymoderation&mod=false&Comment="+commentId;
+        $.post(url,null,function(data){ 
+            alert('Commentaire rétabli');
+        });
+    }
 }
 
 let $_GET = [];

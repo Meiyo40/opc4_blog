@@ -42,11 +42,9 @@ class PostManager{
         else{
             if(!$extension){
                 $extension = 'Mauvaise extension de fichier : '.$extension.'<br>';
-                file_put_contents('debug.html', $extension, FILE_APPEND);
             }
             elseif($_FILES['image']['size'] > IMG_MAXSIZE){
                 $file_size = 'Taille du fichier trop importante <br>';
-                file_put_contents('debug.html', $file_size, FILE_APPEND);
             }
             return false;
         }

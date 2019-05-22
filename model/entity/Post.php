@@ -28,11 +28,11 @@ class Post{
     }
 
     public function getContent(){
-        return $this->content;
+        return html_entity_decode(htmlspecialchars_decode($this->content));
     }
 
     public function getTitle(){
-        return $this->title;
+        return html_entity_decode(htmlspecialchars_decode($this->title));
     }
 
     public function getId(){

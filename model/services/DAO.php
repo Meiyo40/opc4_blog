@@ -9,7 +9,7 @@ use services\Database;
 
 class DAO{
 
-    public function getAllCommentsPost($postId = 0, $limit = 0){    
+    public function getAllCommentsPost($postId = 0, $limit = 0, $countRows = false){    
         try { 
             $db = Database::connect(); 
             $db->exec("set names utf8");
@@ -26,11 +26,29 @@ class DAO{
 
             $Count = $statement->rowCount(); 
             if ($Count  > 0){
-                $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "entity\Comment", array("id", "post_id", "comment_parent", "depth", "author", "comment", "comment_date", "report"));
-                return $obj = $statement->fetchAll(); 
+                if(!$countRows){
+                    $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "entity\Comment", array("id", "post_id", "comment_parent", "depth", "author", "comment", "comment_date", "report", "moderation"));
+                    $obj = $statement->fetchAll(); 
+
+                    for($i = 0; $i < sizeof($obj); $i++){
+                        if($obj[$i]->getModeration()){
+                            $moderatedComment = "<strong style='color:red'>Ce commentaire a été modéré car son contenu ne respectait pas le règlement de ce site internet.</strong>";
+                            $obj[$i]->setComment($moderatedComment);
+                        }
+                    }
+                }
+                else{
+                    $obj = $Count;
+                }
+                
+                return $obj; 
 
                     Database::disconnect();
             }
+            elseif($countRows){
+                return 0;
+            }
+
 
         }
         catch (PDOException $e) {

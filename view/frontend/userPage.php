@@ -29,10 +29,10 @@
                  
                 if(array_key_exists($i, $posts)){
                     echo "<article class='smallArticle'><a class='article-link' href='index.php?action=post&id=".$posts[$i]->getId()."'>";
-                    echo "<h3>". htmlspecialchars($posts[$i]->getTitle());
+                    echo "<h3>".$posts[$i]->getTitle();
                     echo "</h3>";
                     echo "<div class='post".$i."'>";
-                    echo    "<div class='article-content' style='display: block'>".html_entity_decode(htmlspecialchars_decode($posts[$i]->getContent()))."</div>";
+                    echo    "<div class='article-content' style='display: block'>".$posts[$i]->getContent()."</div>";
                     echo    "<p class='article-signature'>Rédigé par: ".$posts[$i]->getAuthor().", le [".$posts[$i]->getDate()."] <em><a href='index.php?action=post&id=".$posts[$i]->getId()."'>[".$posts[$i]->getNb_comments()."] Commentaires</a></em></p><br>";
                     echo "</div></a></article>";
                 }

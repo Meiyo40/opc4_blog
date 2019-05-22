@@ -18,6 +18,7 @@
     <div id="btnCommentPanel">
         <a href="index.php?action=moderation"><button><i class="far fa-comment-dots"></i> Liste des commentaires</button></a>
         <a href="index.php?action=report"><button><i class="far fa-comment-dots"></i> Liste des signalements</button></a>
+        <a href="index.php?action=modlist"><button><i class="far fa-comment-dots"></i> Liste des modérés</button></a>
     </div>
     
     <div id='blog-comments' class="container">
@@ -29,21 +30,34 @@
 
                 $page = 1;
             }
-            for($i = 0+($sizePage*($page-1)); $i < $sizePage*$page; $i++){
+            if(is_array($comments)){
+                for($i = 0+($sizePage*($page-1)); $i < $sizePage*$page; $i++){
                 if(array_key_exists($i, $comments)){
                     echo "<div class='commentGroup'>
                         <div class='comment node-depth-".$comments[$i]->getDepth()."' id='post".$comments[$i]->getId()."'>
-                            <p class='comment-content'>".$comments[$i]->getComment()."</p>
-                            <p class='comment-signature'>Rédigé par: <strong>".$comments[$i]->getAuthor()."</strong>, le [".$comments[$i]->getComment_date()."] 
+                        
+                            <p class='comment-content'>";
+                            if($comments[$i]->getModeration()){
+                                echo '<strong style="color:red">Commentaire Modéré</strong><br>';
+                            }
+                            echo "".$comments[$i]->getComment()."  
+                            </p>
+
+                            <p class='comment-signature'>
+                                Rédigé par: <strong>".$comments[$i]->getAuthor()."</strong>, le [".$comments[$i]->getComment_date()."] 
+                            </p>
+
                             <div class='comment-control-panel'>
                                 <button onclick='displayForm(".$comments[$i]->getId().",".$comments[$i]->getDepth().")' class='comment-answer btn btn-primary' data-comment-id=".$comments[$i]->getId().">Répondre</button>
-                                <button onclick='requestDel(".$comments[$i]->getId().")' class='btn btn-warning'><i class='fas fa-user-secret'></i> Modérer</button>
-                                <button onclick='applyModeration(".$comments[$i]->getId().")' class='btn btn-danger'><i class='far fa-times-circle'></i> Supprimer</button>                                
+                                <button onclick='applyModeration(".$comments[$i]->getId().", true)' class='btn btn-warning'><i class='fas fa-user-secret'></i> Modérer</button>
+                                <button onclick='applyModeration(".$comments[$i]->getId().", false)' class='btn btn-success'><i class='far fa-thumbs-up'></i> Rétablir</button>
+                                <button onclick='requestDel(".$comments[$i]->getId().")' class='btn btn-danger'><i class='far fa-times-circle'></i> Supprimer</button>                                
                                 <button class='reportCount' disabled><strong>Signalements: <i class='countNb'>".$comments[$i]->getReport()."</i></strong></button>
                             </div>
                             <br>
                     </div>";
                 }
+            }
             }
         ?>
             
@@ -52,6 +66,9 @@
             <ul class="pagination">
                 <li class="page-item"><a class="page-link" href="#">Previous</a></li>
                 <?php
+                if(!isset($nbPage)){
+                    $nbPage = 1;
+                }
                 for($i = 1; $i <= $nbPage ;$i++){
                     echo "<li id='page-link-".$i."' class='page-item'><a class='page-link' href='index.php?action=moderation&page=".$i."'>".$i."</a></li>";
                 }

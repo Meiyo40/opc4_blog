@@ -12,9 +12,9 @@ class Comment{
     private $comment;
     private $comment_date;
     private $report;
+    private $moderation;
 
-
-    public function __construct($id, $post_id, $comment_parent, $depth, $author, $comment, $comment_date, $report){
+    public function __construct($id, $post_id, $comment_parent, $depth, $author, $comment, $comment_date, $report, $moderation = false){
         $this->id = $id;
         $this->post_id = $post_id;
         $this->comment_parent = $comment_parent;
@@ -23,6 +23,7 @@ class Comment{
         $this->comment = $comment;
         $this->comment_date = $comment_date;
         $this->report = $report;
+        $this->moderation = $moderation;
     }
 
     public function addNewComment(){
@@ -57,24 +58,8 @@ class Comment{
         return "id : $this->id, author : $this->author, content : $this->content, date : $this->date, report : $this->report"; 
     }
 
-    public function update(){
-        $db = Database::connect();
-        $statement = $db->prepare("UPDATE opc_blog_comment
-        SET comment = $this->comment,
-            author = $this->author,
-            report = $this->report
-        WHERE id = $this->id");
-
-        $statement->execute();
-        $comment = $statement->fetch();
-
-        Database::disconnect();
-        return $comment; 
-    }
-
     public function setComment($newContent){
         $this->comment = $newContent;
-        $this->update();
     }
 
     public function setAuthor($newAuthor){
@@ -101,8 +86,16 @@ class Comment{
         $this->depth = $newDepth;
     }
 
+    public function setModeration($newModeration){
+        $this->moderation = $newModeration;
+    }
+
+    public function getModeration(){
+        return $this->moderation;
+    }
+
     public function getComment(){
-        return $this->comment;
+        return html_entity_decode(htmlspecialchars_decode($this->comment));
     }
 
     public function getAuthor(){
@@ -152,7 +145,37 @@ class Comment{
 
             $Count = $statement->rowCount(); 
             if ($Count  > 0){
-                $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "entity\Comment", array("id", "post_id", "comment_parent", "depth", "author", "comment", "comment_date", "report"));
+                $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "entity\Comment", array("id", "post_id", "comment_parent", "depth", "author", "comment", "comment_date", "report", "moderation"));
+                Database::disconnect();
+                return $obj = $statement->fetchAll();                     
+            }
+
+        }
+        catch (PDOException $e) {
+            echo 'Connection failed: ' . $e->getMessage();
+        }
+    }
+
+    public static function getModeratedComments($limit = 0){
+        try { 
+            $db = Database::connect(); 
+            $db->exec("set names utf8");
+            $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+
+            if($limit == 0){
+                $statement = $db->prepare("SELECT*FROM opc_blog_comment WHERE moderation > 0 ORDER BY comment_date DESC");
+            }
+            else{
+                $statement = $db->prepare("SELECT*FROM opc_blog_comment WHERE moderation > 0 ORDER BY comment_date DESC LIMIT ".$limit);
+            }
+
+            $statement->execute();
+
+            
+
+            $Count = $statement->rowCount(); 
+            if ($Count  > 0){
+                $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "entity\Comment", array("id", "post_id", "comment_parent", "depth", "author", "comment", "comment_date", "report", "moderation"));
                 Database::disconnect();
                 return $obj = $statement->fetchAll();                     
             }
@@ -189,9 +212,12 @@ class Comment{
 
             $Count = $statement->rowCount(); 
             if ($Count  > 0){
-                $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "entity\Comment", array("id", "post_id", "comment_parent", "depth", "author", "comment", "comment_date", "report"));
+                $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "entity\Comment", array("id", "post_id", "comment_parent", "depth", "author", "comment", "comment_date", "report", "moderation"));
                 Database::disconnect();
-                return $obj = $statement->fetchAll();                     
+
+                $obj = $statement->fetchAll();
+
+                return  $obj;                  
             }
 
         }
@@ -200,10 +226,10 @@ class Comment{
         }
     }
 
-    public static function deleteCom($id){
+    public function deleteCom(){
         $db = Database::connect();
         $statement = $db->prepare("DELETE FROM `opc_blog_comment` WHERE `id` = ? ");
-        $statement->execute(array($id));
+        $statement->execute(array($this->id));
         Database::disconnect();
     }
 
@@ -214,10 +240,35 @@ class Comment{
 
         $obj = $statement->fetch();
         
-        $obj = new Comment($obj['id'], $obj['post_id'], $obj['comment_parent'], $obj['depth'], $obj['author'], $obj['comment'], $obj['comment_date'], $obj['report']);
+        $obj = new Comment($obj['id'], $obj['post_id'], $obj['comment_parent'], $obj['depth'], $obj['author'], $obj['comment'], $obj['comment_date'], $obj['report'], $obj['moderation']);
         
         return $obj;
 
+        Database::disconnect();
+    }
+
+    public function update($mode){
+        $db = Database::connect();
+        
+        switch($mode){
+
+            case 'all':
+                $statement = $db->prepare("UPDATE opc_blog_comment
+                SET comment = ?,
+                    author = ?,
+                    report = ?,
+                    moderation = ?
+                WHERE id = ?");
+                $statement->execute(array($this->comment, $this->author, $this->report, $this->moderation, $this->id));
+                break;
+
+            case 'moderation':
+                $statement = $db->prepare("UPDATE opc_blog_comment
+                SET moderation = ?
+                WHERE id = ?");
+                $statement->execute(array($this->moderation, $this->id));
+                break;
+        }
         Database::disconnect();
     }
 }

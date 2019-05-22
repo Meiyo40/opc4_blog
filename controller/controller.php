@@ -27,6 +27,11 @@ class Controller{
     {
         $posts = $this->DAO->getPosts();
         $nbPage = ceil(sizeof($posts)/$sizePage);
+
+        for($i = 0; $i < sizeof($posts); $i++){
+            $nb_comments = $this->DAO->getAllCommentsPost($posts[$i]->getId(), 0, true);
+            $posts[$i]->setNb_comments($nb_comments);
+        }
        
         
         require(__DIR__.'/../view/frontend/listPostsView.php');

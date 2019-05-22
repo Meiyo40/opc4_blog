@@ -30,10 +30,10 @@
                 if(array_key_exists($i, $posts)){
                     echo "<article class='smallArticle'>
                     <a class='article-link' href='index.php?action=post&id=".$posts[$i]->getId()."'>
-                        <h3>". htmlspecialchars($posts[$i]->getTitle())."</h3>
+                        <h3>".$posts[$i]->getTitle()."</h3>
                         <div class='post".$i."'>
                             <div class='article-content' style='display: block'>
-                                ".html_entity_decode(htmlspecialchars_decode($posts[$i]->getContent()))."
+                                ".$posts[$i]->getContent()."
                             </div>
                             <p class='article-signature'>
                                 Rédigé par: ".$posts[$i]->getAuthor().", le [".$posts[$i]->getDate()."] <em><a href='index.php?action=post&id=".$posts[$i]->getId()."'>[".$posts[$i]->getNb_comments()."] Commentaires</a></em>

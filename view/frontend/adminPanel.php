@@ -35,7 +35,7 @@
 
                     echo "<article>
                         <a class='article-link' href='index.php?action=post&id=".$posts[$i]->getId()."'>
-                        <h3>".htmlspecialchars($posts[$i]->getTitle())."</h3>
+                        <h3>".$posts[$i]->getTitle()."</h3>
                         
                         <div class='post".$i."'>
                             <div class='article-content' id='article-".$posts[$i]->getId()."'>

@@ -60,12 +60,16 @@ if (isset($_GET['action'])) {
             $AdminController->getAdminPanel();
             break;
 
+        case 'applymoderation':
+            $AdminController->setModeration($_GET['Comment'], $_GET['mod']);
+            break;
+
         case 'create':
             $AdminController->getCreatePage();
             break;
 
-        case 'delete':
-            $Controller->deleteComment($_POST['delComment']);
+        case 'deletecomment':
+            $AdminController->deleteComment($_GET['delComment']);
             break;
 
         case 'editarticle':
@@ -93,6 +97,10 @@ if (isset($_GET['action'])) {
 
         case 'moderation':
             $AdminController->getModerationPage('list');
+            break;
+
+        case 'modlist':
+            $AdminController->getModerationPage('modlist');
             break;
 
         case 'post':

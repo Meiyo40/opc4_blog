@@ -79,7 +79,12 @@ class AdminController{
         elseif($mode == 'priority'){
             $comments = Comment::getReportedComments();
         }
-        $nbPage = ceil(sizeof($comments)/$sizePage);        
+        elseif($mode == 'modlist'){
+            $comments = Comment::getModeratedComments();
+        }
+        if(is_array($comments)){
+            $nbPage = ceil(sizeof($comments)/$sizePage);   
+        }     
         
         if($result == 'login' || $_SESSION['login']){
             require(__DIR__.'/../view/frontend/moderationPage.php');
@@ -105,6 +110,18 @@ class AdminController{
         }
     }
 
+    public function setModeration($commentId, $mode){
+        $comment = Comment::initComment($commentId);
+        
+        if($mode == 'true'){
+            $comment->setModeration('1');
+        }
+        else{
+            $comment->setModeration('0');
+        }
+        $comment->update('moderation');
+    }
+
     public function getListsPostsToEdit($sizePage = 10){
         $usersList = $this->UserLogin->getUsers();
         $result = $this->UserLogin->getLoginPage();
@@ -123,6 +140,11 @@ class AdminController{
     public function deletePost($id){
         $post = Post::initPost($id);
         $post->deletePost();
+    }
+
+    public function deleteComment($id){
+        $post = Comment::initComment($id);
+        $post->deleteCom();
     }
 }
 

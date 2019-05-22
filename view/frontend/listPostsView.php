@@ -19,13 +19,13 @@
                      
                     if(array_key_exists($i, $posts)){
                         echo "<article class='smallArticle'><a class='article-link' href='index.php?action=post&id=".$posts[$i]->getId()."'>
-                        <h3>". htmlspecialchars($posts[$i]->getTitle())."</h3>";
+                        <h3>".$posts[$i]->getTitle()."</h3>";
                         
                         if($posts[$i]->getImg_key()){
                             echo "<img class='smallImg' src='./resources/img/".$posts[$i]->getImg_key().".".$posts[$i]->getImg_ext()."'></img>";
                         }
                         echo "<div class='post".$i."'>
-                                <div class='article-content'>".html_entity_decode(htmlspecialchars_decode($posts[$i]->getContent()))."</div>
+                                <div class='article-content'>".$posts[$i]->getContent()."</div>
                                 <p class='article-signature'>Rédigé par: ".$posts[$i]->getAuthor().", le [".$posts[$i]->getDate()."] <em><a href='index.php?action=post&id=".$posts[$i]->getId()."'>[".$posts[$i]->getNb_comments()."] Commentaires</a></em></p><br>
                             </div></a></article>";
                     }

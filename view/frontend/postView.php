@@ -12,7 +12,7 @@
                 <div id='post' class='post".$post['id']."'>
                     <img class='smallImg' src='./resources/img/".$post['img_key'].".".$post['img_ext']."'></img>
                     <div class='article-content'>
-                        ".html_entity_decode(htmlspecialchars_decode($post['content']))."
+                        ".$post['content']."
                     </div>
                     <p class='article-signature'>Publié par: ".$post['author'].", le [".$post['date']."] 
                         <button id='btnPost' class='btn btn-primary' value='".$post['id']."'>Commenter</button>
@@ -44,7 +44,7 @@
                 }
                 
                 for($j = 0; $j < sizeof($comments);$j++){
-                    if($comments[$j]->getComment_parent() == $comments[$i]->getId() && $comments[$j]->getDepth() == 1){
+                    if(($comments[$j]->getComment_parent() == $comments[$i]->getId()) && ($comments[$j]->getDepth() == 1)){
                         echo "<li class='subCommentContainer'>
                         <div class='subComment node-depth-".$comments[$j]->getDepth()."' id='post".$comments[$j]->getId()."'
                             <p>
@@ -62,7 +62,7 @@
                         </div>
                         <ul>"; 
                         for($k = 0; $k < sizeof($comments);$k++){
-                            if(($comments[$k]->getComment_parent() == $comments[$j]->getId() || $comments[$k]->getComment_parent() == $comments[$k]->getId()) && $comments[$k]->getDepth() == 2){
+                            if(($comments[$k]->getComment_parent() == $comments[$j]->getId()) && ($comments[$k]->getDepth() == 2)){
                                 echo "<li>
                                 <div class='subSubComment node-depth-".$comments[$k]->getDepth()."' id='post".$comments[$k]->getId()."'>
                                     <p>
@@ -79,27 +79,28 @@
                                     <br>
                                 </div>
                                 </li>";
-                            }
-                            for($x = 0; $x < sizeof($comments);$x++){
-                                if($comments[$x]->getComment_parent() == $comments[$k]->getId() && $comments[$k]->getDepth() == 2){
-                                    echo "<li>
-                                    <div class='subSubComment node-depth-".$comments[$x]->getDepth()."' id='post".$comments[$x]->getId()."'>
-                                        <p>
-                                            En réponse à <strong>".$comments[$k]->getAuthor()."</strong>
-                                        </p>
-                                        <p class='comment-content'>
-                                            ".$comments[$x]->getComment()."
-                                        </p>
-                                        <p class='comment-signature'>
-                                            Rédigé par: <strong>".$comments[$x]->getAuthor()."</strong>, le [".$comments[$x]->getComment_date()."] 
-                                            <button onclick='displayForm(".$comments[$x]->getId().",".$comments[$x]->getDepth().")' class='comment-answer btn btn-primary' data-comment-id=".$comments[$x]->getId().">Répondre</button>
-                                            <button onclick='reportComment(".$comments[$x]->getId().",".$post['id'].")'  class='btn-report btn btn-warning'><i class='far fa-bell'></i> Signaler</button>
-                                        </p>
-                                        <br>
-                                    </div>
-                                    </li>";
+                                for($x = 0; $x < sizeof($comments);$x++){
+                                    if(($comments[$x]->getComment_parent() == $comments[$k]->getId()) && ($comments[$x]->getDepth() == 2)){
+                                        echo "<li>
+                                        <div class='subSubComment node-depth-".$comments[$x]->getDepth()."' id='post".$comments[$x]->getId()."'>
+                                            <p>
+                                                En réponse à <strong>".$comments[$k]->getAuthor()."</strong>
+                                            </p>
+                                            <p class='comment-content'>
+                                                ".$comments[$x]->getComment()."
+                                            </p>
+                                            <p class='comment-signature'>
+                                                Rédigé par: <strong>".$comments[$x]->getAuthor()."</strong>, le [".$comments[$x]->getComment_date()."] 
+                                                <button onclick='displayForm(".$comments[$x]->getId().",".$comments[$x]->getDepth().")' class='comment-answer btn btn-primary' data-comment-id=".$comments[$x]->getId().">Répondre</button>
+                                                <button onclick='reportComment(".$comments[$x]->getId().",".$post['id'].")'  class='btn-report btn btn-warning'><i class='far fa-bell'></i> Signaler</button>
+                                            </p>
+                                            <br>
+                                        </div>
+                                        </li>";
+                                    }
                                 }
                             }
+                            
                         }
                         echo "</ul>"; 
                         echo "</li>";
