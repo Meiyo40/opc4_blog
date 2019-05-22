@@ -164,6 +164,26 @@ class User{
         Database::disconnect();
     }
 
+    /*
+    $date = date("Y-m-d H:i:s");
+    file_put_contents('debug.html', $date.'<br> name: '.$_POST['name'].'<br> raw_pwd: '.$_POST['raw_pwd'].'<br> email: '.$_POST['email'].'<br> rank: '.$_POST['rank']);
+    */
+
+    public static function createUser($userName, $userRawPwd, $userMail, $userRank){
+        $last_connexion = date("Y-m-d H:i:s");
+        $hash_pwd = password_hash($userRawPwd, PASSWORD_BCRYPT);
+        $userName = Helper::validateContent($userName);
+        file_put_contents('debug.html', 'name: '.$userName.'<br> raw_pwd: '.$hash_pwd.'<br> email: '.$userMail.'<br> rank: '.$userRank);
+        $db = Database::connect();
+        $statement = $db->prepare("INSERT INTO `opc_blog_users` 
+                                    (name, hash_pwd, last_connexion, rank, mail, comments, articles) 
+                                    VALUES (?,?,?,?,?,0,0)");
+
+        $statement->execute(array($userName, $hash_pwd, $last_connexion, $userRank, $userMail));
+
+        Database::disconnect();
+    }
+
     public static function initUser($id){
         $db = Database::connect();
         $statement = $db->prepare("SELECT*FROM opc_blog_user WHERE id = ?");

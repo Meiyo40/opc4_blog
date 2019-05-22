@@ -169,6 +169,24 @@ class AdminController{
 
         }
     }
+
+    public function newUser(){
+        $result = $this->UserLogin->getLoginPage();
+        
+        $userName = $_POST['name'];
+        $userRawPwd = $_POST['raw_pwd'];
+        $userMail = $_POST['email'];
+        $userRank = $_POST['rank'];
+
+        
+
+        if($result == 'login' || $_SESSION['login']){
+            $user = User::createUser($userName, $userRawPwd, $userMail, $userRank);
+        }
+        else{
+            header('Location: index.php?action=loginFail');
+        }
+    }
 }
 
 $AdminController = new AdminController();

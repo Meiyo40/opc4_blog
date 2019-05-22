@@ -20,48 +20,48 @@
         <a href="index.php?action=users"><button><i class="fas fa-user-graduate"></i> Gestion des utilisateurs</button></a>
     </div>
 
-    <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div method='POST' enctype='text/plain' role='form' action="index.php?action=users&newuser=true" class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-            <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold">Nouvel Utilisateur</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body mx-3">
-                <div class="md-form mb-5">
-                    <i class="fas fa-user prefix grey-text"></i>
-                    <input type="text" id="orangeForm-name" class="form-control validate">
-                    <label data-error="wrong" data-success="right" for="orangeForm-name">Nom utilisateur</label>
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Nouvel Utilisateur</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
+                <div class="modal-body mx-3">
+                    <div class="md-form mb-5">
+                        <i class="fas fa-user prefix grey-text"></i>
+                        <input name='name' type="text" id="orangeForm-name" class="form-control validate" required>
+                        <label data-error="wrong" data-success="right" for="orangeForm-name">Nom utilisateur</label>
+                    </div>
 
-                <div class="md-form mb-5">
-                    <i class="fas fa-envelope prefix grey-text"></i>
-                    <input type="email" id="orangeForm-email" class="form-control validate">
-                    <label data-error="wrong" data-success="right" for="orangeForm-email">Email utilisateur</label>
+                    <div class="md-form mb-5">
+                        <i class="fas fa-envelope prefix grey-text"></i>
+                        <input name='email' type="email" id="orangeForm-email" class="form-control validate" required>
+                        <label data-error="wrong" data-success="right" for="orangeForm-email">Email utilisateur</label>
+                    </div>
+
+                    <div class="md-form mb-4">
+                        <i class="fas fa-lock prefix grey-text"></i>
+                        <input name='raw_pwd' type="password" id="orangeForm-pass" class="form-control validate" required>
+                        <label data-error="wrong" data-success="right" for="orangeForm-pass">MDP utilisateur</label>
+                    </div>
+
+                    <div class="md-form mb-4">
+                        <i class="fas fa-user-graduate"></i>
+                        <label data-error="wrong" data-success="right" for="orangeForm-rank">Rang utilisateur: </label>
+                        <select id='orangeForm-rank' name='rank'>
+                            <option value='1'>Modérateur</option>
+                            <option value='2'>Autheur</option>
+                            <option value='3'>Admin</option>
+                        </select>                    
+                    </div>
+
                 </div>
-
-                <div class="md-form mb-4">
-                    <i class="fas fa-lock prefix grey-text"></i>
-                    <input type="password" id="orangeForm-pass" class="form-control validate">
-                    <label data-error="wrong" data-success="right" for="orangeForm-pass">MDP utilisateur</label>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button id='btn-submit' class="btn btn-deep-orange"><i class="fas fa-user-plus"></i> Ajouter l'utilisateur</button>
                 </div>
-
-                <div class="md-form mb-4">
-                    <i class="fas fa-user-graduate"></i>
-                    <label data-error="wrong" data-success="right" for="orangeForm-rank">Rang utilisateur: </label>
-                    <select>
-                        <option value='1'>Modérateur</option>
-                        <option value='2'>Autheur</option>
-                        <option value='3'>Admin</option>
-                    </select>                    
-                </div>
-
-            </div>
-            <div class="modal-footer d-flex justify-content-center">
-                <button class="btn btn-deep-orange"><i class="fas fa-user-plus"></i> Ajouter l'utilisateur</button>
-            </div>
             </div>
         </div>
     </div>

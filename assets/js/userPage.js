@@ -23,4 +23,37 @@ $(document).ready(function(){
         });
     }
     
+     function submitUser(){
+        let url = "index.php?action=users&newuser=true";
+        $.post(url,null,function(data){ 
+            alert('Utilisateur créé');
+        });
+    }
+    
+    let submit = document.getElementById('btn-submit');
+    submit.addEventListener("click",() =>{
+        
+        let name = $('#orangeForm-name').val();
+        let raw_pwd = $('#orangeForm-pass').val();
+        let mail = $('#orangeForm-email').val();
+        let rank = $('#orangeForm-rank').val();
+        
+        let user = {
+            name: name,
+            raw_pwd: raw_pwd,
+            email: mail,
+            rank: rank
+        }
+        
+        let url = "index.php?action=users&newuser=true";
+        $.post(url, {name: user.name, 
+            raw_pwd: user.raw_pwd, 
+            email: user.email, 
+            rank: user.rank
+                    },function(data){ 
+            alert('Utilisateur créé');
+        });
+        
+    });
+    
 });

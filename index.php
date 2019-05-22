@@ -122,7 +122,12 @@ if (isset($_GET['action'])) {
             break;
 
         case 'users':
-            $AdminController->getUsersPage();
+            if(isset($_GET['newuser'])){
+                $AdminController->newUser();
+            }
+            else{
+                $AdminController->getUsersPage();
+            }
             break;
     }
 
