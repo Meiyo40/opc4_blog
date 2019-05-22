@@ -3,6 +3,7 @@
 namespace manager;
 
 use services\Database;
+use entity\User;
 
 class UserLogin{
 
@@ -98,7 +99,10 @@ class UserLogin{
         if(isset($_POST['username']) && isset($_POST['password'])){
             if($this->loginIsValid($_POST['username'], $_POST['password'])){
                 $_SESSION['login'] = $_POST['username'];
-                $_SESSION['user-id'] = $this->getUserId($this->checkInput($_POST['username']))[0];
+                $userId = $this->getUserId($this->checkInput($_POST['username']))[0];
+                $_SESSION['user-id'] = $userId;
+                $user = User::initUser($userId);
+                $_SESSION['rank'] = (int)$user->getRank();
                 return 'login';
             }
             else{
