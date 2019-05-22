@@ -20,7 +20,6 @@ class AdminController{
 
     public function __construct()
     {
-        $this->User = new User();
         $this->DAO = new DAO();
         $this->UserLogin = new UserLogin();
         $this->PostManager = new PostManager();
@@ -112,7 +111,6 @@ class AdminController{
 
     public function setModeration($commentId, $mode){
         $comment = Comment::initComment($commentId);
-        
         if($mode == 'true'){
             $comment->setModeration('1');
         }
@@ -145,6 +143,18 @@ class AdminController{
     public function deleteComment($id){
         $post = Comment::initComment($id);
         $post->deleteCom();
+    }
+
+    public function getUsersPage(){
+        $result = $this->UserLogin->getLoginPage();
+        $users = DAO::getAllUsers();
+
+        if($result == 'login' || $_SESSION['login']){
+            require(__DIR__.'/../view/frontend/userPage.php');
+        }
+        else{
+            header('Location: index.php?action=loginFail');
+        }
     }
 }
 

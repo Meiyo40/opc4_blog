@@ -116,6 +116,10 @@ if (isset($_GET['action'])) {
         case 'report':
             $AdminController->getModerationPage('priority');
             break;
+
+        case 'users':
+            $AdminController->getUsersPage();
+            break;
     }
 
 }

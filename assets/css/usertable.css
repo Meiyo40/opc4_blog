@@ -1,0 +1,23 @@
+#userstable {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 90%;
+    margin: 50px auto;
+}
+
+#userstable td, #userstable th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#userstable tr:nth-child(even){background-color: #f2f2f2;}
+
+#userstable tr:hover {background-color: #ddd;}
+
+#userstable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #0078AD;
+    color: white;
+}

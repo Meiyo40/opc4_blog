@@ -8,9 +8,25 @@ use services\Helper;
 class User{
     private $id;
     private $name;
-    private $hash_password;
+    private $hash_pwd;
+    private $last_connexion;
     private $rank;
     private $auth;
+    private $comments;
+    private $articles;
+    private $mail;
+
+    public function __construct($id, $name, $hash_pwd, $last_connexion, $rank, $comments, $articles, $mail)
+    {
+        $this->id = $id;
+        $this->name = $name;
+        $this->hash_pwd = $hash_pwd;
+        $this->last_connexion = $last_connexion;
+        $this->rank = $rank;
+        $this->comments = $comments;
+        $this->articles = $articles;
+        $this->mail = $mail;
+    }
 
     public function getRank(){
         return $this->rank;
@@ -26,6 +42,30 @@ class User{
 
     public function getAuth(){
         return $this->auth;
+    }
+
+    public function getComments(){
+        return $this->comments;
+    }
+
+    public function getArticles(){
+        return $this->articles;
+    }
+
+    public function getMail(){
+        return $this->mail;
+    }
+
+    public function setMail($newMail){
+        return $this->mail = $newMail;
+    }
+
+    public function setComments($newComments){
+        $this->comments = $newComments;
+    }
+
+    public function setArticles($newArticles){
+        $this->articles = $newArticles;
     }
 
     public function setId($newId){
@@ -91,6 +131,20 @@ class User{
 
     public function to_string() { 
         return "id : $this->id, author : $this->author, content : $this->content, date : $this->date, report : $this->report"; 
+    }
+
+    public static function initUser($id){
+        $db = Database::connect();
+        $statement = $db->prepare("SELECT*FROM opc_blog_user WHERE id = ?");
+        $statement->execute(array($id));
+
+        $obj = $statement->fetch();
+        
+        $obj = new User($obj['id'], $obj['name'], $obj['hash_pwd'], $obj['last_connexion'], $obj['rank'], $obj['comments'], $obj['articles'], $obj['mail']);
+        
+        return $obj;
+
+        Database::disconnect();
     }
 
 }

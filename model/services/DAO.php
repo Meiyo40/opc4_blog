@@ -38,6 +38,7 @@ class DAO{
                     }
                 }
                 else{
+                    file_put_contents('debug.html', $Count);
                     $obj = $Count;
                 }
                 
@@ -76,6 +77,33 @@ class DAO{
                 $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "entity\Post", array("id", "author", "content", "date", "title", "nb_comments", "img_key", "img_ext"));
                 return $obj = $statement->fetchAll(); 
 
+                    Database::disconnect();
+            }
+
+        }
+        catch (PDOException $e) {
+            echo 'Connection failed: ' . $e->getMessage();
+        }
+    }
+
+    public function getAllUsers($limit = 0){
+        try { 
+            $db = Database::connect(); 
+            $db->exec("set names utf8");
+            $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            
+            if($limit > 0){
+                $statement = $db->prepare("SELECT id, name, last_connexion, rank, comments, articles, mail FROM opc_blog_users ORDER BY last_connexion DESC LIMIT ".$limit);
+                $statement->execute();
+            }
+            else{
+                $statement = $db->prepare("SELECT*FROM opc_blog_users ORDER BY last_connexion DESC");
+                $statement->execute();
+            }            
+
+            $Count = $statement->rowCount(); 
+            if ($Count  > 0){
+                return $users = $statement->fetchAll(); 
                     Database::disconnect();
             }
 
