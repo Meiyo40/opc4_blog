@@ -106,15 +106,15 @@
                         <td>".$users[$i]['comments']."</td>
                         <td>".$users[$i]['articles']."</td>
                         <td>".$users[$i]['mail']."</td>
-                        <td>
+                        <td class='btn-action'>
                         ";
                         if($_SESSION['rank'] >= 3){
                             echo "
                             
-                            <button class='user-control' onclick='rankUser(true,".$users[$i]['id'].")' data-toggle='tooltip' title='Promouvoir utilisateur'><i class='fas fa-plus'></i></button> 
-                            <button class='user-control' onclick='rankUser(false, ".$users[$i]['id'].")' data-toggle='tooltip' title='Retrograder utilisateur'><i class='fas fa-minus'></i></button>
-                            <button class='user-control' onclick='manageUser('del', ".$users[$i]['id'].")' data-toggle='tooltip' title='Supprimer utilisateur'><i class='fas fa-user-minus'></i></button>
-                            <button class='user-control' onclick='mailUser()' data-toggle='tooltip' title='MailTo utilisateur'><i class='fas fa-envelope-open-text'></i></button>
+                            <button class='user-control' onclick='rankUser(true,".$users[$i]['id'].")' data-toggle='tooltip' title='Promouvoir ".$users[$i]['name']."'><i class='fas fa-plus'></i></button> 
+                            <button class='user-control' onclick='rankUser(false, ".$users[$i]['id'].")' data-toggle='tooltip' title='Retrograder ".$users[$i]['name']."'><i class='fas fa-minus'></i></button>
+                            <button class='user-control' onclick='manageUser('del', ".$users[$i]['id'].")' data-toggle='tooltip' title='Supprimer ".$users[$i]['name']."'><i class='fas fa-user-minus'></i></button>
+                            <button class='user-control' onclick='mailUser()' data-toggle='tooltip' title='MailTo ".$users[$i]['name']."'><i class='fas fa-envelope-open-text'></i></button>
                             
                             ";
                         }

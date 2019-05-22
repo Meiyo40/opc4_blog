@@ -1,4 +1,9 @@
 .article-content,
 article{
     height: auto;
+    margin: 0 auto;
+}
+.largeImg{
+    max-height: 100%;
+    max-width: 100%; 
 }

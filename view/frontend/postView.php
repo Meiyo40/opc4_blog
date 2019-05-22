@@ -10,7 +10,7 @@
         <?php
             echo "<article>
                 <div id='post' class='post".$post['id']."'>
-                    <img class='smallImg' src='./resources/img/".$post['img_key'].".".$post['img_ext']."'></img>
+                    <img class='largeImg' src='./resources/img/".$post['img_key'].".".$post['img_ext']."'></img>
                     <div class='article-content'>
                         ".$post['content']."
                     </div>
