@@ -7,6 +7,7 @@ use manager\PostManager;
 use manager\UserLogin;
 use services\DAO;
 use entity\Comment;
+use entity\Post;
 
 class Controller{
     private $login;
@@ -39,7 +40,7 @@ class Controller{
 
     public function post()
     {
-        $post = $this->PostManager->getPost($_GET['id']);
+        $post = Post::initPost($_GET['id']);
         $comments = $this->DAO->getAllCommentsPost($_GET['id']);
         
         require(__DIR__.'/../view/frontend/postView.php');
