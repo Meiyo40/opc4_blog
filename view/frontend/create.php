@@ -11,6 +11,7 @@
         <a href="index.php?action=editarticle"><button><i class="far fa-edit"></i> Modifier un article</button></a>        
         <a href="index.php?action=moderation"><button><i class="far fa-comment-dots"></i> Gestion des commentaires</button></a>
         <a href="index.php?action=users"><button><i class="fas fa-user-graduate"></i> Gestion des utilisateurs</button></a>
+        <a href="index.php?action=logout"><button><i class="fas fa-sign-out-alt"></i> Se déconnecter (<?php echo $_SESSION['login']; ?>)</button></a>
     </div>
     
     <div id='addPost'>

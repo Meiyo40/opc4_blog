@@ -57,3 +57,8 @@ function rankUser(action, userId){
         });
     }
 }
+
+function deleteUser(userId){
+    let url = "index.php?action=deleteuser&user=" + userId;
+        $.post(url,null,function(data){ return; });
+}

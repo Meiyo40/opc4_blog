@@ -13,6 +13,7 @@
         <a href="index.php?action=create"><button><i class="far fa-newspaper"></i> Créer nouvel article</button></a>
         <a href="index.php?action=editarticle"><button><i class="far fa-edit"></i> Modifier un article</button></a>        
         <a href="index.php?action=users"><button><i class="fas fa-user-graduate"></i> Gestion des utilisateurs</button></a>
+        <a href="index.php?action=logout"><button><i class="fas fa-sign-out-alt"></i> Se déconnecter (<?php echo $_SESSION['login']; ?>)</button></a>
     </div>
         
     <div id="btnCommentPanel">

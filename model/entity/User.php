@@ -32,6 +32,10 @@ class User{
         return $this->rank;
     }
 
+    private function getHash_pwd(){
+        return $this->hash_pwd;
+    }
+
     public function getId(){
         return $this->id;
     }
@@ -84,41 +88,22 @@ class User{
         $this->rank = $newRank;
     }
 
+    private function setHash_pwd($new_pwd){
+        $this->hash_pwd = $new_pwd;
+    }
+
     public function loginIsValid($name, $password){
         $name = Helper::validateContent($name);
         $password = Helper::validateContent($password);
-        if(password_verify($password, $this->getUserPwd($name)[0]))
+        if(password_verify($password, $this->getHash_pwd()))
         {
-            $this->updateLastUserConnexion($name);
+            $this->updateLastUserConnexion($this->getName());
+
             return true;
         }
         else{
             return false;
         }
-    }
-
-    private function updateLastUserConnexion($name){
-        $db = Database::connect();
-        $statement = $db->prepare("UPDATE `opc_blog_users` SET `last_connexion` = ? WHERE `name` = ?");
-
-        $date = date("Y-m-d H:i:s");
-        $statement->execute(array($date,$name));
-        $users = $statement->fetchAll();
-        
-        Database::disconnect();
-    }
-
-    private function getUserPwd(string $name){
-        $db = Database::connect();
-        $statement = $db->prepare("
-            SELECT hash_pwd
-            FROM opc_blog_users
-            WHERE name=?
-        ");
-        $statement->execute(array($name));
-        $statement = $statement->fetchAll(); 
-        Database::disconnect();
-        return $statement[0];
     }
 
     public function properties(){ 
@@ -173,6 +158,30 @@ class User{
         Database::disconnect();
     }
 
+    public static  function getIdFromName(string $name){
+        $db = Database::connect();
+        $req = $db->prepare("
+        SELECT id
+        FROM opc_blog_users
+        WHERE name=?");
+        
+        $req->execute(array($name));
+        $req = $req->fetch();
+        Database::disconnect();
+        return $req[0];
+    }
+
+    private function updateLastUserConnexion($name){
+        $db = Database::connect();
+        $statement = $db->prepare("UPDATE `opc_blog_users` SET `last_connexion` = ? WHERE `name` = ?");
+
+        $date = date("Y-m-d H:i:s");
+        $statement->execute(array($date,$name));
+        $users = $statement->fetchAll();
+        
+        Database::disconnect();
+    } 
+
     public static function createUser($userName, $userRawPwd, $userMail, $userRank){
         $last_connexion = date("Y-m-d H:i:s");
         $hash_pwd = password_hash($userRawPwd, PASSWORD_BCRYPT);
@@ -196,10 +205,20 @@ class User{
         $obj = $statement->fetch();
         
         $obj = new User($obj['id'], $obj['name'], $obj['hash_pwd'], $obj['last_connexion'], $obj['rank'], $obj['comments'], $obj['articles'], $obj['mail']);
+        Database::disconnect();
         
         return $obj;
 
+        
+    }
+
+    public function deleteUser(){
+        $db = Database::connect();
+        $statement = $db->prepare("DELETE FROM `opc_blog_users` WHERE id = ?");
+        $result = $statement->execute(array($this->id));        
         Database::disconnect();
+
+        return $result;
     }
 
 }

@@ -60,6 +60,10 @@ if($_GET.edit === 'success'){
     alert('Votre article a bien été mis à jour !');
 }
 
+if($_GET.delete === 'success'){
+    alert('Utilisateur supprimé !');
+}
+
 if($_GET.action === 'moderation'){
     if($_GET.page){
         let pageLinkId = "page-link-" + $_GET.page;

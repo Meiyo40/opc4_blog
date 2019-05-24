@@ -52,6 +52,7 @@ class AdminController{
         }
         else{
             header('Location: index.php?action=loginFail');
+            die();
         }
     }
 
@@ -65,6 +66,7 @@ class AdminController{
         }
         else{
             header('Location: index.php?action=loginFail');
+            die();
         }
     }
 
@@ -90,6 +92,7 @@ class AdminController{
         }
         else{
             header('Location: index.php?action=loginFail');
+            die();
         }
     }
 
@@ -106,6 +109,7 @@ class AdminController{
         }
         else{
             header('Location: index.php?action=loginFail');
+            die();
         }
     }
 
@@ -132,6 +136,7 @@ class AdminController{
         }
         else{
             header('Location: index.php?action=loginFail');
+            die();
         }
     }
 
@@ -154,6 +159,7 @@ class AdminController{
         }
         else{
             header('Location: index.php?action=loginFail');
+            die();
         }
     }
 
@@ -186,8 +192,26 @@ class AdminController{
             $user = User::createUser($userName, $userRawPwd, $userMail, $userRank);
         }
         else{
-            header('Location: index.php?action=loginFail');
+            
         }
+    }
+
+    public function deleteUser($user){
+        $user = User::initUser($user);
+        $result = $user->deleteUser();
+        file_put_contents('debug.html', $result);
+        if($result){
+            header('Location: index.php?action=users&delete=success');
+            die();
+        }
+        else{
+            header('Location: index.php?action=users&delete=failed');
+            die();
+        }
+    }
+
+    public function disconnectUser(){
+        require(__DIR__.'/../view/frontend/logout.php');
     }
 }
 

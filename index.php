@@ -72,6 +72,10 @@ if (isset($_GET['action'])) {
             $AdminController->deleteComment($_GET['delComment']);
             break;
 
+        case 'deleteuser';
+            $AdminController->deleteUser($_GET['user']);
+            break;
+
         case 'editarticle':
             $AdminController->getPostEditPage();
             break;
@@ -93,6 +97,10 @@ if (isset($_GET['action'])) {
         case 'login':
         case 'loginFail':
             $AdminController->getLoginPage();
+            break;
+
+        case 'logout':
+            $AdminController->disconnectUser();
             break;
 
         case 'manageuser':

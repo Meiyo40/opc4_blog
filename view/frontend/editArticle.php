@@ -10,6 +10,7 @@
         <a href="edit.php"><button>Modifier un article</button></a>
         <a href="create.php"><button>Créer nouvel article</button></a>
         <a href="users.php"><button>Gestion des utilisateurs</button></a>
+        <a href="index.php?action=logout"><button><i class="fas fa-sign-out-alt"></i> Se déconnecter (<?php echo $_SESSION['login']; ?>)</button></a>
     </div>
     
     <div id='addPost'>

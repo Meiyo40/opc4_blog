@@ -17,6 +17,7 @@
         <a href="index.php?action=editarticle"><button><i class="far fa-edit"></i> Modifier un article</button></a>        
         <a href="index.php?action=moderation"><button><i class="far fa-comment-dots"></i> Gestion des commentaires</button></a>
         <a href="index.php?action=users"><button><i class="fas fa-user-graduate"></i> Gestion des utilisateurs</button></a>
+        <a href="index.php?action=logout"><button><i class="fas fa-sign-out-alt"></i> Se déconnecter (<?php echo $_SESSION['login']; ?>)</button></a>
     </div>
 
     <?php 
@@ -113,7 +114,7 @@
                             
                             <button class='user-control' onclick='rankUser(true,".$users[$i]['id'].")' data-toggle='tooltip' title='Promouvoir ".$users[$i]['name']."'><i class='fas fa-plus'></i></button> 
                             <button class='user-control' onclick='rankUser(false, ".$users[$i]['id'].")' data-toggle='tooltip' title='Retrograder ".$users[$i]['name']."'><i class='fas fa-minus'></i></button>
-                            <button class='user-control' onclick='manageUser('del', ".$users[$i]['id'].")' data-toggle='tooltip' title='Supprimer ".$users[$i]['name']."'><i class='fas fa-user-minus'></i></button>
+                            <button class='user-control' onclick='deleteUser(".$users[$i]['id'].")' data-toggle='tooltip' title='Supprimer ".$users[$i]['name']."'><i class='fas fa-user-minus'></i></button>
                             <button class='user-control' onclick='mailUser()' data-toggle='tooltip' title='MailTo ".$users[$i]['name']."'><i class='fas fa-envelope-open-text'></i></button>
                             
                             ";
