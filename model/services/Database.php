@@ -3,24 +3,36 @@
 namespace services;
 
 class Database{
-    private static $db_user = 'OPC4_PHP_BLOG';
-    private static $db_pwd = 'azerty';
-    private static $dsn = 'mysql:host=localhost;dbname=OPC4_blog;charset=utf8';
-    private static $connection_db = null;
+    private $connection_db = null;
+    private $db;
+    private $hostname;
+    private $username;
+    private $password; 
+    private $dbname;
 
-    public static function connect(){
+    public function __construct()
+    {
+        $this->db = parse_url(getenv('JAWSDB_URL'));
+        $this->hostname = $this->db['host'];
+        $this->username = $this->db['user'];
+        $this->password = $this->db['pass'];
+        $this->dbname = ltrim($this->db['path'], '/');
+    }
+    
+
+    public function connect(){
         try {
-            self::$connection_db = new \PDO(self::$dsn, self::$db_user, self::$db_pwd);
+            $this->connection_db = new \PDO("mysql:host=$this->hostname;dbname=$this->dbname", $this->username, $this->password);
         }
         catch (PDOException $e)
         {
             die($e->getMessage());
         }
-        return self::$connection_db;
+        return $this->connection_db;
     }
 
-    public static function disconnect(){
-        self::$connection_db = null;
+    public function disconnect(){
+        $this->connection_db = null;
     }
 
 

@@ -11,7 +11,8 @@ class DAO{
 
     public function getAllCommentsPost($postId = 0, $limit = 0, $countRows = false){    
         try { 
-            $db = Database::connect(); 
+            $db = new Database();
+$db->connect();
             $db->exec("set names utf8");
             $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             
@@ -44,7 +45,7 @@ class DAO{
                 
                 return $obj; 
 
-                    Database::disconnect();
+                    $db->disconnect();
             }
             elseif($countRows){
                 return 0;
@@ -59,7 +60,8 @@ class DAO{
 
     public function getPosts( $limit = 0 ){
         try { 
-            $db = Database::connect(); 
+            $db = new Database();
+$db->connect();
             $db->exec("set names utf8");
             $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             
@@ -77,7 +79,7 @@ class DAO{
                 $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "entity\Post", array("id", "author", "content", "date", "title", "nb_comments", "img_key", "img_ext"));
                 return $obj = $statement->fetchAll(); 
 
-                    Database::disconnect();
+                    $db->disconnect();
             }
 
         }
@@ -88,7 +90,8 @@ class DAO{
 
     public function getAllUsers($limit = 0){
         try { 
-            $db = Database::connect(); 
+            $db = new Database();
+$db->connect();
             $db->exec("set names utf8");
             $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             
@@ -104,7 +107,7 @@ class DAO{
             $Count = $statement->rowCount(); 
             if ($Count  > 0){
                 return $users = $statement->fetchAll(); 
-                    Database::disconnect();
+                    $db->disconnect();
             }
 
         }

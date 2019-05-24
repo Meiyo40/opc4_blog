@@ -96,6 +96,8 @@ if (isset($_GET['action'])) {
 
         case 'login':
         case 'loginFail':
+            session_unset();
+            session_destroy();
             $AdminController->getLoginPage();
             break;
 

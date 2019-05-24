@@ -10,14 +10,15 @@ define ("IMG_MAXSIZE", 10485760);
 class PostManager{
 
     public function getPost($postId){
-        $db = Database::connect();
+        $db = new Database();
+$db->connect();
         $req = $db->prepare('
         SELECT * 
         FROM opc_blog_posts
         WHERE id = ?');
         $req->execute(array($postId));
         $post = $req->fetch();
-        Database::disconnect();
+        $db->disconnect();
         return $post; 
     }
 

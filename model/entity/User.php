@@ -119,7 +119,8 @@ class User{
     }
 
     public function updateUser($action){
-        $db = Database::connect();
+        $db = new Database();
+$db->connect();
         switch($action){
             case 'all':
                 break;
@@ -155,11 +156,12 @@ class User{
                 $statement->execute(array($this->rank,$this->id));
                 break;                 
         }
-        Database::disconnect();
+        $db->disconnect();
     }
 
     public static  function getIdFromName(string $name){
-        $db = Database::connect();
+        $db = new Database();
+$db->connect();
         $req = $db->prepare("
         SELECT id
         FROM opc_blog_users
@@ -167,19 +169,20 @@ class User{
         
         $req->execute(array($name));
         $req = $req->fetch();
-        Database::disconnect();
+        $db->disconnect();
         return $req[0];
     }
 
     private function updateLastUserConnexion($name){
-        $db = Database::connect();
+        $db = new Database();
+$db->connect();
         $statement = $db->prepare("UPDATE `opc_blog_users` SET `last_connexion` = ? WHERE `name` = ?");
 
         $date = date("Y-m-d H:i:s");
         $statement->execute(array($date,$name));
         $users = $statement->fetchAll();
         
-        Database::disconnect();
+        $db->disconnect();
     } 
 
     public static function createUser($userName, $userRawPwd, $userMail, $userRank){
@@ -187,25 +190,27 @@ class User{
         $hash_pwd = password_hash($userRawPwd, PASSWORD_BCRYPT);
         $userName = Helper::validateContent($userName);
         file_put_contents('debug.html', 'name: '.$userName.'<br> raw_pwd: '.$hash_pwd.'<br> email: '.$userMail.'<br> rank: '.$userRank);
-        $db = Database::connect();
+        $db = new Database();
+$db->connect();
         $statement = $db->prepare("INSERT INTO `opc_blog_users` 
                                     (name, hash_pwd, last_connexion, rank, mail, comments, articles) 
                                     VALUES (?,?,?,?,?,0,0)");
 
         $statement->execute(array($userName, $hash_pwd, $last_connexion, $userRank, $userMail));
 
-        Database::disconnect();
+        $db->disconnect();
     }
 
     public static function initUser($id){
-        $db = Database::connect();
+        $db = new Database();
+$db->connect();
         $statement = $db->prepare("SELECT*FROM opc_blog_users WHERE id = ?");
         $statement->execute(array($id));
 
         $obj = $statement->fetch();
         
         $obj = new User($obj['id'], $obj['name'], $obj['hash_pwd'], $obj['last_connexion'], $obj['rank'], $obj['comments'], $obj['articles'], $obj['mail']);
-        Database::disconnect();
+        $db->disconnect();
         
         return $obj;
 
@@ -213,10 +218,11 @@ class User{
     }
 
     public function deleteUser(){
-        $db = Database::connect();
+        $db = new Database();
+$db->connect();
         $statement = $db->prepare("DELETE FROM `opc_blog_users` WHERE id = ?");
         $result = $statement->execute(array($this->id));        
-        Database::disconnect();
+        $db->disconnect();
 
         return $result;
     }

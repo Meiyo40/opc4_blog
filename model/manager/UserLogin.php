@@ -9,13 +9,14 @@ use services\Helper;
 class UserLogin{
 
     public function getUsers(){
-        $db = Database::connect();
+        $db = new Database();
+$db->connect();
         $statement = $db->prepare('SELECT*FROM opc_blog_users');
 
         $statement->execute();
         $users = $statement->fetchAll();
         
-        Database::disconnect();
+        $db->disconnect();
         
         return $users;
     }

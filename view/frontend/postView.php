@@ -37,7 +37,7 @@
                         </p>
                         <p class='comment-signature'>Rédigé par: <strong>".$comments[$i]->getAuthor()."</strong>, le [".$comments[$i]->getComment_date()."] 
                             <button onclick='displayForm(".$comments[$i]->getId().",".$comments[$i]->getDepth().")' class='comment-answer btn btn-primary' data-comment-id=".$comments[$i]->getId().">Répondre</button>
-                            <button onclick='reportComment(".$comments[$i]->getId().",".$post['id'].")' class='btn-report btn btn-warning'><i class='far fa-bell'></i> Signaler</button>
+                            <button onclick='reportComment(".$comments[$i]->getId().",".$post->getContent().")' class='btn-report btn btn-warning'><i class='far fa-bell'></i> Signaler</button>
                         </p>
                         <br>
                     </div>
@@ -57,7 +57,7 @@
                             <p class='comment-signature'>
                                 Rédigé par: <strong>".$comments[$j]->getAuthor()."</strong>, le [".$comments[$j]->getComment_date()."] 
                                 <button onclick='displayForm(".$comments[$j]->getId().",".$comments[$j]->getDepth().")' class='comment-answer btn btn-primary' data-comment-id=".$comments[$j]->getId().">Répondre</button>
-                                <button onclick='reportComment(".$comments[$j]->getId().",".$post['id'].")'  class='btn-report btn btn-warning'><i class='far fa-bell'></i> Signaler</button>
+                                <button onclick='reportComment(".$comments[$j]->getId().",".$post->getId().")'  class='btn-report btn btn-warning'><i class='far fa-bell'></i> Signaler</button>
                             </p>
                             <br>
                         </div>
@@ -75,7 +75,7 @@
                                     <p class='comment-signature'>
                                         Rédigé par: <strong>".$comments[$k]->getAuthor()."</strong>, le [".$comments[$k]->getComment_date()."] 
                                         <button onclick='displayForm(".$comments[$k]->getId().",".$comments[$k]->getDepth().")' class='comment-answer btn btn-primary' data-comment-id=".$comments[$k]->getId().">Répondre</button>
-                                        <button onclick='reportComment(".$comments[$k]->getId().",".$post['id'].")'  class='btn-report btn btn-warning'><i class='far fa-bell'></i> Signaler</button>
+                                        <button onclick='reportComment(".$comments[$k]->getId().",".$post->getId().")'  class='btn-report btn btn-warning'><i class='far fa-bell'></i> Signaler</button>
                                     </p>
                                     <br>
                                 </div>

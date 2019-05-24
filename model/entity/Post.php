@@ -90,11 +90,12 @@ class Post{
     }
 
     private function ImgIdExist($imgId){
-        $db = Database::connect();
+        $db = new Database();
+$db->connect();
         $statement = $db->prepare("SELECT img_key WHERE img_key = ?");        
         $statement->execute(array($imgId));
         $imgList = $statement->fetchAll();
-        Database::disconnect();
+        $db->disconnect();
 
         if(sizeof($imgList)){
             $this->setImgUniqueId();
@@ -135,16 +136,18 @@ class Post{
 
 
     public function addPost(){
-        $db = Database::connect();
+        $db = new Database();
+$db->connect();
         $statement = $db->prepare("INSERT INTO opc_blog_posts (author, content, title, date, img_key, img_ext) VALUES (?,?,?,?,?,?)");        
         $statement->execute(array($this->author, $this->content, $this->title, $this->date, $this->img_key, $this->img_ext));
         $err = $this->author."<br>".$this->content."<br>".$this->title."<br>".$this->date."<br>".$this->img_key."<br>".$this->img_ext;
             file_put_contents('debug.html', $err, FILE_APPEND);
-        Database::disconnect();
+        $db->disconnect();
     }
 
     public function updatePost(){
-        $db = Database::connect();
+        $db = new Database();
+$db->connect();
         if($this->image != null){
 
             $statement = $db->prepare("UPDATE `opc_blog_posts` SET `author` = ?, `content` = ?, `title` = ?, `img_key` = ?, `img_ext` = ?  WHERE `id` = ? ");
@@ -156,21 +159,23 @@ class Post{
             $statement->execute(array($this->author, $this->content, $this->title, $this->id));
         }
         
-        Database::disconnect();
+        $db->disconnect();
     }
 
     public function deletePost(){
-        $db = Database::connect();
+        $db = new Database();
+$db->connect();
         $statement = $db->prepare("DELETE FROM `opc_blog_posts` WHERE `id` = ? ");
         $statement->execute(array($this->id));
-        Database::disconnect();
+        $db->disconnect();
     }
 
     public static function addCommentcounter($postId){
-        $db = Database::connect();
+        $db = new Database();
+$db->connect();
         $statement = $db->prepare("UPDATE `opc_blog_posts` SET `nb_comments` = `nb_comments` + 1 WHERE `id` = ? ");
         $statement->execute(array($postId));
-        Database::disconnect();
+        $db->disconnect();
     }
 
     public function properties(){ 
@@ -186,7 +191,8 @@ class Post{
     }
 
     public static function initPost($id){
-        $db = Database::connect();
+        $db = new Database();
+$db->connect();
         $statement = $db->prepare("SELECT*FROM opc_blog_posts WHERE id = ?");
         $statement->execute(array($id));
 
@@ -196,6 +202,6 @@ class Post{
         
         return $obj;
 
-        Database::disconnect();
+        $db->disconnect();
     }
 }
