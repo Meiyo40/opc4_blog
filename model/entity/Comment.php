@@ -29,7 +29,7 @@ class Comment{
     public function addNewComment(){
         if($this->depth == 0){
             $db = new Database();
-$db->connect();
+$db = $db->connect();
 
             $statement = $db->prepare("INSERT INTO opc_blog_comment (post_id, author, depth, comment, comment_date) VALUES (?,?,?,?,?)");
             $statement->execute(array($this->commentPost, $this->author, $this->depth, $this->content, $this->date));
@@ -38,7 +38,7 @@ $db->connect();
         }
         else{
             $db = new Database();
-$db->connect();
+$db = $db->connect();
 
             $statement = $db->prepare("INSERT INTO opc_blog_comment (post_id, comment_parent, depth, author, comment, comment_date) VALUES (?,?,?,?,?,?)");
             $statement->execute(array($this->commentPost, $this->commentParent, $this->depth, $this->author, $this->content, $this->date));
@@ -131,7 +131,7 @@ $db->connect();
     public static function getReportedComments($limit = 0){
         try { 
             $db = new Database();
-$db->connect();
+$db = $db->connect();
             $db->exec("set names utf8");
             $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
@@ -162,7 +162,7 @@ $db->connect();
     public static function getModeratedComments($limit = 0){
         try { 
             $db = new Database();
-$db->connect();
+$db = $db->connect();
             $db->exec("set names utf8");
             $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
@@ -192,7 +192,7 @@ $db->connect();
 
     public function reportComment(){
         $db = new Database();
-$db->connect();
+$db = $db->connect();
         $statement = $db->prepare("UPDATE `opc_blog_comment` SET `report` = `report` + 1 WHERE `id` = ? ");
         $statement->execute(array($this->id));
         $db->disconnect();
@@ -201,7 +201,7 @@ $db->connect();
     public static function getAllComments($limit = 0){    
         try { 
             $db = new Database();
-$db->connect();
+$db = $db->connect();
             $db->exec("set names utf8");
             $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
@@ -234,7 +234,7 @@ $db->connect();
 
     public function deleteCom(){
         $db = new Database();
-$db->connect();
+$db = $db->connect();
         $statement = $db->prepare("DELETE FROM `opc_blog_comment` WHERE `id` = ? ");
         $statement->execute(array($this->id));
         $db->disconnect();
@@ -242,7 +242,7 @@ $db->connect();
 
     public static function initComment($id){
         $db = new Database();
-$db->connect();
+$db = $db->connect();
         $statement = $db->prepare("SELECT*FROM opc_blog_comment WHERE id = ?");
         $statement->execute(array($id));
 
@@ -257,7 +257,7 @@ $db->connect();
 
     public function update($mode){
         $db = new Database();
-$db->connect();
+$db = $db->connect();
         
         switch($mode){
 

@@ -120,7 +120,7 @@ class User{
 
     public function updateUser($action){
         $db = new Database();
-$db->connect();
+$db = $db->connect();
         switch($action){
             case 'all':
                 break;
@@ -161,7 +161,7 @@ $db->connect();
 
     public static  function getIdFromName(string $name){
         $db = new Database();
-$db->connect();
+$db = $db->connect();
         $req = $db->prepare("
         SELECT id
         FROM opc_blog_users
@@ -175,7 +175,7 @@ $db->connect();
 
     private function updateLastUserConnexion($name){
         $db = new Database();
-$db->connect();
+$db = $db->connect();
         $statement = $db->prepare("UPDATE `opc_blog_users` SET `last_connexion` = ? WHERE `name` = ?");
 
         $date = date("Y-m-d H:i:s");
@@ -191,7 +191,7 @@ $db->connect();
         $userName = Helper::validateContent($userName);
         file_put_contents('debug.html', 'name: '.$userName.'<br> raw_pwd: '.$hash_pwd.'<br> email: '.$userMail.'<br> rank: '.$userRank);
         $db = new Database();
-$db->connect();
+$db = $db->connect();
         $statement = $db->prepare("INSERT INTO `opc_blog_users` 
                                     (name, hash_pwd, last_connexion, rank, mail, comments, articles) 
                                     VALUES (?,?,?,?,?,0,0)");
@@ -203,7 +203,7 @@ $db->connect();
 
     public static function initUser($id){
         $db = new Database();
-$db->connect();
+$db = $db->connect();
         $statement = $db->prepare("SELECT*FROM opc_blog_users WHERE id = ?");
         $statement->execute(array($id));
 
@@ -219,7 +219,7 @@ $db->connect();
 
     public function deleteUser(){
         $db = new Database();
-$db->connect();
+$db = $db->connect();
         $statement = $db->prepare("DELETE FROM `opc_blog_users` WHERE id = ?");
         $result = $statement->execute(array($this->id));        
         $db->disconnect();

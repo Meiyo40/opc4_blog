@@ -91,7 +91,7 @@ class Post{
 
     private function ImgIdExist($imgId){
         $db = new Database();
-$db->connect();
+$db = $db->connect();
         $statement = $db->prepare("SELECT img_key WHERE img_key = ?");        
         $statement->execute(array($imgId));
         $imgList = $statement->fetchAll();
@@ -137,7 +137,7 @@ $db->connect();
 
     public function addPost(){
         $db = new Database();
-$db->connect();
+$db = $db->connect();
         $statement = $db->prepare("INSERT INTO opc_blog_posts (author, content, title, date, img_key, img_ext) VALUES (?,?,?,?,?,?)");        
         $statement->execute(array($this->author, $this->content, $this->title, $this->date, $this->img_key, $this->img_ext));
         $err = $this->author."<br>".$this->content."<br>".$this->title."<br>".$this->date."<br>".$this->img_key."<br>".$this->img_ext;
@@ -147,7 +147,7 @@ $db->connect();
 
     public function updatePost(){
         $db = new Database();
-$db->connect();
+$db = $db->connect();
         if($this->image != null){
 
             $statement = $db->prepare("UPDATE `opc_blog_posts` SET `author` = ?, `content` = ?, `title` = ?, `img_key` = ?, `img_ext` = ?  WHERE `id` = ? ");
@@ -164,7 +164,7 @@ $db->connect();
 
     public function deletePost(){
         $db = new Database();
-$db->connect();
+$db = $db->connect();
         $statement = $db->prepare("DELETE FROM `opc_blog_posts` WHERE `id` = ? ");
         $statement->execute(array($this->id));
         $db->disconnect();
@@ -172,7 +172,7 @@ $db->connect();
 
     public static function addCommentcounter($postId){
         $db = new Database();
-$db->connect();
+$db = $db->connect();
         $statement = $db->prepare("UPDATE `opc_blog_posts` SET `nb_comments` = `nb_comments` + 1 WHERE `id` = ? ");
         $statement->execute(array($postId));
         $db->disconnect();
@@ -192,7 +192,7 @@ $db->connect();
 
     public static function initPost($id){
         $db = new Database();
-$db->connect();
+$db = $db->connect();
         $statement = $db->prepare("SELECT*FROM opc_blog_posts WHERE id = ?");
         $statement->execute(array($id));
 

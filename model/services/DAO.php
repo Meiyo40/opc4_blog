@@ -12,7 +12,7 @@ class DAO{
     public function getAllCommentsPost($postId = 0, $limit = 0, $countRows = false){    
         try { 
             $db = new Database();
-$db->connect();
+$db = $db->connect();
             $db->exec("set names utf8");
             $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             
@@ -61,7 +61,7 @@ $db->connect();
     public function getPosts( $limit = 0 ){
         try { 
             $db = new Database();
-$db->connect();
+            $db = $db->connect();
             $db->exec("set names utf8");
             $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             
@@ -91,7 +91,7 @@ $db->connect();
     public function getAllUsers($limit = 0){
         try { 
             $db = new Database();
-$db->connect();
+$db = $db->connect();
             $db->exec("set names utf8");
             $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             
