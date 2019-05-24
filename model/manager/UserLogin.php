@@ -16,7 +16,7 @@ $db = $db->connect();
         $statement->execute();
         $users = $statement->fetchAll();
         
-        $db->disconnect();
+        unset($db);
         
         return $users;
     }

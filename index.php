@@ -4,8 +4,8 @@ define('WEBROOT', str_replace('index.php', '', $_SERVER['SCRIPT_NAME']));
 define('ROOT', str_replace('index.php', '', $_SERVER['SCRIPT_FILENAME']));
 
 require_once __DIR__.'/vendor/autoload.php';
-require(ROOT.'controller/Controller.php');
-require(ROOT.'controller/AdminController.php');
+require_once __DIR__.'/controller/controller.php';
+require_once __DIR__.'/controller/AdminController.php';
 
 use manager\PostManager;
 use entity\Comment;

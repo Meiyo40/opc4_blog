@@ -18,7 +18,7 @@ $db = $db->connect();
         WHERE id = ?');
         $req->execute(array($postId));
         $post = $req->fetch();
-        $db->disconnect();
+        unset($db);
         return $post; 
     }
 

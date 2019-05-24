@@ -21,7 +21,7 @@ $db = $db->connect();
         $statement->execute(array($postId, $author, 0, $content, $dateOfCom));
 
         Post::addCommentcounter($postId);
-        $db->disconnect();
+        unset($db);
     }
 
     public function addCommentToComment($postId, $author, $content, $commentId, $depth){
@@ -34,6 +34,6 @@ $db = $db->connect();
         $statement->execute(array($postId, $commentId, $depth,$author, $content, $dateOfCom));
         
         Post::addCommentcounter($postId);
-        $db->disconnect();
+        unset($db);
     }
 }

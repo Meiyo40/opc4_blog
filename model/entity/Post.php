@@ -91,11 +91,11 @@ class Post{
 
     private function ImgIdExist($imgId){
         $db = new Database();
-$db = $db->connect();
-        $statement = $db->prepare("SELECT img_key WHERE img_key = ?");        
+        $db = $db->connect();
+        $statement = $db->prepare("SELECT img_key FROM opc_blog_posts WHERE img_key = ?");        
         $statement->execute(array($imgId));
         $imgList = $statement->fetchAll();
-        $db->disconnect();
+        unset($db);
 
         if(sizeof($imgList)){
             $this->setImgUniqueId();
@@ -142,7 +142,7 @@ $db = $db->connect();
         $statement->execute(array($this->author, $this->content, $this->title, $this->date, $this->img_key, $this->img_ext));
         $err = $this->author."<br>".$this->content."<br>".$this->title."<br>".$this->date."<br>".$this->img_key."<br>".$this->img_ext;
             file_put_contents('debug.html', $err, FILE_APPEND);
-        $db->disconnect();
+        unset($db);
     }
 
     public function updatePost(){
@@ -159,7 +159,7 @@ $db = $db->connect();
             $statement->execute(array($this->author, $this->content, $this->title, $this->id));
         }
         
-        $db->disconnect();
+        unset($db);
     }
 
     public function deletePost(){
@@ -167,7 +167,7 @@ $db = $db->connect();
 $db = $db->connect();
         $statement = $db->prepare("DELETE FROM `opc_blog_posts` WHERE `id` = ? ");
         $statement->execute(array($this->id));
-        $db->disconnect();
+        unset($db);
     }
 
     public static function addCommentcounter($postId){
@@ -175,7 +175,7 @@ $db = $db->connect();
 $db = $db->connect();
         $statement = $db->prepare("UPDATE `opc_blog_posts` SET `nb_comments` = `nb_comments` + 1 WHERE `id` = ? ");
         $statement->execute(array($postId));
-        $db->disconnect();
+        unset($db);
     }
 
     public function properties(){ 
@@ -202,6 +202,6 @@ $db = $db->connect();
         
         return $obj;
 
-        $db->disconnect();
+        unset($db);
     }
 }

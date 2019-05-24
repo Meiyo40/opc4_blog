@@ -34,7 +34,7 @@ $db = $db->connect();
             $statement = $db->prepare("INSERT INTO opc_blog_comment (post_id, author, depth, comment, comment_date) VALUES (?,?,?,?,?)");
             $statement->execute(array($this->commentPost, $this->author, $this->depth, $this->content, $this->date));
 
-            $db->disconnect();
+            unset($db);
         }
         else{
             $db = new Database();
@@ -44,7 +44,7 @@ $db = $db->connect();
             $statement->execute(array($this->commentPost, $this->commentParent, $this->depth, $this->author, $this->content, $this->date));
             
             //$this->addCommentcounter($postId);
-            $db->disconnect();
+            unset($db);
         }
     }
 
@@ -149,7 +149,7 @@ $db = $db->connect();
             $Count = $statement->rowCount(); 
             if ($Count  > 0){
                 $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "entity\Comment", array("id", "post_id", "comment_parent", "depth", "author", "comment", "comment_date", "report", "moderation"));
-                $db->disconnect();
+                unset($db);
                 return $obj = $statement->fetchAll();                     
             }
 
@@ -180,7 +180,7 @@ $db = $db->connect();
             $Count = $statement->rowCount(); 
             if ($Count  > 0){
                 $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "entity\Comment", array("id", "post_id", "comment_parent", "depth", "author", "comment", "comment_date", "report", "moderation"));
-                $db->disconnect();
+                unset($db);
                 return $obj = $statement->fetchAll();                     
             }
 
@@ -195,7 +195,7 @@ $db = $db->connect();
 $db = $db->connect();
         $statement = $db->prepare("UPDATE `opc_blog_comment` SET `report` = `report` + 1 WHERE `id` = ? ");
         $statement->execute(array($this->id));
-        $db->disconnect();
+        unset($db);
     }
 
     public static function getAllComments($limit = 0){    
@@ -219,7 +219,7 @@ $db = $db->connect();
             $Count = $statement->rowCount(); 
             if ($Count  > 0){
                 $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "entity\Comment", array("id", "post_id", "comment_parent", "depth", "author", "comment", "comment_date", "report", "moderation"));
-                $db->disconnect();
+                unset($db);
 
                 $obj = $statement->fetchAll();
 
@@ -237,7 +237,7 @@ $db = $db->connect();
 $db = $db->connect();
         $statement = $db->prepare("DELETE FROM `opc_blog_comment` WHERE `id` = ? ");
         $statement->execute(array($this->id));
-        $db->disconnect();
+        unset($db);
     }
 
     public static function initComment($id){
@@ -252,7 +252,7 @@ $db = $db->connect();
         
         return $obj;
 
-        $db->disconnect();
+        unset($db);
     }
 
     public function update($mode){
@@ -278,6 +278,6 @@ $db = $db->connect();
                 $statement->execute(array($this->moderation, $this->id));
                 break;
         }
-        $db->disconnect();
+        unset($db);
     }
 }

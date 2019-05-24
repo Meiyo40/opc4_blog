@@ -45,7 +45,7 @@ $db = $db->connect();
                 
                 return $obj; 
 
-                    $db->disconnect();
+                    unset($db);
             }
             elseif($countRows){
                 return 0;
@@ -79,7 +79,7 @@ $db = $db->connect();
                 $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "entity\Post", array("id", "author", "content", "date", "title", "nb_comments", "img_key", "img_ext"));
                 return $obj = $statement->fetchAll(); 
 
-                    $db->disconnect();
+                    unset($db);
             }
 
         }
@@ -107,7 +107,7 @@ $db = $db->connect();
             $Count = $statement->rowCount(); 
             if ($Count  > 0){
                 return $users = $statement->fetchAll(); 
-                    $db->disconnect();
+                    unset($db);
             }
 
         }

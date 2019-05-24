@@ -156,12 +156,12 @@ $db = $db->connect();
                 $statement->execute(array($this->rank,$this->id));
                 break;                 
         }
-        $db->disconnect();
+        unset($db);
     }
 
     public static  function getIdFromName(string $name){
         $db = new Database();
-$db = $db->connect();
+        $db = $db->connect();
         $req = $db->prepare("
         SELECT id
         FROM opc_blog_users
@@ -169,20 +169,19 @@ $db = $db->connect();
         
         $req->execute(array($name));
         $req = $req->fetch();
-        $db->disconnect();
+        unset($db);
         return $req[0];
     }
 
     private function updateLastUserConnexion($name){
         $db = new Database();
-$db = $db->connect();
+        $db = $db->connect();
         $statement = $db->prepare("UPDATE `opc_blog_users` SET `last_connexion` = ? WHERE `name` = ?");
 
         $date = date("Y-m-d H:i:s");
         $statement->execute(array($date,$name));
-        $users = $statement->fetchAll();
         
-        $db->disconnect();
+        unset($db);
     } 
 
     public static function createUser($userName, $userRawPwd, $userMail, $userRank){
@@ -198,19 +197,19 @@ $db = $db->connect();
 
         $statement->execute(array($userName, $hash_pwd, $last_connexion, $userRank, $userMail));
 
-        $db->disconnect();
+        unset($db);
     }
 
     public static function initUser($id){
         $db = new Database();
-$db = $db->connect();
+        $db = $db->connect();
         $statement = $db->prepare("SELECT*FROM opc_blog_users WHERE id = ?");
         $statement->execute(array($id));
 
         $obj = $statement->fetch();
         
         $obj = new User($obj['id'], $obj['name'], $obj['hash_pwd'], $obj['last_connexion'], $obj['rank'], $obj['comments'], $obj['articles'], $obj['mail']);
-        $db->disconnect();
+        unset($db);
         
         return $obj;
 
@@ -222,7 +221,7 @@ $db = $db->connect();
 $db = $db->connect();
         $statement = $db->prepare("DELETE FROM `opc_blog_users` WHERE id = ?");
         $result = $statement->execute(array($this->id));        
-        $db->disconnect();
+        unset($db);
 
         return $result;
     }
