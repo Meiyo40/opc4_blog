@@ -24,7 +24,7 @@ class Database{
 
     public function connect(){
         try {
-            $this->connection_db = new \PDO("mysql:host=$this->hostname;dbname=$this->dbname", $this->username, $this->password);
+            $this->connection_db = new \PDO("mysql:host=$this->hostname;dbname=$this->dbname;charset=utf8", $this->username, $this->password);
             $this->connection_db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         }
         catch (PDOException $e)
