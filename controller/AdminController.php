@@ -79,7 +79,7 @@ class AdminController{
         
         if($result == 'login' || $_SESSION['login']){
             echo $twig->render('/frontend/create.twig', [
-                'userList' => $usersList,
+                'usersList' => $usersList,
                 'OnlineUser' => $this->loggedUser,
             ]);
         }
