@@ -270,7 +270,7 @@ class AdminController{
         for($i = 0; $i < sizeof($posts); $i++){
             if($posts[$i]->getHideState() == '1'){
                 $newTitle = $posts[$i]->getTitle();
-                $newTitle = "(Hiding) ".$newTitle;
+                $newTitle = "(Hide) ".$newTitle;
                 $posts[$i]->setTitle($newTitle);
             }
         }
@@ -292,6 +292,7 @@ class AdminController{
     public function deletePost($id){
         $post = Post::initPost($id);
         $post->deletePost();
+        header('Location: index.php?action=listArticles');
     }
 
     public function deleteComment($id){

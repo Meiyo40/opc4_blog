@@ -76,6 +76,10 @@ if (isset($_GET['action'])) {
             $AdminController->getCreatePage($twig);
             break;
 
+        case 'deletearticle':
+            $AdminController->deletePost($_GET['article']);
+            break;
+
         case 'deletecomment':
             $AdminController->deleteComment($_GET['delComment']);
             break;

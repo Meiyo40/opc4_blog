@@ -61,13 +61,13 @@
                             <td>{{ post[i].nb_comments }}</td>
                             <td>{{ post[i].viewers }}</td>
                             <td class='btn-action'>
-                                <a href="index.php?action=editarticle&article={{ post[i].id }}"><button class='user-control' data-toggle='tooltip' title='Edit {{ post[i].title }}'><i class='far fa-edit'></i></button></a>                                
-                                <a href='index.php?action=deletearticle&article={{ post[i].id }}'><button class='user-control' data-toggle='tooltip' title='Supprimer {{ post[i].title }}'><i class="fas fa-trash"></i></button></a>
+                                <a href="javascript:void(0)" onclick="location.href='index.php?action=editarticle&article={{ post[i].id }}'"><button class='user-control' data-toggle='tooltip' title='Edit {{ post[i].title }}'><i class='far fa-edit'></i></button></a>                                
+                                <a href="javascript:void(0)" onclick="location.href='index.php?action=deletearticle&article={{ post[i].id }}'"><button class='user-control' data-toggle='tooltip' title='Supprimer {{ post[i].title }}'><i class="fas fa-trash"></i></button></a>
                                 {% if post[i].getHideState == '1' %}
-                                    <a href='index.php?action=displayarticle&article={{ post[i].id }}'><button class='user-control' onclick='togglePost(false, {{ post[i].id }} )' data-toggle='tooltip' title='Afficher {{ post[i].title }}'><i class="fas fa-eye"></i></button></a>
+                                    <a href="javascript:void(0)" onclick="location.href='index.php?action=displayarticle&article={{ post[i].id }}'"><button class='user-control' data-toggle='tooltip' title='Afficher {{ post[i].title }}'><i class="fas fa-eye"></i></button></a>
                                 {% else %}
                                 
-                                    <a href='index.php?action=hidearticle&article={{ post[i].id }}'><button class='user-control' onclick='togglePost(false, {{ post[i].id }} )' data-toggle='tooltip' title='Cacher {{ post[i].title }}'><i class='far fa-eye-slash'></i></button></a>
+                                    <a href="javascript:void(0)" onclick="location.href='index.php?action=hidearticle&article={{ post[i].id }}'"><button class='user-control' data-toggle='tooltip' title='Cacher {{ post[i].title }}'><i class='far fa-eye-slash'></i></button></a>
                                 {% endif %}
                             </td>
                         </tr>
