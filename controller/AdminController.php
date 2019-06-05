@@ -3,6 +3,7 @@
 namespace controller;
 
 use entity\User;
+use entity\Post;
 use entity\Comment;
 use manager\UserLogin;
 use manager\CommentManager;
@@ -87,6 +88,20 @@ class AdminController{
             header('Location: index.php?action=loginFail');
             die();
         }
+    }
+
+    public function displayArticle($article){
+        $post = Post::initPost($article);
+        $post->setHideState('0');
+        $post->updatePost();
+        header('Location: index.php?action=listArticles');
+    }
+
+    public function hideArticle($article){
+        $post = Post::initPost($article);
+        $post->setHideState('1');
+        $post->updatePost();
+        header('Location: index.php?action=listArticles');
     }
 
     public function getModeratedComPage($twig, $sizePage= 10){
@@ -249,8 +264,16 @@ class AdminController{
         $usersList = $this->UserLogin->getUsers();
         $result = $this->UserLogin->getLoginPage();
 
-        $posts = $this->DAO->getPosts();
+        $posts = $this->DAO->getAllPosts();
         $nbPage = ceil(sizeof($posts)/$sizePage);
+        
+        for($i = 0; $i < sizeof($posts); $i++){
+            if($posts[$i]->getHideState() == '1'){
+                $newTitle = $posts[$i]->getTitle();
+                $newTitle = "(Hiding) ".$newTitle;
+                $posts[$i]->setTitle($newTitle);
+            }
+        }
         
         if($result == 'login' || $_SESSION['login']){
             echo $twig->render('/frontend/adminlistposts.twig', [

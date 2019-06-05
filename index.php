@@ -80,8 +80,12 @@ if (isset($_GET['action'])) {
             $AdminController->deleteComment($_GET['delComment']);
             break;
 
-        case 'deleteuser';
+        case 'deleteuser':
             $AdminController->deleteUser($_GET['user']);
+            break;
+
+        case 'displayarticle':
+            $AdminController->displayArticle($_GET['article']);
             break;
 
         case 'editarticle':
@@ -92,6 +96,10 @@ if (isset($_GET['action'])) {
             $PostManager = new PostManager();
             $Post = $PostManager->getPost($_GET['article']);
             echo json_encode($Post);
+            break;
+
+        case 'hidearticle':
+            $AdminController->hideArticle($_GET['article']);
             break;
 
         case 'listArticles':

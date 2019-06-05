@@ -12,7 +12,7 @@ class DAO{
     public function getAllCommentsPost($postId = 0, $limit = 0, $countRows = false){    
         try { 
             $db = new Database();
-$db = $db->connect();
+            $db = $db->connect();
             $db->exec("set names utf8");
             $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             
@@ -28,7 +28,7 @@ $db = $db->connect();
             $Count = $statement->rowCount(); 
             if ($Count  > 0){
                 if(!$countRows){
-                    $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "entity\Comment", array("id", "post_id", "comment_parent", "depth", "author", "comment", "comment_date", "report", "moderation"));
+                    $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "entity\Comment", array("id", "post_id", "comment_parent", "depth", "author", "comment", "comment_date", "report", "moderation", "isHide"));
                     $obj = $statement->fetchAll(); 
 
                     for($i = 0; $i < sizeof($obj); $i++){
@@ -66,6 +66,36 @@ $db = $db->connect();
             $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             
             if($limit > 0){
+                $statement = $db->prepare("SELECT*FROM opc_blog_posts WHERE isHide = false ORDER BY date DESC LIMIT ".$limit);
+                $statement->execute();
+            }
+            else{
+                $statement = $db->prepare("SELECT*FROM opc_blog_posts WHERE isHide = false ORDER BY date DESC");
+                $statement->execute();
+            }            
+
+            $Count = $statement->rowCount(); 
+            if ($Count  > 0){
+                $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "entity\Post", array("id", "author", "content", "date", "title", "nb_comments", "img_key", "img_ext", "isHide"));
+                return $obj = $statement->fetchAll(); 
+
+                    unset($db);
+            }
+
+        }
+        catch (PDOException $e) {
+            echo 'Connection failed: ' . $e->getMessage();
+        }
+    }
+
+    public function getAllPosts( $limit = 0){
+        try { 
+            $db = new Database();
+            $db = $db->connect();
+            $db->exec("set names utf8");
+            $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            
+            if($limit > 0){
                 $statement = $db->prepare("SELECT*FROM opc_blog_posts ORDER BY date DESC LIMIT ".$limit);
                 $statement->execute();
             }
@@ -76,7 +106,7 @@ $db = $db->connect();
 
             $Count = $statement->rowCount(); 
             if ($Count  > 0){
-                $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "entity\Post", array("id", "author", "content", "date", "title", "nb_comments", "img_key", "img_ext"));
+                $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "entity\Post", array("id", "author", "content", "date", "title", "nb_comments", "img_key", "img_ext", "isHide"));
                 return $obj = $statement->fetchAll(); 
 
                     unset($db);
@@ -91,7 +121,7 @@ $db = $db->connect();
     public function getAllUsers($limit = 0){
         try { 
             $db = new Database();
-$db = $db->connect();
+            $db = $db->connect();
             $db->exec("set names utf8");
             $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             

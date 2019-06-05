@@ -14,8 +14,9 @@ class Post{
     private $nb_comments;
     private $img_key;
     private $img_ext;
+    private $isHide;
 
-    public function __construct($id, $author, $content, $date, $title, $nb_comments, $img_key = '', $img_ext = '')
+    public function __construct($id, $author, $content, $date, $title, $nb_comments, $img_key = '', $img_ext = '', $isHide = '0')
     {
         $this->id = $id;
         $this->author = $author;
@@ -25,6 +26,7 @@ class Post{
         $this->$nb_comments = $nb_comments;
         $this->img_key = $img_key;
         $this->img_ext = $img_ext;
+        $this->isHide = $isHide;
     }
 
     public function getContent(){
@@ -37,6 +39,10 @@ class Post{
 
     public function getId(){
         return $this->id;
+    }
+
+    public function getHideState(){
+        return $this->isHide;
     }
 
     public function getAuthor(){
@@ -130,6 +136,10 @@ class Post{
         $this->nb_comments = $nb;
     }
 
+    public function setHideState($state){
+        $this->isHide = $state;
+    }
+
     public function IncrementNb_comments(){
         $this->nb_comments += 1;
     }
@@ -150,13 +160,13 @@ class Post{
         $db = $db->connect();
         if($this->image != null){
 
-            $statement = $db->prepare("UPDATE `opc_blog_posts` SET `author` = ?, `content` = ?, `title` = ?, `img_key` = ?, `img_ext` = ?  WHERE `id` = ? ");
-            $statement->execute(array($this->author, $this->content, $this->title, $this->img_key, $this->img_ext, $this->id));
+            $statement = $db->prepare("UPDATE `opc_blog_posts` SET `author` = ?, `content` = ?, `title` = ?, `img_key` = ?, `img_ext` = ?, `isHide` = ?  WHERE `id` = ? ");
+            $statement->execute(array($this->author, $this->content, $this->title, $this->img_key, $this->img_ext, $this->isHide, $this->id));
         }
         else{
 
-            $statement = $db->prepare("UPDATE `opc_blog_posts` SET `author` = ?, `content` = ?, `title` = ?  WHERE `id` = ? ");
-            $statement->execute(array($this->author, $this->content, $this->title, $this->id));
+            $statement = $db->prepare("UPDATE `opc_blog_posts` SET `author` = ?, `content` = ?, `title` = ?, `isHide` = ?  WHERE `id` = ? ");
+            $statement->execute(array($this->author, $this->content, $this->title, $this->isHide, $this->id));
         }
         
         unset($db);
@@ -198,7 +208,7 @@ class Post{
 
         $obj = $statement->fetch();
 
-        $obj = new Post($obj['id'], $obj['author'], $obj['content'], $obj['date'], $obj['title'], $obj['nb_comments'], $obj['img_key'], $obj['img_ext']);
+        $obj = new Post($obj['id'], $obj['author'], $obj['content'], $obj['date'], $obj['title'], $obj['nb_comments'], $obj['img_key'], $obj['img_ext'], $obj['isHide']);
         
         return $obj;
 
