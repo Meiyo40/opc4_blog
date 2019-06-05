@@ -1,0 +1,141 @@
+{% extends '/layout/publiclayout.twig' %}
+
+{% block headcontent %}
+    <link rel="stylesheet" href="assets/css/postview.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+{% endblock %}
+
+{% block content %}
+<h1>{{ post.title }}</h1>
+
+    <div class="news">
+        <article>
+            <div id='post' class='post{{ post.id }}'>
+                <img class='largeImg' src='./resources/img/{{ post.img_key }}.{{ post.img_ext }}'></img>
+
+                <div class='article-content'>
+                        {% autoescape %}
+                            {{ post.content|raw }}
+                        {% endautoescape %}  
+                </div>
+
+                <p class='article-signature'>Publié par:  {{ post.author }}, le [{{ post.date }}] 
+                    <button id='btnPost' class='btn btn-primary' value='{{ post.id }}'>Commenter</button>
+                </p>
+                <br>
+            </div>
+        </article>
+            
+    </div>
+    
+    <h6>Commentaires de l'article:</h6>
+    <br>
+    {% for comment in comments %}
+        {% if not comment.comment_parent %}
+            <div class='commentGroup'>
+                <div class='comment node-depth-{{ comment.depth }}' id='post{{ comment.id }}'>
+                    <p class='comment-content'>
+                        {% autoescape %}
+                            {{ comment.comment|raw }}
+                        {% endautoescape %}  
+                    </p>
+                    <p class='comment-signature'>Rédigé par: <strong>{{ comment.author }}</strong>, le [{{ comment.comment_date }}] 
+                        <button onclick='displayForm({{ comment.id }}{{ comment.depth }})' class='comment-answer btn btn-primary' data-comment-id={{ comment.id }}>Répondre</button>
+                        <button onclick='reportComment({{ comment.id }},{{ post.id }})' class='btn-report btn btn-warning'><i class='far fa-bell'></i> Signaler</button>
+                    </p>
+                    <br>
+                </div>
+                <ul>
+        {% endif %}
+
+        {% for commentChild1 in comments %}
+            {% if commentChild1.comment_parent == comment.id and commentChild1.depth == 1 %}
+
+                <li class='subCommentContainer'>
+                    <div class='subComment node-depth-{{ commentChild1.depth }}' id='post{{ commentChild1.id }}'>
+                        <p>
+                                En réponse à <strong>{{ comment.author }}</strong>
+                        </p>
+                        <p class='comment-content'>
+                            {% autoescape %}
+                                {{ commentChild1.comment|raw }}
+                            {% endautoescape %}  
+                        </p>
+                        <p class='comment-signature'>
+                            Rédigé par: <strong>{{ commentChild1.author }}</strong>, le [{{ commentChild1.comment_date }}] 
+                            <button onclick='displayForm({{ commentChild1.id }},{{ commentChild1.depth }})' class='comment-answer btn btn-primary' data-comment-id={{ commentChild1.id }}>Répondre</button>
+                            <button onclick='reportComment({{ commentChild1.id }},{{ post.id }})'  class='btn-report btn btn-warning'><i class='far fa-bell'></i> Signaler</button>
+                        </p>
+                        <br>
+                    </div>
+                    <ul>
+
+
+                {% for commentChild2 in comments %}
+                    {% if commentChild2.comment_parent == commentChild1.id and commentChild2.depth == 2 %}
+
+                        <li>
+                            <div class='subSubComment node-depth-{{ commentChild2.depth }}' id='post{{ commentChild2.id }}'>
+                                <p>
+                                    En réponse à <strong>{{ commentChild1.author }}"</strong>
+                                </p>
+                                <p class='comment-content'>
+                                    {% autoescape %}
+                                        {{ commentChild2.comment|raw }}
+                                    {% endautoescape %}  
+                                </p>
+                                <p class='comment-signature'>
+                                    Rédigé par: <strong>{{ commentChild2.author }}</strong>, le [{{ commentChild2.comment_date }}] 
+                                    <button onclick='displayForm({{ commentChild2.id }},{{ commentChild2.depth }})' class='comment-answer btn btn-primary' data-comment-id={{ commentChild2.id }}>Répondre</button>
+                                    <button onclick='reportComment({{ commentChild2.id }},{{ post.id }})'  class='btn-report btn btn-warning'><i class='far fa-bell'></i> Signaler</button>
+                                </p>
+                                <br>
+                            </div>
+                        </li>
+
+
+                    {% for commentChild3 in comments %}
+                        {% if commentChild3.comment_parent == commentChild2.id and commentChild1.depth == 2 %}
+                            <li>
+                                <div class='subSubComment node-depth-{{ commentChild3.depth }}' id='post{{ commentChild3.id }}'>
+                                    <p>
+                                        En réponse à <strong>{{ commentChild2.author }}"</strong>
+                                    </p>
+                                    <p class='comment-content'>
+                                        {% autoescape %}
+                                            {{ commentChild3.comment|raw }}
+                                        {% endautoescape %}  
+                                    </p>
+                                    <p class='comment-signature'>
+                                        Rédigé par: <strong>{{ commentChild3.author }}</strong>, le [{{ commentChild3.comment_date }}] 
+                                        <button onclick='displayForm({{ commentChild3.id }},{{ commentChild3.depth }})' class='comment-answer btn btn-primary' data-comment-id={{ commentChild3.id }}>Répondre</button>
+                                        <button onclick='reportComment({{ commentChild3.id }},{{ post.id }})'  class='btn-report btn btn-warning'><i class='far fa-bell'></i> Signaler</button>
+                                    </p>
+                                    <br>
+                                </div>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            </li>
+        {% endfor %}
+        {% if not comment.parent %}
+            </ul></div>
+        {% endif %}
+    {% endfor %}
+
+    <form id='comment-form' class='comment-form' method='POST' value={{ post.id }}>
+        <label for="name">Nom/Pseudo: </label>
+        <input type='text' name='name' required>
+        <textarea form='comment-form' name="commentContent"></textarea>
+        <input type='hidden' id="node-depth-form" name='depth' value="">
+        <input type='submit' value='Envoyer'>
+    </form>
+
+{% endblock %}
+
+{% block script %}
+    <script src='assets/js/ajax.js'></script><script src='assets/js/comment.js'></script>
+{% endblock %}

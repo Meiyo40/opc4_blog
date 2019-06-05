@@ -11,6 +11,14 @@ use manager\PostManager;
 use entity\Comment;
 use services\DAO;
 
+$loader = new Twig_Loader_Filesystem(__DIR__.'/view');
+$twig = new Twig_Environment($loader, [
+    'cache'=> false,
+]);
+
+if(isset($_SESSION['login'])){
+    $AdminController->setLoggedUser($_SESSION['login']);
+}
 
 if (isset($_GET['action'])) {
     if(isset($_GET['comment'])){
@@ -57,7 +65,7 @@ if (isset($_GET['action'])) {
     switch($_GET['action']){
 
         case 'admin':
-            $AdminController->getAdminPanel();
+            $AdminController->getAdminPanel($twig);
             break;
 
         case 'applymoderation':
@@ -65,7 +73,7 @@ if (isset($_GET['action'])) {
             break;
 
         case 'create':
-            $AdminController->getCreatePage();
+            $AdminController->getCreatePage($twig);
             break;
 
         case 'deletecomment':
@@ -77,7 +85,7 @@ if (isset($_GET['action'])) {
             break;
 
         case 'editarticle':
-            $AdminController->getPostEditPage();
+            $AdminController->getPostEditPage($twig);
             break;
 
         case 'getArticleContent':
@@ -87,18 +95,31 @@ if (isset($_GET['action'])) {
             break;
 
         case 'listArticles':
-            $AdminController->getListsPostsToEdit();
+            if(isset($_GET['page'])){
+                $page = $_GET['page'];
+                $AdminController->getListsPostsToEdit($twig, $page);
+            }else{
+                $page = 1;
+                $AdminController->getListsPostsToEdit($twig, $page);
+            }
             break;
 
         case 'listPosts':
-            $Controller->listPosts();
+            if(isset($_GET['page'])){
+                $page = $_GET['page'];
+                $Controller->listPosts($twig, $page);
+            }
+            else{
+                $page = 1;
+                $Controller->listPosts($twig, $page);
+            }
             break;        
 
         case 'login':
         case 'loginFail':
             session_unset();
             session_destroy();
-            $AdminController->getLoginPage();
+            $AdminController->getLoginPage($twig);
             break;
 
         case 'logout':
@@ -110,16 +131,16 @@ if (isset($_GET['action'])) {
             break;
 
         case 'moderation':
-            $AdminController->getModerationPage('list');
+            $AdminController->getModerationPage($twig);
             break;
 
         case 'modlist':
-            $AdminController->getModerationPage('modlist');
+            $AdminController->getModeratedComPage($twig);
             break;
 
         case 'post':
             if (isset($_GET['id']) && $_GET['id'] > 0) {
-                $Controller->post();
+                $Controller->post($twig);
                 break;
             }
             else {
@@ -128,7 +149,7 @@ if (isset($_GET['action'])) {
             }
             
         case 'report':
-            $AdminController->getModerationPage('priority');
+            $AdminController->getReportedComPage($twig);
             break;
 
         case 'users':
@@ -136,12 +157,19 @@ if (isset($_GET['action'])) {
                 $AdminController->newUser();
             }
             else{
-                $AdminController->getUsersPage();
+                $AdminController->getUsersPage($twig);
             }
             break;
     }
 
 }
 else {
-    $Controller->listPosts();
+    if(isset($_GET['page'])){
+        $page = $_GET['page'];
+        $Controller->listPosts($twig, $page);
+    }
+    else{
+        $page = 1;
+        $Controller->listPosts($twig, $page);
+    }
 }

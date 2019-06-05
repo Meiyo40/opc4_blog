@@ -17,6 +17,7 @@ class AdminController{
     private $PostManager;
     private $CommentManager;
     private $DAO;
+    private $loggedUser;
 
     public function __construct()
     {
@@ -26,29 +27,44 @@ class AdminController{
         $this->CommentManager = new CommentManager();
     }
 
-    public function loginPage(){
+    public function setLoggedUser($newUser){
+        $this->loggedUser = $newUser;
+    }
+
+    public function loginPage($twig){
         $result = $this->UserLogin->getLoginPage();
 
         if($result){
-            require(__DIR__.'/../view/frontend/adminPanel.php');
+            echo $twig->render('/frontend/adminPanel.twig', [
+                'OnlineUser' => $_SERVER['login'],
+                ]);
         }
         else{
-            require(__DIR__.'/../view/frontend/loginPage.php');
+            echo $twig->render('/frontend/loginPage.twig', [
+                'action' => $_GET['action'],
+            ]);
         }
     }
 
-    public function getLoginPage(){
-        require(__DIR__.'/../view/frontend/loginPage.php');
+    public function getLoginPage($twig){
+        echo $twig->render('/frontend/loginPage.twig', [
+            'action' => $_GET['action'],
+        ]);
     }
 
-    public function getAdminPanel(){
+    public function getAdminPanel($twig){
         $posts = $this->DAO->getPosts(5);
         $commentLimit = 10;
         $comments = $this->DAO->getAllCommentsPost(0, $commentLimit);
         $result = $this->UserLogin->getLoginPage();
 
         if($result == 'login' || $_SESSION['login']){
-            require(__DIR__.'/../view/frontend/adminPanel.php');
+            echo $twig->render('/frontend/adminPanel.twig', [
+                'OnlineUser' => $this->loggedUser,
+                'posts' => $posts,
+                'commentLimit' => $commentLimit,
+                'comments' => $comments,
+                ]);
         }
         else{
             header('Location: index.php?action=loginFail');
@@ -56,13 +72,16 @@ class AdminController{
         }
     }
 
-    public function getCreatePage(){
+    public function getCreatePage($twig){
 
         $usersList = $this->UserLogin->getUsers();
         $result = $this->UserLogin->getLoginPage();
         
         if($result == 'login' || $_SESSION['login']){
-            require(__DIR__.'/../view/frontend/create.php');
+            echo $twig->render('/frontend/create.twig', [
+                'userList' => $usersList,
+                'OnlineUser' => $this->loggedUser,
+            ]);
         }
         else{
             header('Location: index.php?action=loginFail');
@@ -70,25 +89,82 @@ class AdminController{
         }
     }
 
-    public function getModerationPage($mode, $sizePage = 10){
-
+    public function getModeratedComPage($twig, $sizePage= 10){
         $usersList = $this->UserLogin->getUsers();
         $result = $this->UserLogin->getLoginPage();
-        if($mode == 'list'){
-            $comments = Comment::getAllComments();
+        $comments = Comment::getModeratedComments();
+
+        if(is_array($comments)){
+            $nbPage = ceil(sizeof($comments)/$sizePage);   
         }
-        elseif($mode == 'priority'){
-            $comments = Comment::getReportedComments();
+        else{
+            $nbPage = 1;
+        }     
+        
+        if(isset($_GET['page'])){
+            $page = $_GET['page'];
         }
-        elseif($mode == 'modlist'){
-            $comments = Comment::getModeratedComments();
+        else{
+            $page = 1;
         }
+
+        if(is_array($comments)){
+            if(sizeof($comments) < 10){
+                $sizePage = sizeof($comments);
+            }
+            else{
+                $sizePage = 10;
+            }
+        }        
+
+        if($result == 'login' || $_SESSION['login']){
+            echo $twig->render('/frontend/moderationPage.twig', [
+                'comments' => $comments,
+                'nbPage' => $nbPage,
+                'usersList' => $usersList,
+                'sizePage' => $sizePage,
+                'page' => $page,
+                'OnlineUser' => $this->loggedUser,
+            ]);
+        }
+        else{
+            header('Location: index.php?action=loginFail');
+            die();
+        }
+    }
+
+    public function getReportedComPage($twig, $sizePage= 10){
+        $usersList = $this->UserLogin->getUsers();
+        $result = $this->UserLogin->getLoginPage();
+        $comments = Comment::getReportedComments();
+
         if(is_array($comments)){
             $nbPage = ceil(sizeof($comments)/$sizePage);   
         }     
         
+        if(isset($_GET['page'])){
+            $page = $_GET['page'];
+        }
+        else{
+            $page = 1;
+        }
+
+        if(sizeof($comments) < 10){
+            $sizePage = sizeof($comments);
+        }
+        else{
+            $sizePage = 10;
+        }
+
         if($result == 'login' || $_SESSION['login']){
-            require(__DIR__.'/../view/frontend/moderationPage.php');
+            echo $twig->render('/frontend/moderationPage.twig', [
+                'comments' => $comments,
+                'nbPage' => $nbPage,
+                'usersList' => $usersList,
+                'sizePage' => $sizePage,
+                'page' => $page,
+                'OnlineUser' => $this->loggedUser,
+            ]);
         }
         else{
             header('Location: index.php?action=loginFail');
@@ -96,7 +172,47 @@ class AdminController{
         }
     }
 
-    public function getPostEditPage(){
+    public function getModerationPage($twig, $sizePage = 10){
+
+        $usersList = $this->UserLogin->getUsers();
+        $result = $this->UserLogin->getLoginPage();
+        $comments = Comment::getAllComments();
+
+        if(is_array($comments)){
+            $nbPage = ceil(sizeof($comments)/$sizePage);   
+        }     
+        
+        if(isset($_GET['page'])){
+            $page = $_GET['page'];
+        }
+        else{
+            $page = 1;
+        }
+
+        if(sizeof($comments) < 10){
+            $sizePage = sizeof($comments);
+        }
+        else{
+            $sizePage = 10;
+        }
+
+        if($result == 'login' || $_SESSION['login']){
+            echo $twig->render('/frontend/moderationPage.twig', [
+                'comments' => $comments,
+                'nbPage' => $nbPage,
+                'usersList' => $usersList,
+                'sizePage' => $sizePage,
+                'page' => $page,
+                'OnlineUser' => $this->loggedUser,
+            ]);
+        }
+        else{
+            header('Location: index.php?action=loginFail');
+            die();
+        }
+    }
+
+    public function getPostEditPage($twig){
         $usersList = $this->UserLogin->getUsers();
         $result = $this->UserLogin->getLoginPage();
 
@@ -105,7 +221,12 @@ class AdminController{
         $post = $this->PostManager->getPost($postId);
         
         if($result == 'login' || $_SESSION['login']){
-            require(__DIR__.'/../view/frontend/editArticle.php');
+            echo $twig->render('/frontend/editarticle.twig', [
+                'OnlineUser' => $this->loggedUser,
+                'article' => $postId,
+                'usersList' => $usersList,
+                'post' => $post,                
+            ]);
         }
         else{
             header('Location: index.php?action=loginFail');
@@ -124,7 +245,7 @@ class AdminController{
         $comment->update('moderation');
     }
 
-    public function getListsPostsToEdit($sizePage = 10){
+    public function getListsPostsToEdit($twig, $page, $sizePage = 10){
         $usersList = $this->UserLogin->getUsers();
         $result = $this->UserLogin->getLoginPage();
 
@@ -132,7 +253,12 @@ class AdminController{
         $nbPage = ceil(sizeof($posts)/$sizePage);
         
         if($result == 'login' || $_SESSION['login']){
-            require(__DIR__.'/../view/frontend/listArticles.php');
+            echo $twig->render('/frontend/adminlistposts.twig', [
+                'OnlineUser' => $this->loggedUser,
+                'page' => $page,
+                'sizePage' => $sizePage,
+                'post' => $posts,
+                'nbPage' => $nbPage]);
         }
         else{
             header('Location: index.php?action=loginFail');
@@ -150,12 +276,16 @@ class AdminController{
         $post->deleteCom();
     }
 
-    public function getUsersPage(){
+    public function getUsersPage($twig){
         $result = $this->UserLogin->getLoginPage();
         $users = DAO::getAllUsers();
 
         if($result == 'login' || $_SESSION['login']){
-            require(__DIR__.'/../view/frontend/userPage.php');
+            echo $twig->render('/frontend/userPage.twig', [
+                'users' => $users,
+                'OnlineUser' => $this->loggedUser,
+                'userRank' => $_SESSION['rank'],
+            ]);
         }
         else{
             header('Location: index.php?action=loginFail');
@@ -192,7 +322,7 @@ class AdminController{
             $user = User::createUser($userName, $userRawPwd, $userMail, $userRank);
         }
         else{
-            
+            echo 'ERROR';
         }
     }
 

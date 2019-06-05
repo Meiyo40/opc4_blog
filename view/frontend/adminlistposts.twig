@@ -1,0 +1,98 @@
+{% extends '/layout/adminlayout.twig' %}
+
+{% block title %}
+    <title>
+        List. Articles
+    </title>
+{% endblock %}
+
+{% block headcontent %}
+    <link href='./assets/css/postPage.css' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.2/css/all.css' integrity='sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay' crossorigin='anonymous'>
+{% endblock %}
+
+{% block content %}
+<h1 class="center" >Listes des articles</h1>
+    
+    <div id='blog' class="container">
+        <table id='poststable'>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Aperçu</th>
+                    <th>Auteur</th>
+                    <th>Date publication</th>
+                    <th>Nb. Commentaires</th>                
+                    <th>Nb. Vues</th>                    
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+                {% for i in sizePage*(page-1)..sizePage*page-1 %}
+                    {% if post[i] %}
+                        <tr>
+                            <td>{{ post[i].title }}</td>
+                            <td class='small-content'>
+                                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#ApercuModal{{post[i].id}}">Ouvrir</button>
+
+                                <div id="ApercuModal{{post[i].id}}" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {% autoescape %}
+                                                {{ post[i].content|raw }}
+                                            {% endautoescape %} 
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                </div>
+                            </td>
+                            <td>{{ post[i].author }}</td>
+                            <td>{{ post[i].date }}</td>
+                            <td>{{ post[i].nb_comments }}</td>
+                            <td>{{ post[i].viewers }}</td>
+                            <td class='btn-action'>
+                                <button class='user-control' onclick='rankUser(true,  {{ post[i].id }} )' data-toggle='tooltip' title='Edit {{ post[i].title }}'><i class='fas fa-plus'></i></button> 
+                                <button class='user-control' onclick='rankUser(false, {{ post[i].id }} )' data-toggle='tooltip' title='Cacher {{ post[i].title }}'><i class='fas fa-minus'></i></button>
+                                <button class='user-control' onclick='deleteUser( {{ post[i].id }} )' data-toggle='tooltip' title='Supprimer {{ post[i].title }}'><i class='fas fa-user-minus'></i></button>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+            
+            
+        {% if nbPage > 1 %}
+            <nav id="nav-Pagination">
+                <ul class="pagination">
+                    {% if page > 1 %}
+                        <li class="page-item"><a class="page-link" href="index.php?action=listArticles&page={{ page-1 }}">Previous</a></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="index.php?action=listArticles&page={{ nbPage }}">Previous</a></li>
+                    {% endif %}
+
+                    {% for i in 1..nbPage %}
+                        <li id='page-link-{{ i }}' class='page-item'><a class='page-link' href='index.php?action=listArticles&page={{ i }}'>{{ i }}</a></li>
+                    {% endfor %}
+
+                    {% if page < nbPage %}
+                        <li class="page-item"><a class="page-link" href="index.php?action=listArticles&page={{ page+1 }}">Next</a></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="index.php?action=listArticles&page=1">Next</a></li>
+                    {% endif %}
+
+                </ul>
+            </nav>
+        {% endif %} 
+    </div>
+{% endblock %}

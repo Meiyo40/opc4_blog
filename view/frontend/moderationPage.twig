@@ -1,0 +1,74 @@
+{% extends '/layout/adminlayout.twig' %}
+
+{% block title %}
+    <title>
+        Gest. Commentaires
+    </title>
+{% endblock %}
+
+{% block content %}
+        
+    <div id="btnCommentPanel">
+        <a href="index.php?action=moderation"><button><i class="far fa-comment-dots"></i> Liste des commentaires</button></a>
+        <a href="index.php?action=report"><button><i class="far fa-comment-dots"></i> Liste des signalements</button></a>
+        <a href="index.php?action=modlist"><button><i class="far fa-comment-dots"></i> Liste des modérés</button></a>
+    </div>
+    
+    <div id='blog-comments' class="container">
+        {% if comments %}
+            {% for i in sizePage*(page-1)..sizePage*page-1 %}
+                <div class='commentGroup'>
+                    <div class='comment node-depth-{{ comments[i].depth }}' id='post{{ comments[i].id }}'>
+                        <p class='comment-content'>
+                            {% if comments[i].moderation %}
+                                <strong style="color:red">Commentaire Modéré</strong><br>
+                            {% endif %}
+                            {% autoescape %}
+                                {{ comments[i].comment|raw }}
+                            {% endautoescape %}   
+                        </p>
+
+                        <p class='comment-signature'>
+                            Rédigé par: <strong> {{ comments[i].author }}</strong>, le [{{ comments[i].comment_date }}] 
+                        </p>
+
+                        <div class='comment-control-panel'>
+                            <button onclick='displayForm("{{ comments[i].id }}","{{ comments[i].depth }}")' class='comment-answer btn btn-primary' data-comment-id="{{ comments[i].id }}">Répondre</button>
+                            <button onclick='applyModeration("{{ comments[i].id }}", true)' class='btn btn-warning'><i class='fas fa-user-secret'></i> Modérer</button>
+                            <button onclick='applyModeration("{{ comments[i].id }}", false)' class='btn btn-success'><i class='far fa-thumbs-up'></i> Rétablir</button>
+                            <button onclick='requestDel("{{ comments[i].id }}")' class='btn btn-danger'><i class='far fa-times-circle'></i> Supprimer</button>                                
+                            <button class='reportCount' disabled><strong>Signalements: <i class='countNb'>{{ comments[i].report }}</i></strong></button>
+                        </div>
+                        <br>
+                </div>
+            {% endfor %}
+
+        {% else %}
+            <strong> Aucun commentaire signalé ou modéré</strong>
+        {% endif %}
+            
+            
+        {% if nbPage > 1 %}
+            <nav id="nav-Pagination">
+                <ul class="pagination">
+                    {% if page > 1 %}
+                        <li class="page-item"><a class="page-link" href="index.php?action=moderation&page={{ page-1 }}">Previous</a></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="index.php?action=moderation&page={{ nbPage }}">Previous</a></li>
+                    {% endif %}
+
+                    {% for i in 1..nbPage %}
+                        <li id='page-link-{{ i }}' class='page-item'><a class='page-link' href='index.php?action=moderation&page={{ i }}'>{{ i }}</a></li>
+                    {% endfor %}
+
+                    {% if page < nbPage %}
+                        <li class="page-item"><a class="page-link" href="index.php?action=moderation&page={{ page+1 }}">Next</a></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="index.php?action=moderation&page=1">Next</a></li>
+                    {% endif %}
+
+                </ul>
+            </nav>
+        {% endif %} 
+    </div>
+{% endblock %}

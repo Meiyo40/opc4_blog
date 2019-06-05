@@ -1,0 +1,78 @@
+{% extends '/layout/adminlayout.twig' %}
+
+{% block title %}
+    <title>
+        Page d'administration
+    </title>
+{% endblock %}
+
+{% block headContent %}
+    
+{% endblock %}
+
+{% block content %}
+
+<h1 class="center"> Panneau d'administration </h1>
+    
+    <div id='blog-infos'>
+        
+            <table>
+                <th>Les 5 derniers articles</th>
+                <th>Les 10 derniers commentaires</th>
+            
+                <tr>
+                <td id='displayPosts'>
+                    {% for i in 0..posts|length-1 %}
+                        <div class='btn-control'> 
+                            <button class='displayContent' onclick='toggleContent({{ posts[i].id }})'><i class='far fa-eye-slash'></i> Afficher l'article</button> 
+                            <a href='index.php?action=editarticle&article={{ posts[i].id }}'><button class='edit-btn'><i class='far fa-edit'></i> Editer article</button></a> 
+                            <a href='index.php?action=deletearticle&article={{ posts[i].id }}'><button class='deletePost-btn'><i class='far fa-trash-alt'></i> Supprimer article</button></a>
+                        </div>
+                        <div class='article'>
+
+                        {% if posts[i].img_key %}
+                            <div><img class='smallImg' src='./resources/img/{{ posts[i].img_key }}.{{ posts[i].img_ext }}'></img></div>
+                        {% endif %}
+
+                        <article>
+                            <a class='article-link' href='index.php?action=post&id={{ posts[i].id }}'>
+                            <h3>{{ posts[i].title }}</h3>
+                            
+                            <div class='post".$i."'>
+                                <div class='article-content' id='article-{{ posts[i].id }}'>
+                                    {% autoescape %}
+                                        {{ posts[i].content|raw }}
+                                    {% endautoescape %}
+                                </div>
+                                <p class='article-signature'>
+                                    Rédigé par: {{ posts[i].author }}, le [{{ posts[i].date }}] <em><a href='index.php?action=post&id={{ posts[i].id }}'>[{{ posts[i].nb_comments }}] Commentaires</a></em>
+                                </p>
+                            <br>
+                            </div>
+                            </a>
+                        </article>
+                            <div class='divider'></div>
+                        </div>
+                    {% endfor %}
+                </td>
+                <td id='displayComments'>
+                {% for i in 0..comments|length-1 %}
+                    <div class='subSubComment node-depth-{{ comments[i].depth }}' id='post{{ comments[i].id }}'>
+                        <p>En réponse à <strong>{{ comments[i].author }}</strong></p>
+                        <p class='comment-content'>
+                        {% autoescape %}
+                            {{ comments[i].comment|raw }}
+                        {% endautoescape %}                        
+                        </p>
+                        <p class='comment-signature'>Rédigé par: <strong>{{ comments[i].author }}</strong>, le [{{ comments[i].comment_date }}] <button onclick='displayForm({{ comments[i].id }},{{ comments[i].depth }})' class='comment-answer' data-comment-id={{ comments[i].id }}>Répondre</button></p><br>
+                    </div>
+                {% endfor %}
+                </td></tr>
+            
+            
+            </table>
+            
+        </p>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,129 @@
+{% extends '/layout/adminlayout.twig' %}
+
+{% block title %}
+    <title>
+        Gest. Utilisateurs
+    </title>
+{% endblock %}
+
+{% block headcontent %}
+    <link href='./assets/css/adminpanel.css' rel='stylesheet' type='text/css'>
+    <link href='./assets/css/userPage.css' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.2/css/all.css' integrity='sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay' crossorigin='anonymous'>
+{% endblock %}
+
+
+{% block content %}
+
+    <h1 class="center"> Gestion des utilisateurs </h1>
+
+    {% if userRank >= 3 %}   
+        <div method='POST' enctype='text/plain' role='form' action='index.php?action=users&newuser=true' class='modal fade' id='modalRegisterForm' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+            <div class='modal-dialog' role='document'>
+                <div class='modal-content'>
+                    <div class='modal-header text-center'>
+                        <h4 class='modal-title w-100 font-weight-bold'>Nouvel Utilisateur</h4>
+                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                        <span aria-hidden='true'>&times;</span>
+                        </button>
+                    </div>
+                    <div class='modal-body mx-3'>
+                        <div class='md-form mb-5'>
+                            <i class='fas fa-user prefix grey-text'></i>
+                            <input name='name' type='text' id='orangeForm-name' class='form-control validate' required>
+                            <label data-error='wrong' data-success='right' for='orangeForm-name'>Nom utilisateur</label>
+                        </div>
+
+                        <div class='md-form mb-5'>
+                            <i class='fas fa-envelope prefix grey-text'></i>
+                            <input name='email' type='email' id='orangeForm-email' class='form-control validate' required>
+                            <label data-error='wrong' data-success='right' for='orangeForm-email'>Email utilisateur</label>
+                        </div>
+
+                        <div class='md-form mb-4'>
+                            <i class='fas fa-lock prefix grey-text'></i>
+                            <input name='raw_pwd' type='password' id='orangeForm-pass' class='form-control validate' required>
+                            <label data-error='wrong' data-success='right' for='orangeForm-pass'>MDP utilisateur</label>
+                        </div>
+
+                        <div class='md-form mb-4'>
+                            <i class='fas fa-user-graduate'></i>
+                            <label data-error='wrong' data-success='right' for='orangeForm-rank'>Rang utilisateur: </label>
+                            <select id='orangeForm-rank' name='rank'>
+                                <option value='1'>Modérateur</option>
+                                <option value='2'>Autheur</option>
+                                <option value='3'>Admin</option>
+                            </select>                    
+                        </div>
+                    </div>
+                    
+                    <div class='modal-footer d-flex justify-content-center'>
+                        <button id='btn-submit' class='btn btn-deep-orange'><i class='fas fa-user-plus'></i> Ajouter l'utilisateur</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class='text-center'>
+            <button type='button' class='btn btn-info'>
+                <a id='user-add-btn' href='' class='btn btn-default btn-rounded' data-toggle='modal' data-target='#modalRegisterForm'><i class='fas fa-user-plus'></i> Ajouter un utilisateur</a>
+            </button>
+        </div>
+    {% endif %}
+
+
+    <table id='userstable'>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Rang</th>
+                <th>Dernière connexion</th>
+                <th>Commentaires</th>                
+                <th>Articles</th>
+                <th>Mail</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.rank }}</td>
+                    <td>{{ user.last_connexion }}</td>
+                    <td>{{ user.comments }}/td>
+                    <td>{{ user.articles }}</td>
+                    <td>{{ user.mail }}</td>
+                    <td class='btn-action'>
+                    {% if userRank >= 3 %}
+                            
+                        <button class='user-control' onclick='rankUser(true,  {{ user.id }} )' data-toggle='tooltip' title='Promouvoir {{ user.name }}'><i class='fas fa-plus'></i></button> 
+                        <button class='user-control' onclick='rankUser(false, {{ user.id }} )' data-toggle='tooltip' title='Retrograder {{ user.name }}'><i class='fas fa-minus'></i></button>
+                        <button class='user-control' onclick='deleteUser( {{ user.id }} )' data-toggle='tooltip' title='Supprimer {{ user.name }}'><i class='fas fa-user-minus'></i></button>
+                        <button class='user-control' onclick='mailUser( {{ user.mail }} )' data-toggle='tooltip' title='MailTo {{ user.name }}'><i class='fas fa-envelope-open-text'></i></button>
+                            
+                    {% else %}
+                        <button class='user-control' disabled><i class='fas fa-plus'></i></button> 
+                        <button class='user-control' disabled><i class='fas fa-minus'></i></button>
+                        <button class='user-control' disabled><i class='fas fa-user-minus'></i></button>
+                        <button class='user-control' disabled><i class='fas fa-envelope-open-text'></i></button>
+                    {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+
+{% block script %}
+    <script src='./assets/js/admin.js'></script>
+    <script src='assets/js/ajax.js'></script>
+    <script src='assets/js/userPage.js'></script>
+{% endblock %}
+{% block adminScript %}
+    {% if userRank >= 3 %}
+        <script src='assets/js/AdminR3Script.js'></script>
+    {% else %}
+        <script src='assets/js/AdminR1Script.js'></script>
+    {% endif %}
+{% endblock %} 

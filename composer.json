@@ -7,7 +7,9 @@
         "email": "meiyo40@gmail.com"
     }],
     "minimum-stability": "stable",
-    "require": {},
+    "require": {
+        "twig/twig": "2.0"
+    },
     "autoload": {
         "psr-4": {
             "": ["model", "controller"]

@@ -1,0 +1,55 @@
+#poststable {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 90%;
+    margin: 50px auto;
+}
+
+#poststable td, #poststable th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#poststable td{
+    height: 70px;
+}
+
+#poststable tr{
+    background-color: cadetblue;
+}
+
+#poststable tr:nth-child(even){
+    background-color: #0c8999;
+}
+
+#poststable tr:hover {
+    background-color: #ddd;
+    color: #000;
+}
+
+#poststable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #0078AD;
+    color: white;
+}
+
+#modalRegisterForm{
+    color: #000;
+}
+
+#user-add-btn{
+    color: #fff;
+}
+
+.btn-action{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-control{
+    height: 35px;
+   
+}

@@ -24,7 +24,7 @@ class Controller{
         $this->DAO = new DAO();
     }
 
-    public function listPosts($sizePage  = 5)
+    public function listPosts($twig, $page, $sizePage  = 5)
     {
         $posts = $this->DAO->getPosts();
         $nbPage = ceil(sizeof($posts)/$sizePage);
@@ -34,16 +34,27 @@ class Controller{
             $posts[$i]->setNb_comments($nb_comments);
         }
        
-        
-        require(__DIR__.'/../view/frontend/listPostsView.php');
+        echo $twig->render('/frontend/listarticles.twig', [
+            'page' => $page,
+            'sizePage' => 5,
+            'posts' => $posts,
+            'nbPage' => $nbPage]);
     }
 
-    public function post()
+    public function post($twig)
     {
         $post = Post::initPost($_GET['id']);
         $comments = $this->DAO->getAllCommentsPost($_GET['id']);
-        
-        require(__DIR__.'/../view/frontend/postView.php');
+
+        $page = 1;
+        $nbPage = 1;
+
+        echo $twig->render('/frontend/postView.twig', [
+            'page' => $page,
+            'sizePage' => 5,
+            'post' => $post,
+            'comments' => $comments,
+            'nbPage' => $nbPage]);
     }
 
     public function addPost($title, $content, $author, $img_name){
