@@ -31,10 +31,15 @@ class AdminController{
         $this->Controller = new Controller();
     }
 
-    public function addAdminComment($commentId, $message, $name){
+    public function addAdminComment($commentId, $message, $author){
         $comment = Comment::initComment($commentId);
         $postId = $comment->getPost_id();
-        $this->Controller->addComment($postId, $name, $message);
+        $depth = (int)$comment->getDepth();
+        $depth++;
+        if ($depth > 2){
+            $depth = 2;
+        }
+        $this->Controller->addCommentToComment($postId, $author, $message, $commentId, $depth);
         header('Location: index.php?action=moderation');
     }
 

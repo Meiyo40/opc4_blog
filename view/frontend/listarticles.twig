@@ -18,6 +18,7 @@
                             <h3> {{ posts[i].title }} </h3>
                             <div>
                                 <div class='article-content' style='display: block'>
+                                <img class='smallImg' src='./resources/img/{{ posts[i].img_key }}.{{ posts[i].img_ext }}'></img>
                                     {% autoescape %}
                                         {{ posts[i].content|raw }}
                                     {% endautoescape %} 

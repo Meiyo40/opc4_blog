@@ -18,8 +18,6 @@ submit.addEventListener('click', () => {
         message: message
     };
     
-    console.log(answer.name + ' ' + answer.message);
-    
     let url = $('#modalanswer').attr('action');
     $.post(url,{
         author: answer.name,

@@ -114,6 +114,9 @@ article{
 .btn-control{
     margin-top: 25px;
 }
+a:link{
+    color: cadetblue;
+}
 
 /*COMMENT POST*/
 

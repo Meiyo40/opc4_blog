@@ -39,7 +39,13 @@
                             {{ comment.comment|raw }}
                         {% endautoescape %}  
                     </p>
-                    <p class='comment-signature'>Rédigé par: <strong>{{ comment.author }}</strong>, le [{{ comment.comment_date }}] 
+                    <p class='comment-signature'>Rédigé par:
+                    {% if comment.author == 'admin' %}
+                        <strong style='color:red'>{{ comment.author }}</strong>,
+                    {% else %}
+                        <strong>{{ comment.author }}</strong>,
+                    {% endif %}
+                     le [{{ comment.comment_date }}] 
                         <button onclick='displayForm({{ comment.id }}{{ comment.depth }})' class='comment-answer btn btn-primary' data-comment-id={{ comment.id }}>Répondre</button>
                         <button onclick='reportComment({{ comment.id }},{{ post.id }})' class='btn-report btn btn-warning'><i class='far fa-bell'></i> Signaler</button>
                     </p>
@@ -62,7 +68,13 @@
                             {% endautoescape %}  
                         </p>
                         <p class='comment-signature'>
-                            Rédigé par: <strong>{{ commentChild1.author }}</strong>, le [{{ commentChild1.comment_date }}] 
+                            Rédigé par:
+                            {% if commentChild1.author == 'admin' %}
+                                <strong style='color:red'>{{ commentChild1.author }}</strong>,
+                            {% else %}
+                                <strong>{{ commentChild1.author }}</strong>,
+                            {% endif %}
+                             le [{{ commentChild1.comment_date }}] 
                             <button onclick='displayForm({{ commentChild1.id }},{{ commentChild1.depth }})' class='comment-answer btn btn-primary' data-comment-id={{ commentChild1.id }}>Répondre</button>
                             <button onclick='reportComment({{ commentChild1.id }},{{ post.id }})'  class='btn-report btn btn-warning'><i class='far fa-bell'></i> Signaler</button>
                         </p>
@@ -85,7 +97,13 @@
                                     {% endautoescape %}  
                                 </p>
                                 <p class='comment-signature'>
-                                    Rédigé par: <strong>{{ commentChild2.author }}</strong>, le [{{ commentChild2.comment_date }}] 
+                                    Rédigé par: 
+                                    {% if commentChild2.author == 'admin' %}
+                                        <strong style='color:red'>{{ commentChild2.author }}</strong>,
+                                    {% else %}
+                                        <strong>{{ commentChild2.author }}</strong>,
+                                    {% endif %}
+                                     le [{{ commentChild2.comment_date }}] 
                                     <button onclick='displayForm({{ commentChild2.id }},{{ commentChild2.depth }})' class='comment-answer btn btn-primary' data-comment-id={{ commentChild2.id }}>Répondre</button>
                                     <button onclick='reportComment({{ commentChild2.id }},{{ post.id }})'  class='btn-report btn btn-warning'><i class='far fa-bell'></i> Signaler</button>
                                 </p>
@@ -95,7 +113,7 @@
 
 
                     {% for commentChild3 in comments %}
-                        {% if commentChild3.comment_parent == commentChild2.id and commentChild1.depth == 2 %}
+                        {% if commentChild3.comment_parent == commentChild2.id and commentChild3.depth == 2 %}
                             <li>
                                 <div class='subSubComment node-depth-{{ commentChild3.depth }}' id='post{{ commentChild3.id }}'>
                                     <p>
@@ -107,7 +125,13 @@
                                         {% endautoescape %}  
                                     </p>
                                     <p class='comment-signature'>
-                                        Rédigé par: <strong>{{ commentChild3.author }}</strong>, le [{{ commentChild3.comment_date }}] 
+                                        Rédigé par:
+                                        {% if commentChild3.author == 'admin' %}
+                                            <strong style='color:red'>{{ commentChild3.author }}</strong>,
+                                        {% else %}
+                                            <strong>{{ commentChild3.author }}</strong>,
+                                        {% endif %}
+                                         le [{{ commentChild3.comment_date }}] 
                                         <button onclick='displayForm({{ commentChild3.id }},{{ commentChild3.depth }})' class='comment-answer btn btn-primary' data-comment-id={{ commentChild3.id }}>Répondre</button>
                                         <button onclick='reportComment({{ commentChild3.id }},{{ post.id }})'  class='btn-report btn btn-warning'><i class='far fa-bell'></i> Signaler</button>
                                     </p>
