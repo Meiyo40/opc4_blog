@@ -28,6 +28,7 @@ function requestDel(commentId){
     let url = "index.php?action=deletecomment&delComment="+commentId;
         $.post(url,null,function(data){ 
             alert('Commentaire supprimé');
+            location.reload();
         });
 }
 

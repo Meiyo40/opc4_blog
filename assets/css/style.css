@@ -57,8 +57,13 @@ article{
     margin: 20px 0;
 }
 
+.article-content > p > a,
+.article-content > p > sup > a{
+    color: cadetblue;
+}
+
 .article-link,
-.article-link:hover {
+.article-link:hover{
     color: #fff;
     text-decoration: none;
 }
@@ -114,9 +119,7 @@ article{
 .btn-control{
     margin-top: 25px;
 }
-a:link{
-    color: cadetblue;
-}
+
 
 /*COMMENT POST*/
 
