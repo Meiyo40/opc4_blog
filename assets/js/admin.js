@@ -75,6 +75,8 @@ if($_GET.action === 'moderation'){
         let pageLinkId = "page-link-1";
         let pageLink = document.getElementById(pageLinkId);
 
-        pageLink.classList.add('active');
+        if(pageLink){
+            pageLink.classList.add('active');
+        }
     }
 }

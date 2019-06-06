@@ -6,6 +6,10 @@
     </title>
 {% endblock %}
 
+{% block script %}
+    <script src='assets/js/adminanswer.js'></script>
+{% endblock %}
+
 {% block content %}
         
     <div id="btnCommentPanel">
@@ -13,6 +17,42 @@
         <a href="index.php?action=report"><button><i class="far fa-comment-dots"></i> Liste des signalements</button></a>
         <a href="index.php?action=modlist"><button><i class="far fa-comment-dots"></i> Liste des modérés</button></a>
     </div>
+
+    
+
+    <form method='POST' enctype='text/plain' role='form' action='index.php?action=answerto' id="modalanswer" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class='modal-header text-center'>
+                    <h4 id='modal-title' class='modal-title w-100 font-weight-bold'>Votre réponse</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class='md-form mb-4'>
+                        <i class='fas fa-user prefix grey-text'></i>
+                        <label data-error='wrong' data-success='right' for='name'>Votre pseudo:</label>
+                        <input name='name' type='text' id='name' class='form-control validate' value='{{ OnlineUser }}' disabled>
+                    </div>
+
+                    <div class='md-form mb-4'>
+                        <i class='fas fa-user prefix grey-text'></i>
+                        <label data-error='wrong' data-success='right' for='answerto'>En réponse à:</label>
+                        <input name='answerto' type='text' id='answerto' class='form-control validate' disabled>
+                    </div>
+
+                    <div class='md-form mb-5'>
+                        <i class='fas fa-envelope prefix grey-text'></i>
+                        <label data-error='wrong' data-success='right' for='message'>Message</label>
+                        <textarea name='message' type='text' id='message' class='form-control validate' required></textarea>                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="btn-submit" type="submit" class="btn btn-default" data-dismiss="modal">Envoyer</button>
+                </div>
+            </div>
+        </div>
+    </form>
     
     <div id='blog-comments' class="container">
         {% if comments %}
@@ -33,7 +73,7 @@
                         </p>
 
                         <div class='comment-control-panel'>
-                            <button onclick='displayForm("{{ comments[i].id }}","{{ comments[i].depth }}")' class='comment-answer btn btn-primary' data-comment-id="{{ comments[i].id }}">Répondre</button>
+                            <button type="button" class="btn btn-primary" onclick="displayModal({{ comments[i].id }}, '{{ comments[i].author }}')"> Répondre</button>
                             <button onclick='applyModeration("{{ comments[i].id }}", true)' class='btn btn-warning'><i class='fas fa-user-secret'></i> Modérer</button>
                             <button onclick='applyModeration("{{ comments[i].id }}", false)' class='btn btn-success'><i class='far fa-thumbs-up'></i> Rétablir</button>
                             <button onclick='requestDel("{{ comments[i].id }}")' class='btn btn-danger'><i class='far fa-times-circle'></i> Supprimer</button>                                
@@ -72,3 +112,4 @@
         {% endif %} 
     </div>
 {% endblock %}
+

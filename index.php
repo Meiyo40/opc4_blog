@@ -68,6 +68,10 @@ if (isset($_GET['action'])) {
             $AdminController->getAdminPanel($twig);
             break;
 
+        case 'adminanswer':
+            $AdminController->addAdminComment($_GET['answered'], $_POST['message'], $_POST['author']);
+            break;
+
         case 'applymoderation':
             $AdminController->setModeration($_GET['Comment'], $_GET['mod']);
             break;

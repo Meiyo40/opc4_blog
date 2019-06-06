@@ -2,6 +2,7 @@
 
 namespace controller;
 
+use controller\Controller;
 use entity\User;
 use entity\Post;
 use entity\Comment;
@@ -17,6 +18,7 @@ class AdminController{
     private $UserLogin;
     private $PostManager;
     private $CommentManager;
+    private $Controller;
     private $DAO;
     private $loggedUser;
 
@@ -26,6 +28,14 @@ class AdminController{
         $this->UserLogin = new UserLogin();
         $this->PostManager = new PostManager();
         $this->CommentManager = new CommentManager();
+        $this->Controller = new Controller();
+    }
+
+    public function addAdminComment($commentId, $message, $name){
+        $comment = Comment::initComment($commentId);
+        $postId = $comment->getPost_id();
+        $this->Controller->addComment($postId, $name, $message);
+        header('Location: index.php?action=moderation');
     }
 
     public function setLoggedUser($newUser){

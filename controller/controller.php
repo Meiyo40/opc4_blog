@@ -80,6 +80,11 @@ class Controller{
 
     public function addComment($postId, $author, $comment)
     {
+
+        if($author == 'admin' && $_SESSION['login'] != 'admin'){
+            $author = '(not) '.$author;
+        }
+
         $newComment = $this->CommentManager->addCommentToPost($postId, $author, $comment);
 
         if ($newComment === false) {

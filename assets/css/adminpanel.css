@@ -77,3 +77,7 @@ article > .displayContent{
 .countNb{
     color: red;
 }
+label,
+#modal-title{
+    color: #000;
+}
