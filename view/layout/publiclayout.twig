@@ -13,9 +13,9 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
         <!-- Place your stylesheet here-->
-        <link href="assets/css/style.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="assets/css/style.css" rel="stylesheet" type="text/css">
         {% block headcontent %}{% endblock %}
-        <link href="assets/css/custom/skin.min.css">
+        <link rel="stylesheet" href="assets/css/custom/skin.min.css">
     </head>
         
     <body>
@@ -24,7 +24,7 @@
 
         <form id="newsletterForm" action="index.php?newsletter=true" method="POST">
             <label for="email">S'inscrire à la Newsletter: </label>
-            <input type="mail" name="email" placeholder="Votre email">
+            <input type="email" name="email" placeholder="Votre email">
             <input type="submit" value="S'inscrire">
         </form>
 

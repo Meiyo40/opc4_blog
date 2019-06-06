@@ -5,13 +5,17 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 {% endblock %}
 
+{% block title %}
+    <title>Article: {{ post.title }}</title>
+{% endblock %}
+
 {% block content %}
 <h1>{{ post.title }}</h1>
 
     <div class="news">
         <article>
             <div id='post' class='post{{ post.id }}'>
-                <img class='largeImg' src='./resources/img/{{ post.img_key }}.{{ post.img_ext }}'></img>
+                <img class='largeImg' src='./resources/img/{{ post.img_key }}.{{ post.img_ext }}' alt="Image d'illustration de l'article {{ post.title }}"></img>
 
                 <div class='article-content'>
                         {% autoescape %}
@@ -109,7 +113,7 @@
                                 </p>
                                 <br>
                             </div>
-                        </li>
+                        
 
 
                     {% for commentChild3 in comments %}
@@ -140,10 +144,11 @@
                             </li>
                         {% endif %}
                     {% endfor %}
+                    </li>
                     {% endif %}
                 {% endfor %}
-            {% endif %}
-            </li>
+                </li>
+            {% endif %}            
         {% endfor %}
         {% if not comment.parent %}
             </ul></div>
@@ -152,7 +157,7 @@
 
     <form id='comment-form' class='comment-form' method='POST' value={{ post.id }}>
         <label for="name">Nom/Pseudo: </label>
-        <input type='text' name='name' required>
+        <input id="name" type='text' name='name' required>
         <textarea form='comment-form' name="commentContent"></textarea>
         <input type='hidden' id="node-depth-form" name='depth' value="">
         <input type='submit' value='Envoyer'>
