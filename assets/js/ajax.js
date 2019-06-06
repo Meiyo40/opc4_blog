@@ -29,8 +29,14 @@ function Ajax(url) {
 
         oXhr.open("GET", this.url, true);
         oXhr.send();
+        oXhr.showalert = true;
 
-        oXhr.onreadystatechange = function() { alert("Commentaire signalé, il sera vérifié par l'administration") };
+        oXhr.onreadystatechange = function() { 
+            if(oXhr.readyState === 4 && oXhr.status === 200 && oXhr.showalert == true){
+                oXhr.showalert = false;
+                alert("Commentaire signalé, il sera vérifié par l'administration");
+            }
+        };
     }
     
     this.ajaxPost = () => {
