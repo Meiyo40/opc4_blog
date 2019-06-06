@@ -1,5 +1,4 @@
 /vendor/
-/resources/
 debug.html
 /model/services/config.ini
 /model/services/.htaccess
