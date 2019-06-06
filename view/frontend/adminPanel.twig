@@ -64,7 +64,7 @@
                             {{ comments[i].comment|raw }}
                         {% endautoescape %}                        
                         </p>
-                        <p class='comment-signature'>Rédigé par: <strong>{{ comments[i].author }}</strong>, le [{{ comments[i].comment_date }}] <button onclick='displayForm({{ comments[i].id }},{{ comments[i].depth }})' class='comment-answer' data-comment-id={{ comments[i].id }}>Répondre</button></p><br>
+                        <p class='comment-signature'>Rédigé par: <strong>{{ comments[i].author }}</strong>, le [{{ comments[i].comment_date }}]</p><br>
                     </div>
                 {% endfor %}
                 </td></tr>
