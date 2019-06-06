@@ -22,8 +22,8 @@ $db = $db->connect();
         return $post; 
     }
 
-    public function addPost($title, $content, $author, $img_name){
-
+    public function addPost($title, $content, $author, $img_name = null){
+        
         $pattern = '/(gif|png|jpeg|jpg)$/i';
         $extension = pathinfo($img_name, PATHINFO_EXTENSION);
         $extension = preg_match($pattern, $extension);

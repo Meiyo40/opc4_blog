@@ -307,7 +307,12 @@ class AdminController{
     public function deletePost($id){
         $post = Post::initPost($id);
         $post->deletePost();
-        header('Location: index.php?action=listArticles');
+        if($_GET['action'] == 'listArticles'){
+            header('Location: index.php?action=listArticles');
+        }
+        else{
+            header('Location: index.php?action=admin');
+        }
     }
 
     public function deleteComment($id){

@@ -59,7 +59,7 @@ class Controller{
 
     public function addPost($title, $content, $author, $img_name){
         $newPost = $this->PostManager->addPost($title, $content, $author, $img_name);
-
+        
         if ($newPost === false) {
             throw new Exception('Impossible d\'ajouter le post !');
         }
