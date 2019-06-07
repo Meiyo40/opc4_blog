@@ -16,10 +16,6 @@ $twig = new Twig_Environment($loader, [
     'cache'=> false,
 ]);
 
-if(isset($_SESSION['login'])){
-    $AdminController->setLoggedUser($_SESSION['login']);
-}
-
 if (isset($_GET['action'])) {
     if(isset($_GET['comment'])){
         

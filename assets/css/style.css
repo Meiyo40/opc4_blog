@@ -1,8 +1,6 @@
 /*  GENERAL  */
 
 body {
-    background-color: #000;
-    color: #fff;
     height: 100%;
 }
 h6{
@@ -64,7 +62,7 @@ article{
 
 .article-link,
 .article-link:hover{
-    color: #fff;
+    color: #000;
     text-decoration: none;
 }
 
@@ -72,7 +70,7 @@ article{
 .comment,
 .subComment,
 .subSubComment{
-    border: solid 2px #fff;
+    border: solid 2px #000;
     border-radius: 10px;
     padding: 5px;
     margin-bottom: 0;
@@ -91,7 +89,7 @@ h6 {
 .divider{
     width: 100%;
     height: 1px;
-    background-color: white;
+    background-color: #000;
 }
 
 

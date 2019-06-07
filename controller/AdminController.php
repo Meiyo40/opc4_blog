@@ -43,17 +43,15 @@ class AdminController{
         header('Location: index.php?action=moderation');
     }
 
-    public function setLoggedUser($newUser){
-        $this->loggedUser = $newUser;
+    public function setLoggedUser(){
+        $this->loggedUser = $_SESSION['login'];
     }
 
     public function loginPage($twig){
         $result = $this->UserLogin->getLoginPage();
 
         if($result){
-            echo $twig->render('/frontend/adminPanel.twig', [
-                'OnlineUser' => $_SERVER['login'],
-                ]);
+            echo $twig->render('/frontend/adminPanel.twig');
         }
         else{
             echo $twig->render('/frontend/loginPage.twig', [
@@ -76,7 +74,6 @@ class AdminController{
 
         if($result == 'login' || $_SESSION['login']){
             echo $twig->render('/frontend/adminPanel.twig', [
-                'OnlineUser' => $this->loggedUser,
                 'posts' => $posts,
                 'commentLimit' => $commentLimit,
                 'comments' => $comments,
@@ -96,7 +93,6 @@ class AdminController{
         if($result == 'login' || $_SESSION['login']){
             echo $twig->render('/frontend/create.twig', [
                 'usersList' => $usersList,
-                'OnlineUser' => $this->loggedUser,
             ]);
         }
         else{
@@ -154,7 +150,6 @@ class AdminController{
                 'usersList' => $usersList,
                 'sizePage' => $sizePage,
                 'page' => $page,
-                'OnlineUser' => $this->loggedUser,
             ]);
         }
         else{
@@ -193,7 +188,6 @@ class AdminController{
                 'usersList' => $usersList,
                 'sizePage' => $sizePage,
                 'page' => $page,
-                'OnlineUser' => $this->loggedUser,
             ]);
         }
         else{
@@ -233,7 +227,6 @@ class AdminController{
                 'usersList' => $usersList,
                 'sizePage' => $sizePage,
                 'page' => $page,
-                'OnlineUser' => $this->loggedUser,
             ]);
         }
         else{
@@ -252,7 +245,6 @@ class AdminController{
         
         if($result == 'login' || $_SESSION['login']){
             echo $twig->render('/frontend/editarticle.twig', [
-                'OnlineUser' => $this->loggedUser,
                 'article' => $postId,
                 'usersList' => $usersList,
                 'post' => $post,                
@@ -292,7 +284,6 @@ class AdminController{
         
         if($result == 'login' || $_SESSION['login']){
             echo $twig->render('/frontend/adminlistposts.twig', [
-                'OnlineUser' => $this->loggedUser,
                 'page' => $page,
                 'sizePage' => $sizePage,
                 'post' => $posts,
@@ -327,7 +318,6 @@ class AdminController{
         if($result == 'login' || $_SESSION['login']){
             echo $twig->render('/frontend/userPage.twig', [
                 'users' => $users,
-                'OnlineUser' => $this->loggedUser,
                 'userRank' => $_SESSION['rank'],
             ]);
         }
