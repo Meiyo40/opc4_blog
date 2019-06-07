@@ -6,10 +6,9 @@ define('ROOT', str_replace('index.php', '', $_SERVER['SCRIPT_FILENAME']));
 require_once __DIR__.'/vendor/autoload.php';
 require_once __DIR__.'/controller/controller.php';
 require_once __DIR__.'/controller/AdminController.php';
+require_once __DIR__.'/controller/Security.php';
 
 use manager\PostManager;
-use entity\Comment;
-use services\DAO;
 
 $loader = new Twig_Loader_Filesystem(__DIR__.'/view');
 $twig = new Twig_Environment($loader, [
@@ -131,11 +130,11 @@ if (isset($_GET['action'])) {
         case 'loginFail':
             session_unset();
             session_destroy();
-            $AdminController->getLoginPage($twig);
+            $Security->getLoginPage($twig);
             break;
 
         case 'logout':
-            $AdminController->disconnectUser();
+            $Security->logout();
             break;
 
         case 'manageuser':

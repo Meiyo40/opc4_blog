@@ -3,6 +3,7 @@
 namespace controller;
 
 use controller\Controller;
+use controller\Security;
 use entity\User;
 use entity\Post;
 use entity\Comment;
@@ -15,13 +16,11 @@ use services\Helper;
 
 class AdminController{
 
-    private $User;
     private $UserLogin;
     private $PostManager;
     private $CommentManager;
     private $Controller;
     private $DAO;
-    private $loggedUser;
 
     public function __construct()
     {
@@ -37,32 +36,9 @@ class AdminController{
         $postId = $comment->getPost_id();
         $depth = (int)$comment->getDepth();
         $depth = $comment->addDepth($depth);
-        $author = $this->DAO->isMember($author);
+        $author = Security::isMember($author);
         $this->Controller->addCommentToComment($postId, $author, $message, $commentId, $depth);
         header('Location: index.php?action=moderation');
-    }
-
-    public function setLoggedUser(){
-        $this->loggedUser = $_SESSION['login'];
-    }
-
-    public function loginPage($twig){
-        $result = $this->UserLogin->getLoginPage();
-
-        if($result){
-            echo $twig->render('/frontend/adminPanel.twig');
-        }
-        else{
-            echo $twig->render('/frontend/loginPage.twig', [
-                'action' => $_GET['action'],
-            ]);
-        }
-    }
-
-    public function getLoginPage($twig){
-        echo $twig->render('/frontend/loginPage.twig', [
-            'action' => $_GET['action'],
-        ]);
     }
 
     public function getAdminPanel($twig){
@@ -276,7 +252,7 @@ class AdminController{
 
     public function getUsersPage($twig){
         $result = $this->UserLogin->getLoginPage();
-        $users = DAO::getAllUsers();
+        $users = $this->UserLogin->getUsers();
 
         if($result == 'login' || $_SESSION['login']){
             echo $twig->render('/frontend/userPage.twig', [
@@ -335,10 +311,6 @@ class AdminController{
             header('Location: index.php?action=users&delete=failed');
             die();
         }
-    }
-
-    public function disconnectUser(){
-        require(__DIR__.'/../view/frontend/logout.php');
     }
 }
 

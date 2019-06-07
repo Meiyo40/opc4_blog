@@ -10,7 +10,7 @@ class UserLogin{
 
     public function getUsers(){
         $db = new Database();
-$db = $db->connect();
+        $db = $db->connect();
         $statement = $db->prepare('SELECT*FROM opc_blog_users');
 
         $statement->execute();

@@ -14,7 +14,6 @@ class Controller{
     private $PostManager;
     private $DAO;
     private $CommentManager; 
-    private $Comment;
 
     public function __construct()
     {
@@ -81,7 +80,7 @@ class Controller{
     public function addComment($postId, $author, $comment)
     {
 
-        $author = $this->DAO->isMember($author);
+        $author = Security::isMember($author);
 
         $newComment = $this->CommentManager->addCommentToPost($postId, $author, $comment);
 
@@ -95,7 +94,7 @@ class Controller{
     
     public function addCommentToComment($postId, $author, $content, $commentId, $depth){
 
-        $author = $this->DAO->isMember($author);
+        $author = Security::isMember($author);
 
         $newComment = $this->CommentManager->addCommentToComment($postId, $author, $content, $commentId, $depth);
 

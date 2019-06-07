@@ -22,6 +22,9 @@ class Helper{
     public static function getNbPage($comments, $sizePage){
         if(is_array($comments)){
             return ceil(sizeof($comments)/$sizePage);   
+        }
+        else{
+            return 1;
         }    
     }
 
