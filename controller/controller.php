@@ -81,9 +81,7 @@ class Controller{
     public function addComment($postId, $author, $comment)
     {
 
-        if($author == 'admin' && $_SESSION['login'] != 'admin'){
-            $author = '(not) '.$author;
-        }
+        $author = $this->DAO->isMember($author);
 
         $newComment = $this->CommentManager->addCommentToPost($postId, $author, $comment);
 
@@ -97,9 +95,7 @@ class Controller{
     
     public function addCommentToComment($postId, $author, $content, $commentId, $depth){
 
-        if($author == 'admin' && $_SESSION['login'] != 'admin'){
-            $author = '(not) '.$author;
-        }
+        $author = $this->DAO->isMember($author);
 
         $newComment = $this->CommentManager->addCommentToComment($postId, $author, $content, $commentId, $depth);
 

@@ -37,6 +37,7 @@ class AdminController{
         $postId = $comment->getPost_id();
         $depth = (int)$comment->getDepth();
         $depth = $comment->addDepth($depth);
+        $author = $this->DAO->isMember($author);
         $this->Controller->addCommentToComment($postId, $author, $message, $commentId, $depth);
         header('Location: index.php?action=moderation');
     }

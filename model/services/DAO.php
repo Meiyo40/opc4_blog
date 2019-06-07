@@ -146,4 +146,37 @@ class DAO{
         }
     }
 
+    public function isMember($name){
+        $users = $this->getAllUsers();
+            if(is_array($users)){
+                for($i = 0; $i < sizeof($users); $i++){
+                    if($users[$i]['name'] == $name){
+                        if(isset($_SESSION['login']) && $_SESSION['login'] == $name){
+                            $rank = (int)$users[$i]['rank'];
+                            switch ($rank){
+                                case 1:
+                                    return $name = '[Modérateur] '.$name;
+                                    break;
+                                case 2:
+                                    return $name = '[Autheur] '.$name;
+                                    break;
+                                case 3:
+                                    return $name = '[Admin] '.$name;
+                                    break;
+                            }
+                        }else{
+                            return $name = "(NOT) ".$name;
+                        }
+                    }
+                }
+                
+                if(strpos($name, '[Admin]') || strpos($name, '[Autheur]') || strpos($name, '[Modérateur]') || strpos($name, '[Moderateur]')){
+                    return "(NOT) ".$name;
+                }
+                else{
+                    return $name;
+                }
+            }
+    }
+
 }
