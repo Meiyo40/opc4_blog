@@ -117,48 +117,7 @@ class User{
     public function to_string() { 
         return "id : $this->id, author : $this->author, content : $this->content, date : $this->date, report : $this->report"; 
     }
-
-    public function updateUser($action){
-        $db = new Database();
-$db = $db->connect();
-        switch($action){
-            case 'all':
-                break;
-
-            case 'articles':
-                break;
-
-            case 'comments':
-                break;
-
-            case 'last_connexion':
-                $statement = $db->prepare("UPDATE `opc_blog_users` SET `last_connexion` = ? WHERE `id` = ? ");
-                $statement->execute(array($this->last_connexion,$this->id));
-                break;
-
-            case 'mail':
-                break;
-
-            case 'name':
-                break;
-
-            case 'pwd':
-                break;
-
-            case 'rank':
-                if($this->rank > 3){
-                    $this->rank = 3;
-                }
-                elseif($this->rank < 0){
-                    $this->rank = 0;
-                }          
-                $statement = $db->prepare("UPDATE `opc_blog_users` SET `rank` = ? WHERE `id` = ? ");
-                $statement->execute(array($this->rank,$this->id));
-                break;                 
-        }
-        unset($db);
-    }
-
+    
     public static  function getIdFromName(string $name){
         $db = new Database();
         $db = $db->connect();
@@ -173,7 +132,7 @@ $db = $db->connect();
         return $req[0];
     }
 
-    private function updateLastUserConnexion($name){
+    public function updateLastUserConnexion($name){
         $db = new Database();
         $db = $db->connect();
         $statement = $db->prepare("UPDATE `opc_blog_users` SET `last_connexion` = ? WHERE `name` = ?");
@@ -184,13 +143,29 @@ $db = $db->connect();
         unset($db);
     } 
 
+    public function updateUserRank(){
+        $db = new Database();
+        $db = $db->connect();
+
+        if($this->rank > 3){
+            $this->rank = 3;
+        }
+        elseif($this->rank < 0){
+            $this->rank = 0;
+        }          
+        $statement = $db->prepare("UPDATE `opc_blog_users` SET `rank` = ? WHERE `id` = ? ");
+        $statement->execute(array($this->rank,$this->id));
+        
+        unset($db);
+    } 
+
     public static function createUser($userName, $userRawPwd, $userMail, $userRank){
         $last_connexion = date("Y-m-d H:i:s");
         $hash_pwd = password_hash($userRawPwd, PASSWORD_BCRYPT);
         $userName = Helper::validateContent($userName);
         file_put_contents('debug.html', 'name: '.$userName.'<br> raw_pwd: '.$hash_pwd.'<br> email: '.$userMail.'<br> rank: '.$userRank);
         $db = new Database();
-$db = $db->connect();
+        $db = $db->connect();
         $statement = $db->prepare("INSERT INTO `opc_blog_users` 
                                     (name, hash_pwd, last_connexion, rank, mail, comments, articles) 
                                     VALUES (?,?,?,?,?,0,0)");
@@ -218,7 +193,7 @@ $db = $db->connect();
 
     public function deleteUser(){
         $db = new Database();
-$db = $db->connect();
+        $db = $db->connect();
         $statement = $db->prepare("DELETE FROM `opc_blog_users` WHERE id = ?");
         $result = $statement->execute(array($this->id));        
         unset($db);

@@ -31,15 +31,7 @@ $(document).ready(function(){
         $.post(url,null,function(data){ 
             alert('Utilisateur supprimé');
         });
-    }
-    
-     function submitUser(){
-        let url = "index.php?action=users&newuser=true";
-        $.post(url,null,function(data){ 
-            alert('Utilisateur créé');
-        });
-    }
-    
+    }    
     
 });
 

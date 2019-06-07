@@ -301,7 +301,7 @@ class AdminController{
         }
 
         $user->setRank($userRank);
-        $user->updateUser('rank');
+        $user->updateUserRank();
     }
 
     public function newUser(){

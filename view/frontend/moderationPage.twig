@@ -57,30 +57,32 @@
     <div id='blog-comments' class="container">
         {% if comments %}
             {% for i in sizePage*(page-1)..sizePage*page-1 %}
-                <div class='commentGroup'>
-                    <div class='comment node-depth-{{ comments[i].depth }}' id='post{{ comments[i].id }}'>
-                        <p class='comment-content'>
-                            {% if comments[i].moderation %}
-                                <strong style="color:red">Commentaire Modéré</strong><br>
-                            {% endif %}
-                            {% autoescape %}
-                                {{ comments[i].comment|raw }}
-                            {% endautoescape %}   
-                        </p>
+                {% if comments[i] %}
+                    <div class='commentGroup'>
+                        <div class='comment node-depth-{{ comments[i].depth }}' id='post{{ comments[i].id }}'>
+                            <p class='comment-content'>
+                                {% if comments[i].moderation %}
+                                    <strong style="color:red">Commentaire Modéré</strong><br>
+                                {% endif %}
+                                {% autoescape %}
+                                    {{ comments[i].comment|raw }}
+                                {% endautoescape %}   
+                            </p>
 
-                        <p class='comment-signature'>
-                            Rédigé par: <strong> {{ comments[i].author }}</strong>, le [{{ comments[i].comment_date }}] 
-                        </p>
+                            <p class='comment-signature'>
+                                Rédigé par: <strong> {{ comments[i].author }}</strong>, le [{{ comments[i].comment_date }}] 
+                            </p>
 
-                        <div class='comment-control-panel'>
-                            <button type="button" class="btn btn-primary" onclick="displayModal({{ comments[i].id }}, '{{ comments[i].author }}')"> Répondre</button>
-                            <button onclick='applyModeration("{{ comments[i].id }}", true)' class='btn btn-warning'><i class='fas fa-user-secret'></i> Modérer</button>
-                            <button onclick='applyModeration("{{ comments[i].id }}", false)' class='btn btn-success'><i class='far fa-thumbs-up'></i> Rétablir</button>
-                            <button onclick='requestDel("{{ comments[i].id }}")' class='btn btn-danger'><i class='far fa-times-circle'></i> Supprimer</button>                                
-                            <button class='reportCount' disabled><strong>Signalements: <i class='countNb'>{{ comments[i].report }}</i></strong></button>
-                        </div>
-                        <br>
-                </div>
+                            <div class='comment-control-panel'>
+                                <button type="button" class="btn btn-primary" onclick="displayModal({{ comments[i].id }}, '{{ comments[i].author }}')"> Répondre</button>
+                                <button onclick='applyModeration("{{ comments[i].id }}", true)' class='btn btn-warning'><i class='fas fa-user-secret'></i> Modérer</button>
+                                <button onclick='applyModeration("{{ comments[i].id }}", false)' class='btn btn-success'><i class='far fa-thumbs-up'></i> Rétablir</button>
+                                <button onclick='requestDel("{{ comments[i].id }}")' class='btn btn-danger'><i class='far fa-times-circle'></i> Supprimer</button>                                
+                                <button class='reportCount' disabled><strong>Signalements: <i class='countNb'>{{ comments[i].report }}</i></strong></button>
+                            </div>
+                            <br>
+                    </div>
+                {% endif %}
             {% endfor %}
 
         {% else %}
