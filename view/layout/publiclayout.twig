@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
         <!-- Place your stylesheet here-->
-        <link rel="stylesheet" href="assets/css/style.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/style.css" rel="stylesheet" type="text/css">
         {% block headcontent %}{% endblock %}
         <link rel="stylesheet" href="assets/css/custom/skin.min.css">
     </head>
@@ -21,12 +21,6 @@
     <body>
 
         {% block content %}{% endblock %}
-
-        <form id="newsletterForm" action="index.php?newsletter=true" method="POST">
-            <label for="email">S'inscrire à la Newsletter: </label>
-            <input type="email" name="email" placeholder="Votre email">
-            <input type="submit" value="S'inscrire">
-        </form>
 
         <div id="admin-btn">
             <a href="index.php?action=login"><button class="btn btn-info">Administration</button></a>
@@ -48,6 +42,6 @@
         <p>
             Site développé par LDM pour le 4e projet du parcours développeur web junior d'Openclassrooms
         </p>
-        <a href="#">Politique de confidentialité</a>
+        <a href="index.php?action=policy">Politique de confidentialité</a>
     </footer>
 </html>

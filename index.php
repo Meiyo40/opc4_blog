@@ -154,6 +154,10 @@ if (isset($_GET['action'])) {
             $AdminController->getModeratedComPage($twig);
             break;
 
+        case 'policy':
+            $Controller->getPolicyPage($twig);
+            break;
+
         case 'post':
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 $Controller->post($twig);

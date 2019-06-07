@@ -18,13 +18,13 @@
                             <h3> {{ posts[i].title }} </h3>
                             <div>
                                 <div class='article-content' style='display: block'>
-                                <img class='smallImg' src='./resources/img/{{ posts[i].img_key }}.{{ posts[i].img_ext }}' alt="Image d'illustration de l'article {{ post.title }}"></img>
+                                <img class='smallImg' src='./resources/img/{{ posts[i].img_key }}.{{ posts[i].img_ext }}' alt="Image d'illustration de l'article {{ post.title }}">
                                     {% autoescape %}
                                         {{ posts[i].content|raw }}
                                     {% endautoescape %} 
                                 </div>
                                 <p class='article-signature'>
-                                    Rédigé par: "{{ posts[i].author }}", le [" {{ posts[i].date }}"] <em><a href='index.php?action=post&id={{ posts[i].id }}'>[{{ posts[i].nb_comments }}] Commentaires</a></em>
+                                    Rédigé par: "{{ posts[i].author }}", le [" {{ posts[i].date }}"] <a href='index.php?action=post&id={{ posts[i].id }}'>[{{ posts[i].nb_comments }}] Commentaires</a>
                                 </p>
                                 <br>
                             </div>
