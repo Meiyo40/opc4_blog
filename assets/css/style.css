@@ -32,10 +32,6 @@ nav{
     margin-right: 20px;
 }
 
-.smallArticle{
-    height: 250px;
-}
-
 
 /* ARTICLE */
 #post{
@@ -93,15 +89,9 @@ h6 {
 }
 
 
-.article,
-.article-content,
-.smallArticle,
-.smallArticle > div,
-article{
-    height: 250px;
-}
+
 .smallArticle{
-    margin: 0 auto 100px;
+    margin: 25px auto 25px;
     max-width: 900px;
 }
 .article-content{

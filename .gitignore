@@ -4,3 +4,4 @@ debug.html
 /model/services/.htaccess
 /model/services/Database - Copie.php
 model/services/Database.php
+sql/database.sql

@@ -8,6 +8,7 @@ use manager\UserLogin;
 use services\DAO;
 use entity\Comment;
 use entity\Post;
+use services\Helper;
 
 class Controller{
     private $login;
@@ -28,10 +29,16 @@ class Controller{
         $posts = $this->DAO->getPosts();
         $nbPage = ceil(sizeof($posts)/$sizePage);
 
+        
+
         for($i = 0; $i < sizeof($posts); $i++){
             $nb_comments = $this->DAO->getAllCommentsPost($posts[$i]->getId(), 0, true);
             $posts[$i]->setNb_comments($nb_comments);
+            $description = Helper::setDescription($posts[$i]);
+            $posts[$i]->setContent($description);
         }
+
+        
        
         echo $twig->render('/frontend/listarticles.twig', [
             'page' => $page,

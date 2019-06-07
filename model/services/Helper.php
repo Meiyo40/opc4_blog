@@ -19,6 +19,13 @@ class Helper{
         }
     }
 
+    public static function setDescription($post){
+        $strLimit = 500;
+        $content = $post->getContent();
+        $content = strlen($content) > $strLimit ? substr($content,0,$strLimit)."..." : $content;
+        return $content;
+    }
+
     public static function getNbPage($comments, $sizePage){
         if(is_array($comments)){
             return ceil(sizeof($comments)/$sizePage);   
