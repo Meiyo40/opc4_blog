@@ -231,6 +231,16 @@ class Comment{
         }
     }
 
+    public function addDepth($depth){
+        $depth++;
+        if ($depth > 2){
+            return $depth = 2;
+        }
+        else{
+            return $depth;
+        }
+    }
+
     public function deleteCom(){
         $db = new Database();
         $db = $db->connect();

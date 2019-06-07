@@ -50,7 +50,7 @@
                         <strong>{{ comment.author }}</strong>,
                     {% endif %}
                      le [{{ comment.comment_date }}] 
-                        <button onclick='displayForm({{ comment.id }}{{ comment.depth }})' class='comment-answer btn btn-primary' data-comment-id={{ comment.id }}>Répondre</button>
+                        <button onclick='displayForm({{ comment.id }},{{ comment.depth }})' class='comment-answer btn btn-primary' data-comment-id={{ comment.id }}>Répondre</button>
                         <button onclick='reportComment({{ comment.id }},{{ post.id }})' class='btn-report btn btn-warning'><i class='far fa-bell'></i> Signaler</button>
                     </p>
                     <br>
@@ -147,7 +147,7 @@
                     </li>
                     {% endif %}
                 {% endfor %}
-                </li>
+                </ul></li>
             {% endif %}            
         {% endfor %}
         {% if not comment.parent %}

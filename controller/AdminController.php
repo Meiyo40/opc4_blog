@@ -10,6 +10,7 @@ use manager\UserLogin;
 use manager\CommentManager;
 use manager\PostManager;
 use services\DAO;
+use services\Helper;
 
 
 class AdminController{
@@ -35,10 +36,7 @@ class AdminController{
         $comment = Comment::initComment($commentId);
         $postId = $comment->getPost_id();
         $depth = (int)$comment->getDepth();
-        $depth++;
-        if ($depth > 2){
-            $depth = 2;
-        }
+        $depth = $comment->addDepth($depth);
         $this->Controller->addCommentToComment($postId, $author, $message, $commentId, $depth);
         header('Location: index.php?action=moderation');
     }
@@ -120,36 +118,20 @@ class AdminController{
         $result = $this->UserLogin->getLoginPage();
         $comments = Comment::getModeratedComments();
 
-        if(is_array($comments)){
-            $nbPage = ceil(sizeof($comments)/$sizePage);   
-        }
-        else{
-            $nbPage = 1;
-        }     
-        
-        if(isset($_GET['page'])){
-            $page = $_GET['page'];
-        }
-        else{
-            $page = 1;
-        }
-
-        if(is_array($comments)){
-            if(sizeof($comments) < 10){
-                $sizePage = sizeof($comments);
-            }
-            else{
-                $sizePage = 10;
-            }
-        }        
+        $page = Helper::getPage();
+        $sizePage = Helper::getSizePage($comments);
+        $nbPage = Helper::getNbPage($comments, $sizePage);   
 
         if($result == 'login' || $_SESSION['login']){
+            $user = $_SESSION['login'];
+
             echo $twig->render('/frontend/moderationPage.twig', [
                 'comments' => $comments,
                 'nbPage' => $nbPage,
                 'usersList' => $usersList,
                 'sizePage' => $sizePage,
                 'page' => $page,
+                'OnlineUser' => $user
             ]);
         }
         else{
@@ -162,32 +144,23 @@ class AdminController{
         $usersList = $this->UserLogin->getUsers();
         $result = $this->UserLogin->getLoginPage();
         $comments = Comment::getReportedComments();
-
-        if(is_array($comments)){
-            $nbPage = ceil(sizeof($comments)/$sizePage);   
-        }     
         
-        if(isset($_GET['page'])){
-            $page = $_GET['page'];
-        }
-        else{
-            $page = 1;
-        }
+        $page = Helper::getPage();
+        $sizePage = Helper::getSizePage($comments);
+        $nbPage = Helper::getNbPage($comments, $sizePage);
 
-        if(sizeof($comments) < 10){
-            $sizePage = sizeof($comments);
-        }
-        else{
-            $sizePage = 10;
-        }
+        
 
         if($result == 'login' || $_SESSION['login']){
+            $user = $_SESSION['login'];
+
             echo $twig->render('/frontend/moderationPage.twig', [
                 'comments' => $comments,
                 'nbPage' => $nbPage,
                 'usersList' => $usersList,
                 'sizePage' => $sizePage,
                 'page' => $page,
+                'OnlineUser' => $user
             ]);
         }
         else{
@@ -202,31 +175,20 @@ class AdminController{
         $result = $this->UserLogin->getLoginPage();
         $comments = Comment::getAllComments();
 
-        if(is_array($comments)){
-            $nbPage = ceil(sizeof($comments)/$sizePage);   
-        }     
-        
-        if(isset($_GET['page'])){
-            $page = $_GET['page'];
-        }
-        else{
-            $page = 1;
-        }
-
-        if(sizeof($comments) < 10){
-            $sizePage = sizeof($comments);
-        }
-        else{
-            $sizePage = 10;
-        }
+        $page = Helper::getPage();
+        $sizePage = Helper::getSizePage($comments);
+        $nbPage = Helper::getNbPage($comments, $sizePage);
 
         if($result == 'login' || $_SESSION['login']){
+            $user = $_SESSION['login'];
+
             echo $twig->render('/frontend/moderationPage.twig', [
                 'comments' => $comments,
                 'nbPage' => $nbPage,
                 'usersList' => $usersList,
                 'sizePage' => $sizePage,
                 'page' => $page,
+                'OnlineUser' => $user
             ]);
         }
         else{

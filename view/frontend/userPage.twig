@@ -99,13 +99,11 @@
                         <button class='user-control' onclick='rankUser(true,  {{ user.id }} )' data-toggle='tooltip' title='Promouvoir {{ user.name }}'><i class='fas fa-plus'></i></button> 
                         <button class='user-control' onclick='rankUser(false, {{ user.id }} )' data-toggle='tooltip' title='Retrograder {{ user.name }}'><i class='fas fa-minus'></i></button>
                         <button class='user-control' onclick='deleteUser( {{ user.id }} )' data-toggle='tooltip' title='Supprimer {{ user.name }}'><i class='fas fa-user-minus'></i></button>
-                        <button class='user-control' onclick='mailUser( {{ user.mail }} )' data-toggle='tooltip' title='MailTo {{ user.name }}'><i class='fas fa-envelope-open-text'></i></button>
                             
                     {% else %}
                         <button class='user-control' disabled><i class='fas fa-plus'></i></button> 
                         <button class='user-control' disabled><i class='fas fa-minus'></i></button>
                         <button class='user-control' disabled><i class='fas fa-user-minus'></i></button>
-                        <button class='user-control' disabled><i class='fas fa-envelope-open-text'></i></button>
                     {% endif %}
                     </td>
                 </tr>

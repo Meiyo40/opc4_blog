@@ -10,7 +10,27 @@ class Helper{
         return $data;
     }
 
-    public static function getNbPage(){
-        
+    public static function getPage(){
+        if(isset($_GET['page'])){
+            return $_GET['page'];
+        }
+        else{
+           return 1;
+        }
+    }
+
+    public static function getNbPage($comments, $sizePage){
+        if(is_array($comments)){
+            return ceil(sizeof($comments)/$sizePage);   
+        }    
+    }
+
+    public static function getSizePage($comments){
+        if(sizeof($comments) < 10){
+            return sizeof($comments);
+        }
+        else{
+            return 10;
+        }
     }
 }
