@@ -41,6 +41,7 @@ class Controller{
         
        
         echo $twig->render('/frontend/listarticles.twig', [
+            'year' => date('Y'),
             'page' => $page,
             'sizePage' => 5,
             'posts' => $posts,

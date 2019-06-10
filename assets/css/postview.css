@@ -4,6 +4,8 @@ article{
     margin: 0 auto;
 }
 .largeImg{
+    border-radius: 10px;
+    margin-bottom: 10px;
     max-height: 100%;
     max-width: 100%; 
 }

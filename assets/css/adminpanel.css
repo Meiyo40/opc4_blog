@@ -5,6 +5,7 @@ th{
 
 
 #admin-options{
+    background-color: #808080;
     display: flex;
     justify-content: center;
 }
@@ -30,6 +31,7 @@ table{
 }
 
 #displayPosts{
+    vertical-align: baseline;
     width: 65%;
 }
 #displayComments{

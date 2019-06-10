@@ -3,9 +3,19 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="Blog projet openclassroom numéro 4">
+        <meta name="description" content=" Blog projet openclassroom numéro 4 (Exemple Jules Vernes)">
         <meta name="author" content="Meiyo">
         <link rel="icon" href="assets/image/icon.jpg">
+
+        <meta property="og:title" content="Projet OPC DWJ">
+        <meta property="og:description" content="Blog projet openclassroom numéro 4 (Exemple Jules Vernes)">
+        <meta property="og:image" content="./resources/siteImg/JulesVernes.jpg">
+        <meta property="og:url" content="https://opcblog.herokuapp.com/index.php">
+
+        <meta name="twitter:title" content="Projet OPC DWJ">
+        <meta name="twitter:description" content=" Blog projet openclassroom numéro 4 (Exemple Jules Vernes)">
+        <meta name="twitter:image" content="./resources/siteImg/JulesVernes.jpg">
+        <meta name="twitter:card" content="summary_large_image">
 
         {% block title %}{% endblock %}
         
@@ -38,10 +48,14 @@
         
     </body>
         
-    <footer>        
+    <footer>    
         <p>
             Site développé par LDM pour le 4e projet du parcours développeur web junior d'Openclassrooms
+            <br>
+            <a href="index.php?action=policy">Politique de confidentialité</a>
         </p>
-        <a href="index.php?action=policy">Politique de confidentialité</a>
+        <div>            
+            &copy; {{ year }}
+        </div>
     </footer>
 </html>

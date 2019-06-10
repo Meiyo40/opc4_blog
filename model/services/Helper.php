@@ -20,7 +20,7 @@ class Helper{
     }
 
     public static function setDescription($post){
-        $strLimit = 500;
+        $strLimit = 510;
         $content = $post->getContent();
         $content = strlen($content) > $strLimit ? substr($content,0,$strLimit)."..." : $content;
         return $content;

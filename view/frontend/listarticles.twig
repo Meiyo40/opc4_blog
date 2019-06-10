@@ -7,29 +7,32 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="center" >Mes dernières nouvelles</h1>
+<div id='page-title'>
+    <img id='title-img' src='./resources/siteImg/JulesVernes.jpg' alt="Photo de Jules Vernes">
+    <h1 class="center" >L'univers Verniens</h1>
+</div>
     
     <div id='blog' class="container">
             {% for i in sizePage*(page-1)..sizePage*page-1 %}
 
                 {% if posts[i] is defined %}
-                     <article class='smallArticle'>
+                     <div class='smallArticle'>
                         <a class='article-link' href='index.php?action=post&id={{ posts[i].id }}'>
                             <h3> {{ posts[i].title }} </h3>
                             <div>
-                                <div class='article-content' style='display: block'>
-                                <img class='smallImg' src='./resources/img/{{ posts[i].img_key }}.{{ posts[i].img_ext }}' alt="Image d'illustration de l'article {{ post.title }}">
+                                <article class='article-content' style='display: block'>
+                                    <img class='smallImg' src='./resources/img/{{ posts[i].img_key }}.{{ posts[i].img_ext }}' alt="Image d'illustration de l'article {{ post.title }}">
                                     {% autoescape %}
                                         {{ posts[i].content|raw }}
                                     {% endautoescape %} 
-                                </div>
-                                <p class='article-signature'>
+                                </article>
+                                <div class='article-signature'>
                                     Rédigé par: "{{ posts[i].author }}", le [" {{ posts[i].date }}"] <a href='index.php?action=post&id={{ posts[i].id }}'>[{{ posts[i].nb_comments }}] Commentaires</a>
-                                </p>
+                                </div>
                                 <br>
                             </div>
                         </a>
-                    </article> 
+                    </div> 
                 {% endif %}
             
             {% endfor %}
