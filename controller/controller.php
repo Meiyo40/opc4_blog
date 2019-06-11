@@ -57,6 +57,7 @@ class Controller{
         $nbPage = 1;
 
         echo $twig->render('/frontend/postView.twig', [
+            'year' => date('Y'),
             'page' => $page,
             'sizePage' => 5,
             'post' => $post,

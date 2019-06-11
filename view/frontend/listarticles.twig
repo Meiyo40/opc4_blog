@@ -6,6 +6,10 @@
     </title>
 {% endblock %}
 
+{% block headcontent %}
+    <link rel='stylesheet' type='text/css' href='./assets/css/responsive.css'>
+{% endblock %}
+
 {% block content %}
 <div id='page-title'>
     <img id='title-img' src='./resources/siteImg/JulesVernes.jpg' alt="Photo de Jules Vernes">
@@ -19,7 +23,7 @@
                      <div class='smallArticle'>
                         <a class='article-link' href='index.php?action=post&id={{ posts[i].id }}'>
                             <h3> {{ posts[i].title }} </h3>
-                            <div>
+                            <div class='content-container'>
                                 <article class='article-content' style='display: block'>
                                     <img class='smallImg' src='./resources/img/{{ posts[i].img_key }}.{{ posts[i].img_ext }}' alt="Image d'illustration de l'article {{ post.title }}">
                                     {% autoescape %}

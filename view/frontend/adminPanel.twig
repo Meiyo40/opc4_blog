@@ -60,9 +60,13 @@
                     <div class='subSubComment node-depth-{{ comments[i].depth }}' id='post{{ comments[i].id }}'>
                         <p>En réponse à <strong>{{ comments[i].author }}</strong></p>
                         <p class='comment-content'>
-                        {% autoescape %}
-                            {{ comments[i].comment|raw }}
-                        {% endautoescape %}                        
+                        {% if comments[i].moderation %}
+                            <strong style='color:red'>Ce commentaire a été modéré car son contenu ne respectait pas le règlement de ce site internet.</strong>
+                        {% else %}
+                            {% autoescape %}
+                                {{ comments[i].comment }}
+                            {% endautoescape %}  
+                        {% endif %}                      
                         </p>
                         <p class='comment-signature'>Rédigé par: <strong>{{ comments[i].author }}</strong>, le [{{ comments[i].comment_date }}]</p><br>
                     </div>

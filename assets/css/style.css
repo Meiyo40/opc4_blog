@@ -58,6 +58,7 @@ footer{
 
 article,
 .comment,
+.article-signature,
 .subCommentContainer{
     width: 60%;
     margin: 0 auto;
@@ -111,6 +112,16 @@ h6 {
     margin: 25px auto 25px;
     max-width: 900px;
 }
+.article-content:hover{
+    animation: hover 1s forwards;
+}
+
+@keyframes hover{
+    100%{
+        background-color: #edebeb;
+    }
+}
+
 .article-content{
     white-space: wrap;
     overflow: hidden;

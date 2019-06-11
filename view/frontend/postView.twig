@@ -39,9 +39,13 @@
             <div class='commentGroup'>
                 <div class='comment node-depth-{{ comment.depth }}' id='post{{ comment.id }}'>
                     <p class='comment-content'>
-                        {% autoescape %}
-                            {{ comment.comment|raw }}
-                        {% endautoescape %}  
+                        {% if comment.moderation %}
+                            <strong style='color:red'>Ce commentaire a été modéré car son contenu ne respectait pas le règlement de ce site internet.</strong>
+                        {% else %}
+                            {% autoescape %}
+                                {{ comment.comment|raw }}
+                            {% endautoescape %}  
+                        {% endif %} 
                     </p>
                     <p class='comment-signature'>Rédigé par:
                     {% if comment.author == 'admin' %}
@@ -67,9 +71,13 @@
                                 En réponse à <strong>{{ comment.author }}</strong>
                         </p>
                         <p class='comment-content'>
-                            {% autoescape %}
-                                {{ commentChild1.comment|raw }}
-                            {% endautoescape %}  
+                            {% if commentChild1.moderation %}
+                                <strong style='color:red'>Ce commentaire a été modéré car son contenu ne respectait pas le règlement de ce site internet.</strong>
+                            {% else %}
+                                {% autoescape %}
+                                    {{ commentChild1.comment|raw }}
+                                {% endautoescape %}  
+                            {% endif %}
                         </p>
                         <p class='comment-signature'>
                             Rédigé par:
@@ -96,9 +104,14 @@
                                     En réponse à <strong>{{ commentChild1.author }}"</strong>
                                 </p>
                                 <p class='comment-content'>
+                                {% if commentChild2.moderation %}
+                                    <strong style='color:red'>Ce commentaire a été modéré car son contenu ne respectait pas le règlement de ce site internet.</strong>
+                                {% else %}
                                     {% autoescape %}
                                         {{ commentChild2.comment|raw }}
                                     {% endautoescape %}  
+                                {% endif %}
+                                    
                                 </p>
                                 <p class='comment-signature'>
                                     Rédigé par: 
@@ -124,9 +137,13 @@
                                         En réponse à <strong>{{ commentChild2.author }}"</strong>
                                     </p>
                                     <p class='comment-content'>
-                                        {% autoescape %}
-                                            {{ commentChild3.comment|raw }}
-                                        {% endautoescape %}  
+                                        {% if commentChild3.moderation %}
+                                            <strong style='color:red'>Ce commentaire a été modéré car son contenu ne respectait pas le règlement de ce site internet.</strong>
+                                        {% else %}
+                                            {% autoescape %}
+                                                {{ commentChild3.comment|raw }}
+                                            {% endautoescape %}  
+                                        {% endif %}
                                     </p>
                                     <p class='comment-signature'>
                                         Rédigé par:

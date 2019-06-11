@@ -65,7 +65,7 @@
                                     <strong style="color:red">Commentaire Modéré</strong><br>
                                 {% endif %}
                                 {% autoescape %}
-                                    {{ comments[i].comment|raw }}
+                                    {{ comments[i].comment }}
                                 {% endautoescape %}   
                             </p>
 
