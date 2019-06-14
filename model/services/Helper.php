@@ -10,6 +10,13 @@ class Helper{
         return $data;
     }
 
+    public static function deleteJScode($content){
+        $pattern = array('script', 'javascript');
+        $content = str_replace( $pattern, '', $content, $count);
+        return array( 'content' => $content, 
+                    'nbReplace' => $count);
+    }
+
     public static function getPage(){
         if(isset($_GET['page'])){
             return $_GET['page'];

@@ -197,13 +197,14 @@ class AdminController{
 
     public function setModeration($commentId, $mode){
         $comment = Comment::initComment($commentId);
-        if($mode == 'true'){
-            $comment->setModeration('1');
+        if($mode == 'true'){         
+            $comment->setModeration(true);   
+            $comment->update();
         }
         else{
-            $comment->setModeration('0');
+            $comment->setModeration(false);
+            $comment->update();
         }
-        $comment->update('moderation');
     }
 
     public function getListsPostsToEdit($twig, $page, $sizePage = 10){

@@ -35,13 +35,13 @@ function requestDel(commentId){
 function applyModeration(commentId, mode){
     if(mode){
         let url = "index.php?action=applymoderation&mod=true&Comment="+commentId;
-        $.post(url,null,function(data){ 
+        $.post(url,function(data){ 
             alert('Commentaire modéré');
         });
     }
     else{
         let url = "index.php?action=applymoderation&mod=false&Comment="+commentId;
-        $.post(url,null,function(data){ 
+        $.post(url,function(data){ 
             alert('Commentaire rétabli');
         });
     }

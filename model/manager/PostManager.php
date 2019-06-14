@@ -11,7 +11,7 @@ class PostManager{
 
     public function getPost($postId){
         $db = new Database();
-$db = $db->connect();
+        $db = $db->connect();
         $req = $db->prepare('
         SELECT * 
         FROM opc_blog_posts

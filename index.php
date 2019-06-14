@@ -78,7 +78,7 @@ if (isset($_GET['action'])) {
             break;
 
         case 'applymoderation':
-            $AdminController->setModeration($_GET['Comment'], $_GET['mod']);
+            $AdminController->setModeration($_GET['Comment'], $_GET['mod']);            
             break;
 
         case 'create':

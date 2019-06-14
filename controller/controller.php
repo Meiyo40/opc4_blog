@@ -90,8 +90,16 @@ class Controller{
     {
 
         $author = Security::isMember($author);
+        $data = Helper::deleteJScode($comment);
 
-        $newComment = $this->CommentManager->addCommentToPost($postId, $author, $comment);
+        if(((int)$data['nbReplace']) > 0){
+            $moderation = 1;
+        }
+        else{
+            $moderation = 0;
+        }
+
+        $newComment = $this->CommentManager->addCommentToPost($postId, $author, $$data['content'], $moderation);
 
         if ($newComment === false) {
             throw new Exception('Impossible d\'ajouter le commentaire !');
@@ -104,8 +112,16 @@ class Controller{
     public function addCommentToComment($postId, $author, $content, $commentId, $depth){
 
         $author = Security::isMember($author);
+        $data = Helper::deleteJScode($content);
 
-        $newComment = $this->CommentManager->addCommentToComment($postId, $author, $content, $commentId, $depth);
+        if(((int)$data['nbReplace']) > 0){
+            $moderation = 1;
+        }
+        else{
+            $moderation = 0;
+        }
+
+        $newComment = $this->CommentManager->addCommentToComment($postId, $author, $data['content'], $commentId, $depth, $moderation);
 
         if ($newComment === false) {
             throw new Exception('Impossible d\'ajouter le commentaire !');

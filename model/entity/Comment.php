@@ -264,40 +264,16 @@ class Comment{
         unset($db);
     }
 
-    public function update($mode){
+    public function update(){
         $db = new Database();
         $db = $db->connect();
-        
-        switch($mode){
-
-            case 'all':
-                $statement = $db->prepare("UPDATE opc_blog_comment
-                SET comment = ?,
-                    author = ?,
-                    report = ?,
-                    moderation = ?
-                WHERE id = ?");
-                $statement->execute(array($this->comment, $this->author, $this->report, $this->moderation, $this->id));
-                break;
-
-            case 'moderation':
-                $statement = $db->prepare("UPDATE opc_blog_comment
-                SET moderation = ?
-                WHERE id = ?");
-                $statement->execute(array($this->moderation, $this->id));
-                break;
-        }
-        unset($db);
-    }
-
-    public function setModration(){
-        $db = new Database();
-        $db = $db->connect();
-
         $statement = $db->prepare("UPDATE opc_blog_comment
-                SET moderation = ?
-                WHERE id = ?");
-        $statement->execute(array($this->moderation, $this->id));
+                                    SET comment = ?,
+                                        author = ?,
+                                        report = ?,
+                                        moderation = ?
+                                        WHERE id = ?");
+        $statement->execute(array($this->comment, $this->author, $this->report, $this->moderation, $this->id));
 
         unset($db);
     }
