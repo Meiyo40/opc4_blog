@@ -1,6 +1,7 @@
 <?php
 
 namespace services;
+require_once __DIR__.'/../../vendor/ezyang/htmlpurifier/library/HTMLPurifier.auto.php';
 
 class Helper{
     public static function validateContent($data){
@@ -9,8 +10,21 @@ class Helper{
         $data = htmlspecialchars($data);
         return $data;
     }
+    
+    public static function HTMLpurifier($data){
+        file_put_contents('debug.html', $data, FILE_APPEND);
+        $config = \HTMLPurifier_Config::createDefault();
+        $config->set('Core.Encoding', 'ISO-8859-1'); 
+        $config->set('HTML.Allowed', 'a[href],i,b,img[src],font[style|size],ol,ul,li,br'); 
+        $purifier = new \HTMLPurifier($config);
+
+        $data = $purifier->purify($data);
+        file_put_contents('debug.html', $data, FILE_APPEND);
+        return $data;
+    }
 
     public static function deleteJScode($content){
+        $content = Helper::HTMLpurifier($content);
         $pattern = array('script', 'javascript');
         $content = str_replace( $pattern, '', $content, $count);
         return array( 'content' => $content, 

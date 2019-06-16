@@ -153,7 +153,6 @@
                                             <strong>{{ commentChild3.author }}</strong>,
                                         {% endif %}
                                          le [{{ commentChild3.comment_date }}] 
-                                        <button onclick='displayForm({{ commentChild3.id }},{{ commentChild3.depth }})' class='comment-answer btn btn-primary' data-comment-id={{ commentChild3.id }}>Répondre</button>
                                         <button onclick='reportComment({{ commentChild3.id }},{{ post.id }})'  class='btn-report btn btn-warning'><i class='far fa-bell'></i> Signaler</button>
                                     </p>
                                     <br>

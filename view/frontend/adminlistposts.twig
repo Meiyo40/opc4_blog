@@ -22,8 +22,7 @@
                     <th>Aperçu</th>
                     <th>Auteur</th>
                     <th>Date publication</th>
-                    <th>Nb. Commentaires</th>                
-                    <th>Nb. Vues</th>                    
+                    <th>Nb. Commentaires</th>                                  
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -59,7 +58,6 @@
                             <td>{{ post[i].author }}</td>
                             <td>{{ post[i].date }}</td>
                             <td>{{ post[i].nb_comments }}</td>
-                            <td>{{ post[i].viewers }}</td>
                             <td class='btn-action'>
                                 <a href="javascript:void(0)" onclick="location.href='index.php?action=editarticle&article={{ post[i].id }}'"><button class='user-control' data-toggle='tooltip' title='Edit {{ post[i].title }}'><i class='far fa-edit'></i></button></a>                                
                                 <a href="javascript:void(0)" onclick="location.href='index.php?action=deletearticle&article={{ post[i].id }}'"><button class='user-control' data-toggle='tooltip' title='Supprimer {{ post[i].title }}'><i class="fas fa-trash"></i></button></a>

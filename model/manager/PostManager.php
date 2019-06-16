@@ -5,7 +5,7 @@ use services\Database;
 use services\Helper;
 use entity\Post;
 
-define ("IMG_MAXSIZE", 10485760);
+
 
 class PostManager{
 
@@ -20,36 +20,6 @@ class PostManager{
         $post = $req->fetch();
         unset($db);
         return $post; 
-    }
-
-    public function addPost($title, $content, $author, $img_name = null){
-        
-        $pattern = '/(gif|png|jpeg|jpg)$/i';
-        $extension = pathinfo($img_name, PATHINFO_EXTENSION);
-        $extension = preg_match($pattern, $extension);
-
-        if($_FILES['image']['size'] < IMG_MAXSIZE && $extension){
-            $author = Helper::validateContent($author);
-            $content = Helper::validateContent($content);
-            $title = Helper::validateContent($title);
-            $date = date("Y-m-d H:i:s");
-            $nb_comments = 0;
-
-                      
-            $post = new Post(null, $author, $content, $date, $title, $nb_comments);  
-            $post->setImg($img_name);
-            $post->addPost();
-        }
-        else{
-            if(!$extension){
-                $extension = 'Mauvaise extension de fichier : '.$extension.'<br>';
-            }
-            elseif($_FILES['image']['size'] > IMG_MAXSIZE){
-                $file_size = 'Taille du fichier trop importante <br>';
-            }
-            return false;
-        }
-        
     }
 
     public function updatePost($id, $title, $content, $author, $img_name){

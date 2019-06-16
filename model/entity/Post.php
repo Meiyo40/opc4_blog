@@ -3,6 +3,7 @@
 namespace entity;
 
 use services\Database;
+use services\Helper;
 
 class Post{
     private $id;
@@ -15,6 +16,7 @@ class Post{
     private $img_key;
     private $img_ext;
     private $isHide;
+    private $IMG_MAXSIZE = 10485760;
 
     public function __construct($id, $author, $content, $date, $title, $nb_comments, $img_key = '', $img_ext = '', $isHide = '0')
     {
@@ -150,9 +152,38 @@ class Post{
         $db = $db->connect();
         $statement = $db->prepare("INSERT INTO opc_blog_posts (author, content, title, date, img_key, img_ext) VALUES (?,?,?,?,?,?)");        
         $statement->execute(array($this->author, $this->content, $this->title, $this->date, $this->img_key, $this->img_ext));
-        $err = $this->author."<br>".$this->content."<br>".$this->title."<br>".$this->date."<br>".$this->img_key."<br>".$this->img_ext;
-            file_put_contents('debug.html', $err, FILE_APPEND);
         unset($db);
+    }
+
+    static function setNewPost($title, $content, $author, $img_name = null){
+        
+        $pattern = '/(gif|png|jpeg|jpg)$/i';
+        $extension = pathinfo($img_name, PATHINFO_EXTENSION);
+        $extension = preg_match($pattern, $extension);
+
+        $author = Helper::validateContent($author);
+        $content = Helper::validateContent($content);
+        $title = Helper::validateContent($title);
+        $date = date("Y-m-d H:i:s");
+        $nb_comments = 0;  
+
+        $post = new Post(null, $author, $content, $date, $title, $nb_comments);  
+
+        if($_FILES['image']['size'] < $post->IMG_MAXSIZE && $extension){                              
+            
+            $post->setImg($img_name);
+            $post->addPost();
+        }
+        else{
+            if(!$extension){
+                $extension = 'Mauvaise extension de fichier : '.$extension.'<br>';
+            }
+            elseif($_FILES['image']['size'] > $post->IMG_MAXSIZE){
+                $file_size = 'Taille du fichier trop importante <br>';
+            }
+            return false;
+        }
+        
     }
 
     public function updatePost(){
@@ -173,6 +204,9 @@ class Post{
     }
 
     public function deletePost(){
+        $filename = "./resources/img/{$this->img_key}.{$this->img_ext}";
+        file_put_contents('debug.html', $filename);
+        unlink($filename);
         $db = new Database();
         $db = $db->connect();
         $statement = $db->prepare("DELETE FROM `opc_blog_posts` WHERE `id` = ? ");

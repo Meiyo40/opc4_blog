@@ -4,7 +4,6 @@ define('WEBROOT', str_replace('index.php', '', $_SERVER['SCRIPT_NAME']));
 define('ROOT', str_replace('index.php', '', $_SERVER['SCRIPT_FILENAME']));
 
 require_once __DIR__.'/vendor/autoload.php';
-require_once __DIR__.'/vendor/ezyang/htmlpurifier/library/HTMLPurifier.auto.php';
 require_once __DIR__.'/controller/controller.php';
 require_once __DIR__.'/controller/AdminController.php';
 require_once __DIR__.'/controller/Security.php';
@@ -16,13 +15,6 @@ $twig = new Twig_Environment($loader, [
     'cache'=> false,
 ]);
 
-$config = HTMLPurifier_Config::createDefault(); 
-$config->set('Core.Encoding', 'ISO-8859-1'); 
-$config->set('Cache.DefinitionImpl', null); // TODO: remove this later! 
-$config->set('HTML.Allowed', 'a[href],i,b,img[src],font[style|size],ol,ul,li,br'); 
-$purifier = new HTMLPurifier($config);
-
-
 if (isset($_GET['action'])) {
     if(isset($_GET['comment'])){
         
@@ -30,8 +22,7 @@ if (isset($_GET['action'])) {
             $postId = $_GET['id'];
             $commentAuthor = $_POST['name'];
             $content = $_POST['commentContent'];
-            $clean_comment = $purifier->purify($content);
-            $Controller->addComment($postId, $commentAuthor, $clean_comment);
+            $Controller->addComment($postId, $commentAuthor, $content);
         }
         else{
             $postId = $_GET['id'];
@@ -39,8 +30,7 @@ if (isset($_GET['action'])) {
             $commentAuthor = $_POST['name'];
             $content = $_POST['commentContent'];
             $depth = $_POST['depth'];
-            $clean_comment = $purifier->purify($content);
-            $Controller->addCommentToComment($postId, $commentAuthor, $clean_comment, $commentId, $depth);
+            $Controller->addCommentToComment($postId, $commentAuthor, $content, $commentId, $depth);
         }
     }
     if(isset($_GET['addPost'])){
