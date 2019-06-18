@@ -9,20 +9,7 @@ use entity\Post;
 
 class PostManager{
 
-    public function getPost($postId){
-        $db = new Database();
-        $db = $db->connect();
-        $req = $db->prepare('
-        SELECT * 
-        FROM opc_blog_posts
-        WHERE id = ?');
-        $req->execute(array($postId));
-        $post = $req->fetch();
-        unset($db);
-        return $post; 
-    }
-
-    public function updatePost($id, $title, $content, $author, $img_name){
+    public function preparePost($id, $title, $content, $author, $img_name){
         $author = Helper::validateContent($author);
         $title = Helper::validateContent($title);
         $content = Helper::validateContent($content);

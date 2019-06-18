@@ -171,7 +171,7 @@
         {% endif %}
     {% endfor %}
 
-    <form id='comment-form' class='comment-form' method='POST' value={{ post.id }}>
+    <form id='comment-form' class='comment-form' method='POST' data-postId={{ post.id }}>
         <label for="name">Nom/Pseudo: </label>
         <input id="name" type='text' name='name' required>
         <textarea form='comment-form' name="commentContent"></textarea>

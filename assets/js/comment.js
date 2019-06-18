@@ -19,7 +19,7 @@ function displayForm(commentId, node_depth){
     commentArea.style.display = "block";
     commentArea.classList.remove("post");
     commentArea.setAttribute('data-comment-id', commentId);
-    let pageId = commentArea.getAttribute('value');
+    let pageId = commentArea.getAttribute('data-postId');
     let depth = document.getElementById('node-depth-form');
     if(node_depth < 2){
         node_depth++;

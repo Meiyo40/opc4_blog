@@ -243,9 +243,10 @@ class Post{
         $obj = $statement->fetch();
 
         $obj = new Post($obj['id'], $obj['author'], $obj['content'], $obj['date'], $obj['title'], $obj['nb_comments'], $obj['img_key'], $obj['img_ext'], $obj['isHide']);
+        unset($db);
         
         return $obj;
 
-        unset($db);
+        
     }
 }

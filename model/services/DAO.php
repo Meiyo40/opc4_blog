@@ -58,7 +58,7 @@ class DAO{
         }
     }
 
-    public function getPosts( $limit = 0 ){
+    public function getNonHidePosts( $limit = 0 ){
         try { 
             $db = new Database();
             $db = $db->connect();

@@ -6,7 +6,7 @@ use services\Database;
 use entity\User;
 use services\Helper;
 
-class UserLogin{
+class UsersManager{
 
     public function getUsers(){
         $db = new Database();

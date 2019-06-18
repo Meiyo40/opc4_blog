@@ -7,7 +7,7 @@ use controller\Security;
 use entity\User;
 use entity\Post;
 use entity\Comment;
-use manager\UserLogin;
+use manager\UsersManager;
 use manager\CommentManager;
 use manager\PostManager;
 use services\DAO;
@@ -16,7 +16,7 @@ use services\Helper;
 
 class AdminController{
 
-    private $UserLogin;
+    private $UsersManager;
     private $PostManager;
     private $CommentManager;
     private $Controller;
@@ -25,7 +25,7 @@ class AdminController{
     public function __construct()
     {
         $this->DAO = new DAO();
-        $this->UserLogin = new UserLogin();
+        $this->UsersManager = new UsersManager();
         $this->PostManager = new PostManager();
         $this->CommentManager = new CommentManager();
         $this->Controller = new Controller();
@@ -42,10 +42,10 @@ class AdminController{
     }
 
     public function getAdminPanel($twig){
-        $posts = $this->DAO->getPosts(5);
+        $posts = $this->DAO->getNonHidePosts(5);
         $commentLimit = 10;
         $comments = $this->DAO->getAllCommentsPost(0, $commentLimit);
-        $result = $this->UserLogin->getLoginPage();
+        $result = $this->UsersManager->getLoginPage();
 
         if($result == 'login' || $_SESSION['login']){
             echo $twig->render('/frontend/adminPanel.twig', [
@@ -62,8 +62,8 @@ class AdminController{
 
     public function getCreatePage($twig){
 
-        $usersList = $this->UserLogin->getUsers();
-        $result = $this->UserLogin->getLoginPage();
+        $usersList = $this->UsersManager->getUsers();
+        $result = $this->UsersManager->getLoginPage();
         
         if($result == 'login' || $_SESSION['login']){
             echo $twig->render('/frontend/create.twig', [
@@ -91,8 +91,8 @@ class AdminController{
     }
 
     public function getModeratedComPage($twig, $sizePage= 10){
-        $usersList = $this->UserLogin->getUsers();
-        $result = $this->UserLogin->getLoginPage();
+        $usersList = $this->UsersManager->getUsers();
+        $result = $this->UsersManager->getLoginPage();
         $comments = Comment::getModeratedComments();
 
         $page = Helper::getPage();
@@ -118,8 +118,8 @@ class AdminController{
     }
 
     public function getReportedComPage($twig, $sizePage= 10){
-        $usersList = $this->UserLogin->getUsers();
-        $result = $this->UserLogin->getLoginPage();
+        $usersList = $this->UsersManager->getUsers();
+        $result = $this->UsersManager->getLoginPage();
         $comments = Comment::getReportedComments();
         
         $page = Helper::getPage();
@@ -148,8 +148,8 @@ class AdminController{
 
     public function getModerationPage($twig, $sizePage = 10){
 
-        $usersList = $this->UserLogin->getUsers();
-        $result = $this->UserLogin->getLoginPage();
+        $usersList = $this->UsersManager->getUsers();
+        $result = $this->UsersManager->getLoginPage();
         $comments = Comment::getAllComments();
 
         $page = Helper::getPage();
@@ -175,12 +175,12 @@ class AdminController{
     }
 
     public function getPostEditPage($twig){
-        $usersList = $this->UserLogin->getUsers();
-        $result = $this->UserLogin->getLoginPage();
+        $usersList = $this->UsersManager->getUsers();
+        $result = $this->UsersManager->getLoginPage();
 
         $postId = $_GET['article'];
 
-        $post = $this->PostManager->getPost($postId);
+        $post = $this->DAO->getPost($postId);
         
         if($result == 'login' || $_SESSION['login']){
             echo $twig->render('/frontend/editarticle.twig', [
@@ -208,8 +208,8 @@ class AdminController{
     }
 
     public function getListsPostsToEdit($twig, $page, $sizePage = 10){
-        $usersList = $this->UserLogin->getUsers();
-        $result = $this->UserLogin->getLoginPage();
+        $usersList = $this->UsersManager->getUsers();
+        $result = $this->UsersManager->getLoginPage();
 
         $posts = $this->DAO->getAllPosts();
         $nbPage = ceil(sizeof($posts)/$sizePage);
@@ -252,8 +252,8 @@ class AdminController{
     }
 
     public function getUsersPage($twig){
-        $result = $this->UserLogin->getLoginPage();
-        $users = $this->UserLogin->getUsers();
+        $result = $this->UsersManager->getLoginPage();
+        $users = $this->UsersManager->getUsers();
 
         if($result == 'login' || $_SESSION['login']){
             echo $twig->render('/frontend/userPage.twig', [
@@ -283,7 +283,7 @@ class AdminController{
     }
 
     public function newUser(){
-        $result = $this->UserLogin->getLoginPage();
+        $result = $this->UsersManager->getLoginPage();
         
         $userName = $_POST['name'];
         $userRawPwd = $_POST['raw_pwd'];

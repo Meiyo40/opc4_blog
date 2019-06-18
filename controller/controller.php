@@ -4,7 +4,7 @@ namespace controller;
 
 use manager\CommentManager;
 use manager\PostManager;
-use manager\UserLogin;
+use manager\UsersManager;
 use services\DAO;
 use entity\Comment;
 use entity\Post;
@@ -18,7 +18,7 @@ class Controller{
 
     public function __construct()
     {
-        $this->login = new UserLogin();
+        $this->login = new UsersManager();
         $this->PostManager = new PostManager();
         $this->CommentManager = new CommentManager();
         $this->DAO = new DAO();
@@ -26,7 +26,7 @@ class Controller{
 
     public function listPosts($twig, $page, $sizePage  = 5)
     {
-        $posts = $this->DAO->getPosts();
+        $posts = $this->DAO->getNonHidePosts();
         $nbPage = ceil(sizeof($posts)/$sizePage);
 
         
@@ -77,7 +77,7 @@ class Controller{
     }
 
     public function updatePost($id, $title, $content, $author, $img_name){
-        $update = $this->PostManager->updatePost($id, $title, $content, $author, $img_name);
+        $update = $this->PostManager->preparePost($id, $title, $content, $author, $img_name);
         if ($update === false) {
             throw new Exception('Impossible de mettre a jour le post !');
         }

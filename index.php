@@ -9,6 +9,7 @@ require_once __DIR__.'/controller/AdminController.php';
 require_once __DIR__.'/controller/Security.php';
 
 use manager\PostManager;
+use services\DAO;
 
 $loader = new Twig_Loader_Filesystem(__DIR__.'/view');
 $twig = new Twig_Environment($loader, [
@@ -96,8 +97,8 @@ if (isset($_GET['action'])) {
             break;
 
         case 'getArticleContent':
-            $PostManager = new PostManager();
-            $Post = $PostManager->getPost($_GET['article']);
+            $DAO = new DAO();
+            $Post = $DAO->getPost($_GET['article']);
             echo json_encode($Post);
             break;
 

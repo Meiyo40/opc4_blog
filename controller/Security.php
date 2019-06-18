@@ -2,13 +2,13 @@
 
 namespace controller;
 
-use manager\UserLogin;
+use manager\UsersManager;
 
 
 class Security{
 
     public static function verifyIdentity($name){
-        $users = new UserLogin();
+        $users = new UsersManager();
         $users = $users->getUsers();
         if(is_array($users)){
             for($i = 0; $i < sizeof($users); $i++){
