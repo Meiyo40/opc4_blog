@@ -23,18 +23,18 @@
     <body>
 
         <div id="admin-options">
-            <a href="index.php?action=create"><button><i class="far fa-newspaper"></i> Créer nouvel article</button></a>      
-            <a href='index.php?action=listArticles'><button class='edit-btn'><i class='far fa-edit'></i> Editer article</button></a>
-            <a href="index.php?action=moderation"><button><i class="far fa-comment-dots"></i> Gestion des commentaires</button></a>
-            <a href="index.php?action=users"><button><i class="fas fa-user-graduate"></i> Gestion des utilisateurs</button></a>
-            <a href="index.php?action=logout"><button><i class="fas fa-sign-out-alt"></i> Se déconnecter </button></a>
+            <a href="index.php?action=create" class='btn btn-success'><i class="far fa-newspaper"></i> Créer nouvel article</a>      
+            <a href='index.php?action=listArticles' class='btn btn-secondary edit-btn'><i class='far fa-edit'></i> Editer article</a>
+            <a href="index.php?action=moderation" class='btn btn-secondary'><i class="far fa-comment-dots"></i> Gestion des commentaires</a>
+            <a href="index.php?action=users" class='btn btn-secondary'><i class="fas fa-user-graduate"></i> Gestion des utilisateurs</a>
+            <a href="index.php?action=logout" class='btn btn-secondary' id='btn-logout'><i class="fas fa-sign-out-alt"></i> Se déconnecter </a>
         </div>
 
         {% block content %}{% endblock %}
 
         <div id="admin-btn">
-            <a href="index.php?action=admin"><button class="btn btn-info">Administration</button></a>
-            <a href="index.php" ><button class="btn btn-info">Accueil</button></a>
+            <a href="index.php?action=admin" class="btn btn-info"> Administration</a>
+            <a href="index.php" class="btn btn-info">Accueil</a>
         </div>
         <!-- Bootstrap core JavaScript
         ================================================== -->

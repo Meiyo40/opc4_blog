@@ -17,6 +17,19 @@ a{
     text-align: center;
     margin: 20px 0;
 }
+/*Button navbar*/
+.btn-secondary{
+    background-color: cadetblue;
+    border-color: cadetblue;
+}
+#btn-logout{
+    background-color: red;
+    border-color: red;
+}
+#btn-logout:hover{
+    background-color: #d30e12;
+    border-color: #d30e12;
+}
 
 /*DISPLAY*/
 table{

@@ -20,23 +20,23 @@
             {% for i in sizePage*(page-1)..sizePage*page-1 %}
 
                 {% if posts[i] is defined %}
-                     <div class='smallArticle'>
-                        <a class='article-link' href='index.php?action=post&id={{ posts[i].id }}'>
-                            <h3> {{ posts[i].title }} </h3>
+                     <article class='smallArticle'>
+                        <h3> {{ posts[i].title }} </h3>
+                        <a class='article-link' href='index.php?action=post&id={{ posts[i].id }}'>                            
                             <div class='content-container'>
-                                <article class='article-content' style='display: block'>
-                                    <img class='smallImg' src='./resources/img/{{ posts[i].img_key }}.{{ posts[i].img_ext }}' alt="Image d'illustration de l'article {{ post.title }}">
+                                <div class='article-content' style='display: block'>
+                                    <img class='smallImg' src='./resources/img/{{ posts[i].img_key }}.{{ posts[i].img_ext }}' alt="Image d'illustration de l'article: {{ posts[i].title }}">
                                     {% autoescape %}
                                         {{ posts[i].content|raw }}
                                     {% endautoescape %} 
-                                </article>
+                                </div>
                                 <div class='article-signature'>
                                     Rédigé par: "{{ posts[i].author }}", le ["{{ posts[i].date }}"] <a href='index.php?action=post&id={{ posts[i].id }}'>[{{ posts[i].nb_comments }}] Commentaires</a>
                                 </div>
                                 <br>
                             </div>
                         </a>
-                    </div> 
+                    </article> 
                 {% endif %}
             
             {% endfor %}
