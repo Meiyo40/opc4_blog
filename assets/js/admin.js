@@ -1,3 +1,43 @@
+function getUrlData(){
+    let $_GET = [];
+    let parts = window.location.search.substr(1).split("&");
+    for (let i = 0; i < parts.length; i++) {
+        let temp = parts[i].split("=");
+        $_GET[decodeURIComponent(temp[0])] = decodeURIComponent(temp[1]);
+    }
+
+    if($_GET.addPost === 'success'){
+        alert('Votre article a bien été posté !');
+    }
+    if($_GET.edit === 'success'){
+        alert('Votre article a bien été mis à jour !');
+    }
+
+    if($_GET.delete === 'success'){
+        alert('Utilisateur supprimé !');
+    }
+
+    if($_GET.action === 'moderation'){
+        if($_GET.page){
+            let pageLinkId = "page-link-" + $_GET.page;
+            let pageLink = document.getElementById(pageLinkId);
+
+            pageLink.classList.add('active');
+        }
+        else{
+            let pageLinkId = "page-link-1";
+            let pageLink = document.getElementById(pageLinkId);
+
+            if(pageLink){
+                pageLink.classList.add('active');
+            }
+        }
+    }
+}
+
+getUrlData();
+
+
 function toggleContent(postId){
     let article = "article-" + postId;
     let content = document.getElementById(article);
@@ -44,40 +84,5 @@ function applyModeration(commentId, mode){
         $.post(url,function(data){ 
             alert('Commentaire rétabli');
         });
-    }
-}
-
-let $_GET = [];
-let parts = window.location.search.substr(1).split("&");
-for (let i = 0; i < parts.length; i++) {
-    let temp = parts[i].split("=");
-    $_GET[decodeURIComponent(temp[0])] = decodeURIComponent(temp[1]);
-}
-
-if($_GET.addPost === 'success'){
-    alert('Votre article a bien été posté !');
-}
-if($_GET.edit === 'success'){
-    alert('Votre article a bien été mis à jour !');
-}
-
-if($_GET.delete === 'success'){
-    alert('Utilisateur supprimé !');
-}
-
-if($_GET.action === 'moderation'){
-    if($_GET.page){
-        let pageLinkId = "page-link-" + $_GET.page;
-        let pageLink = document.getElementById(pageLinkId);
-
-        pageLink.classList.add('active');
-    }
-    else{
-        let pageLinkId = "page-link-1";
-        let pageLink = document.getElementById(pageLinkId);
-
-        if(pageLink){
-            pageLink.classList.add('active');
-        }
     }
 }

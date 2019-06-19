@@ -88,6 +88,10 @@ if (isset($_GET['action'])) {
             $AdminController->deleteUser($_GET['user']);
             break;
 
+        case 'demoteuser':
+            $AdminController->demoteUser($_GET['userid']);
+            break;
+
         case 'displayarticle':
             $AdminController->displayArticle($_GET['article']);
             break;
@@ -138,10 +142,6 @@ if (isset($_GET['action'])) {
             $Security->logout();
             break;
 
-        case 'manageuser':
-            $AdminController->manageUser($_GET['rankaction'] ,$_GET['user']);
-            break;
-
         case 'moderation':
             $AdminController->getModerationPage($twig);
             break;
@@ -163,6 +163,10 @@ if (isset($_GET['action'])) {
                 echo 'Erreur : aucun identifiant de billet envoyé';
                 break;
             }
+
+        case 'promoteuser':
+            $AdminController->promoteUser($_GET['userid']);
+            break;
             
         case 'report':
             $AdminController->getReportedComPage($twig);

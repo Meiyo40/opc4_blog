@@ -26,6 +26,10 @@ class User{
         $this->comments = $comments;
         $this->articles = $articles;
         $this->mail = $mail;
+        $this->countUserComments();
+        $this->updateUserNbComments();
+        $this->countUserPosts();
+        $this->updateUserPosts();
     }
 
     public function getRank(){
@@ -143,6 +147,56 @@ class User{
         unset($db);
     } 
 
+    public function countUserComments(){
+        $db = new Database();
+        $db = $db->connect();
+
+        $statement = $db->prepare("SELECT*FROM opc_blog_comment WHERE author NOT LIKE '%(NOT)%' AND author LIKE '%{$this->name}%'");
+        $statement->execute();
+        
+        $result = $statement->fetchAll();
+        file_put_contents('debug.html', 'nbcomment: '.sizeof($result));
+        $this->comments = sizeof($result);
+        unset($db);
+
+        return $this->comments;        
+    }
+
+    public function updateUserNbComments(){
+        $db = new Database();
+        $db = $db->connect();
+        $statement = $db->prepare("UPDATE `opc_blog_users` SET `comments` = ? WHERE `name` = ?");
+
+        $statement->execute(array($this->comments, $this->name));
+        
+        unset($db);
+    }
+
+    public function countUserPosts(){
+        $db = new Database();
+        $db = $db->connect();
+
+        $statement = $db->prepare("SELECT*FROM opc_blog_posts WHERE author NOT LIKE '%(NOT)%' AND author LIKE '%{$this->name}%'");
+        $statement->execute();
+        
+        $result = $statement->fetchAll();
+        file_put_contents('debug.html', 'nbcomment: '.sizeof($result));
+        $this->articles = sizeof($result);
+        unset($db);
+
+        return $this->articles;        
+    }
+
+    public function updateUserPosts(){
+        $db = new Database();
+        $db = $db->connect();
+        $statement = $db->prepare("UPDATE `opc_blog_users` SET `articles` = ? WHERE `name` = ?");
+
+        $statement->execute(array($this->articles, $this->name));
+        
+        unset($db);
+    }
+
     public function updateUserRank(){
         $db = new Database();
         $db = $db->connect();
@@ -157,13 +211,70 @@ class User{
         $statement->execute(array($this->rank,$this->id));
         
         unset($db);
+
+        echo 'Nouveau rang de l\'utilisateur: '.$this->getRankName($this->rank);
     } 
+
+    public function getRankName($ranklevel){
+        switch($ranklevel){
+            case '0':
+                return 'Utilisateur';
+                break;
+            case '1':
+                return 'Modérateur';
+                break;
+            case '2':
+                return 'Autheur';
+                break;
+            case '3':
+                return 'Administrateur';
+                break;
+            default:
+                return 'Erreur';
+                break;
+        }
+    }
+
+    public static function mailExist($email){
+        $db = new Database();
+        $db = $db->connect();
+        $statement = $db->prepare("SELECT*FROM opc_blog_users WHERE mail = ?");
+        $statement->execute(array($email));
+        $result = $statement->fetch();
+
+        unset($db);
+
+        if($result){
+            return true;
+        }
+        else{
+            return false;
+        }
+        
+    }
+
+    public static function userExist($username){
+        $db = new Database();
+        $db = $db->connect();
+        $statement = $db->prepare("SELECT*FROM opc_blog_users WHERE name = ?");
+        $statement->execute(array($username));
+        $result = $statement->fetch();
+
+        unset($db);
+        
+        if($result){
+            return true;
+        }
+        else{
+            return false;
+        }
+        
+    }
 
     public static function createUser($userName, $userRawPwd, $userMail, $userRank){
         $last_connexion = date("Y-m-d H:i:s");
         $hash_pwd = password_hash($userRawPwd, PASSWORD_BCRYPT);
         $userName = Helper::validateContent($userName);
-        file_put_contents('debug.html', 'name: '.$userName.'<br> raw_pwd: '.$hash_pwd.'<br> email: '.$userMail.'<br> rank: '.$userRank);
         $db = new Database();
         $db = $db->connect();
         $statement = $db->prepare("INSERT INTO `opc_blog_users` 

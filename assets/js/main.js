@@ -7,6 +7,7 @@ tinymce.init({
         'searchreplace visualblocks code fullscreen',
         'insertdatetime media table paste code help wordcount'
     ],
+    language: 'fr_FR',
     forced_root_block: "",
     entity_encoding: 'raw',
     encoding: "UTF-8",

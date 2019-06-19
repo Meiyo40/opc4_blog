@@ -18,7 +18,7 @@
     <h1 class="center"> Gestion des utilisateurs </h1>
 
     {% if userRank >= 3 %}   
-        <div method='POST' enctype='text/plain' role='form' action='index.php?action=users&newuser=true' class='modal fade' id='modalRegisterForm' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <form method='POST' enctype='text/plain' role='form' class='modal fade' id='modalRegisterForm' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
             <div class='modal-dialog' role='document'>
                 <div class='modal-content'>
                     <div class='modal-header text-center'>
@@ -62,7 +62,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
 
         <div class='text-center'>
             <button type='button' class='btn btn-info'>
@@ -96,8 +96,8 @@
                     <td class='btn-action'>
                     {% if userRank >= 3 %}
                             
-                        <button class='user-control' onclick='rankUser(true,  {{ user.id }} )' data-toggle='tooltip' title='Promouvoir {{ user.name }}'><i class='fas fa-plus'></i></button> 
-                        <button class='user-control' onclick='rankUser(false, {{ user.id }} )' data-toggle='tooltip' title='Retrograder {{ user.name }}'><i class='fas fa-minus'></i></button>
+                        <button class='user-control' onclick='promoteUser({{ user.id }} )' data-toggle='tooltip' title='Promouvoir {{ user.name }}'><i class='fas fa-plus'></i></button> 
+                        <button class='user-control' onclick='demoteUser({{ user.id }} )' data-toggle='tooltip' title='Retrograder {{ user.name }}'><i class='fas fa-minus'></i></button>
                         <button class='user-control' onclick='deleteUser( {{ user.id }} )' data-toggle='tooltip' title='Supprimer {{ user.name }}'><i class='fas fa-user-minus'></i></button>
                             
                     {% else %}

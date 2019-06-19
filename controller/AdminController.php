@@ -39,15 +39,16 @@ class AdminController{
         $author = Security::verifyIdentity($author);
         $this->Controller->addCommentToComment($postId, $author, $message, $commentId, $depth);
         header('Location: index.php?action=moderation');
+        die();
     }
 
     public function getAdminPanel($twig){
-        $posts = $this->DAO->getNonHidePosts(5);
-        $commentLimit = 10;
-        $comments = $this->DAO->getAllCommentsPost(0, $commentLimit);
         $result = $this->UsersManager->getLoginPage();
 
         if($result == 'login' || $_SESSION['login']){
+            $posts = $this->DAO->getNonHidePosts(5);
+            $commentLimit = 10;
+            $comments = $this->DAO->getAllCommentsPost(0, $commentLimit);
             echo $twig->render('/frontend/adminPanel.twig', [
                 'posts' => $posts,
                 'commentLimit' => $commentLimit,
@@ -81,6 +82,7 @@ class AdminController{
         $post->setHideState('0');
         $post->updatePost();
         header('Location: index.php?action=listArticles');
+        die();
     }
 
     public function hideArticle($article){
@@ -88,6 +90,7 @@ class AdminController{
         $post->setHideState('1');
         $post->updatePost();
         header('Location: index.php?action=listArticles');
+        die();
     }
 
     public function getModeratedComPage($twig, $sizePage= 10){
@@ -240,9 +243,11 @@ class AdminController{
         $post->deletePost();
         if($_GET['action'] == 'listArticles'){
             header('Location: index.php?action=listArticles');
+            die();
         }
         else{
             header('Location: index.php?action=admin');
+            die();
         }
     }
 
@@ -267,17 +272,18 @@ class AdminController{
         }
     }
 
-    public function manageUser($action, $userId){
+    public function promoteUser($userId){
         $user = User::initUser($userId);
         $userRank = (int)$user->getRank();
+        $userRank++;
+        $user->setRank($userRank);
+        $user->updateUserRank();
+    }
 
-        if($action == 'promote'){
-            $userRank += 1;            
-        }
-        elseif($action == 'demote'){
-            $userRank -= 1;
-        }
-
+    public function demoteUser($userId){
+        $user = User::initUser($userId);
+        $userRank = (int)$user->getRank();
+        $userRank--;
         $user->setRank($userRank);
         $user->updateUserRank();
     }
@@ -290,10 +296,18 @@ class AdminController{
         $userMail = $_POST['email'];
         $userRank = $_POST['rank'];
 
-        
+        file_put_contents('debug.html', 'create: true');
 
-        if($result == 'login' || $_SESSION['login']){
-            $user = User::createUser($userName, $userRawPwd, $userMail, $userRank);
+        if($result == 'login' || $_SESSION['login']){            
+            if(User::userExist($userName)){
+                echo 'userexist';
+            }
+            elseif(User::mailExist($userMail)){
+                echo 'mailexist';
+            }
+            else{                
+                $user = User::createUser($userName, $userRawPwd, $userMail, $userRank);
+            }
         }
         else{
             echo 'ERROR';
@@ -303,7 +317,6 @@ class AdminController{
     public function deleteUser($user){
         $user = User::initUser($user);
         $result = $user->deleteUser();
-        file_put_contents('debug.html', $result);
         if($result){
             header('Location: index.php?action=users&delete=success');
             die();

@@ -20,37 +20,39 @@ $(document).ready(function(){
             raw_pwd: user.raw_pwd, 
             email: user.email, 
             rank: user.rank
-                    },function(data){ 
-            alert('Utilisateur créé');
+            },function(data){ 
+                if(data === 'userexist'){
+                    alert('Ce nom d\'utilisateur existe déjà');
+                }
+                else if(data === 'mailexist'){
+                    alert('Ce mail est déjà utilisé');
+                }
+                else{
+                    alert('Utilisateur créé');
+                }
         });
         
     });
     
-    function manageUser(action, userId){
-        let url = "index.php?action=deleteuser&user="+userId;
-        $.post(url,null,function(data){ 
-            alert('Utilisateur supprimé');
-        });
-    }    
-    
 });
 
-function rankUser(action, userId){
-    if(action){
-        let url = "index.php?action=manageuser&rankaction=promote&user=" + userId;
-        $.post(url,null,function(data){ 
-            alert('Utilisateur promu');
-        });
-    }
-    else{
-        let url = "index.php?action=manageuser&rankaction=demote&user=" + userId;
-        $.post(url,null,function(data){ 
-            alert('Utilisateur retrogradé');
-        });
-    }
+function promoteUser(userId){
+    let url = "index.php?action=promoteuser&userid=" + userId;
+    $.post(url,null,function(data){ 
+        alert(data);
+        location.reload();
+    });
+}
+
+function demoteUser(userId){
+    let url = "index.php?action=demoteuser&userid=" + userId;
+    $.post(url,null,function(data){ 
+        alert(data);
+        location.reload();
+    });
 }
 
 function deleteUser(userId){
     let url = "index.php?action=deleteuser&user=" + userId;
-        $.post(url,null,function(data){ return; });
+        $.post(url,null,function(data){ location.reload(); });
 }
