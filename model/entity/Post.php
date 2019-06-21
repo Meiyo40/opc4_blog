@@ -249,4 +249,20 @@ class Post{
 
         
     }
+
+    public static function postExist($title){
+        $db = new Database();
+        $db = $db->connect();
+        $statement = $db->prepare("SELECT*FROM opc_blog_posts WHERE title = ?");
+        $statement->execute(array($title));
+
+        $result = $statement->fetch();
+
+        if($result){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }

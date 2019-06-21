@@ -8,6 +8,7 @@ use manager\UsersManager;
 use services\DAO;
 use entity\Comment;
 use entity\Post;
+use entity\User;
 use services\Helper;
 
 class Controller{
@@ -66,13 +67,21 @@ class Controller{
     }
 
     public function addPost($title, $content, $author, $img_name){
-        $newPost = Post::setNewPost($title, $content, $author, $img_name);
+        if(Post::postExist($title)){
+            header('Location: index.php?action=create&titleexist=true');
+            die();
+        }
+        else{
+            $newPost = Post::setNewPost($title, $content, $author, $img_name);
+            User::updatePostAndCommentData(User::getIdFromName($author));
+        }
 
         if ($newPost === false) {
             throw new Exception('Impossible d\'ajouter le post !');
         }
         else {
             header('Location: index.php?action=admin&addPost=success');
+            die();
         }
     }
 

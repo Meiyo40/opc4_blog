@@ -86,7 +86,7 @@
         </thead>
         <tbody>
             {% for user in users %}
-                <tr>
+                <tr id='user-{{ user.id }}'>
                     <td>{{ user.name }}</td>
                     <td>{{ user.rank }}</td>
                     <td>{{ user.last_connexion }}</td>

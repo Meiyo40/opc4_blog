@@ -16,6 +16,10 @@ function getUrlData(){
     if($_GET.delete === 'success'){
         alert('Utilisateur supprimé !');
     }
+    
+    if($_GET.titleexist === 'true'){
+        alert('Ce titre existe déjà');
+    }
 
     if($_GET.action === 'moderation'){
         if($_GET.page){

@@ -302,6 +302,15 @@ class User{
         
     }
 
+    public static function updatePostAndCommentData($userId){
+        $User = User::initUser($userId);
+
+        $User->countUserComments();
+        $User->updateUserNbComments();
+        $User->countUserPosts();
+        $User->updateUserPosts();
+    }
+
     public function deleteUser(){
         $db = new Database();
         $db = $db->connect();

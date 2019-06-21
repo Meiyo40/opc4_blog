@@ -54,5 +54,18 @@ function demoteUser(userId){
 
 function deleteUser(userId){
     let url = "index.php?action=deleteuser&user=" + userId;
-        $.post(url,null,function(data){ location.reload(); });
+        $.post(url,null,function(data){ 
+            if(data === 'success'){
+                deleteRow(userId);
+                alert('Utilisateur supprimé !');
+            }
+            else{
+                alert('Erreur lors de la suppression');
+            }
+        });
+}
+
+function deleteRow(userId){
+    let row = document.getElementById('user-'+userId);
+    row.style.display = 'none';
 }

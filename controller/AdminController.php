@@ -36,7 +36,6 @@ class AdminController{
         $postId = $comment->getPost_id();
         $depth = (int)$comment->getDepth();
         $depth = $comment->addDepth($depth);
-        $author = Security::verifyIdentity($author);
         $this->Controller->addCommentToComment($postId, $author, $message, $commentId, $depth);
         header('Location: index.php?action=moderation');
         die();
@@ -241,14 +240,8 @@ class AdminController{
     public function deletePost($id){
         $post = Post::initPost($id);
         $post->deletePost();
-        if($_GET['action'] == 'listArticles'){
-            header('Location: index.php?action=listArticles');
-            die();
-        }
-        else{
-            header('Location: index.php?action=admin');
-            die();
-        }
+        header('Location: index.php?action=listArticles');
+        die();
     }
 
     public function deleteComment($id){
@@ -318,12 +311,10 @@ class AdminController{
         $user = User::initUser($user);
         $result = $user->deleteUser();
         if($result){
-            header('Location: index.php?action=users&delete=success');
-            die();
+            echo 'success';
         }
         else{
-            header('Location: index.php?action=users&delete=failed');
-            die();
+            echo 'failed';
         }
     }
 }
