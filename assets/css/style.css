@@ -128,6 +128,7 @@ h6 {
     text-overflow: ellipsis;
     max-width: 900px;
     margin: 0 auto;
+    padding: 2rem;
 }
 article{
     margin-left: 200px;
@@ -150,6 +151,10 @@ li{
 }
 .comment-signature{
     margin-bottom: 0;
+}
+
+.comment-content{
+    padding: 2rem;
 }
 
 /*COMMENT FORM*/

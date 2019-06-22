@@ -12,14 +12,12 @@ class Helper{
     }
     
     public static function HTMLpurifier($data){
-        file_put_contents('debug.html', $data, FILE_APPEND);
         $config = \HTMLPurifier_Config::createDefault();
         $config->set('Core.Encoding', 'ISO-8859-1'); 
         $config->set('HTML.Allowed', 'a[href],i,b,img[src],font[style|size],ol,ul,li,br'); 
         $purifier = new \HTMLPurifier($config);
 
         $data = $purifier->purify($data);
-        file_put_contents('debug.html', $data, FILE_APPEND);
         return $data;
     }
 
@@ -28,7 +26,7 @@ class Helper{
         $pattern = array('script', 'javascript');
         $content = str_replace( $pattern, '', $content, $count);
         return array( 'content' => $content, 
-                    'nbReplace' => $count);
+                    'nbCharJSReplace' => $count);
     }
 
     public static function getPage(){

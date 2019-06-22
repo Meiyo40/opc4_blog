@@ -101,7 +101,7 @@ class Controller{
         $author = Security::verifyIdentity($author);
         $data = Helper::deleteJScode($comment);
 
-        if(((int)$data['nbReplace']) > 0){
+        if(((int)$data['nbCharJSReplace']) > 0){
             $moderation = 1;
         }
         else{

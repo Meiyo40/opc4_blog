@@ -1,9 +1,9 @@
 $(document).ready(function(){
     function getPostContent(postId){
         let url = "index.php?action=getArticleContent&article="+postId;
-        $.post(url,null,function(data){
+        $.post(url,null,function(data){            
             data = JSON.parse(data);
-            updateEditor(data);            
+            updateEditor(data);
         });
     }
     

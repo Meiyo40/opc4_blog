@@ -31,16 +31,6 @@ class AdminController{
         $this->Controller = new Controller();
     }
 
-    public function addAdminComment($commentId, $message, $author){
-        $comment = Comment::initComment($commentId);
-        $postId = $comment->getPost_id();
-        $depth = (int)$comment->getDepth();
-        $depth = $comment->addDepth($depth);
-        $this->Controller->addCommentToComment($postId, $author, $message, $commentId, $depth);
-        header('Location: index.php?action=moderation');
-        die();
-    }
-
     public function getAdminPanel($twig){
         $result = $this->UsersManager->getLoginPage();
 
@@ -74,22 +64,6 @@ class AdminController{
             header('Location: index.php?action=loginFail');
             die();
         }
-    }
-
-    public function displayArticle($article){
-        $post = Post::initPost($article);
-        $post->setHideState('0');
-        $post->updatePost();
-        header('Location: index.php?action=listArticles');
-        die();
-    }
-
-    public function hideArticle($article){
-        $post = Post::initPost($article);
-        $post->setHideState('1');
-        $post->updatePost();
-        header('Location: index.php?action=listArticles');
-        die();
     }
 
     public function getModeratedComPage($twig, $sizePage= 10){
@@ -149,7 +123,6 @@ class AdminController{
     }
 
     public function getModerationPage($twig, $sizePage = 10){
-
         $usersList = $this->UsersManager->getUsers();
         $result = $this->UsersManager->getLoginPage();
         $comments = Comment::getAllComments();
@@ -182,7 +155,7 @@ class AdminController{
 
         $postId = $_GET['article'];
 
-        $post = $this->DAO->getPost($postId);
+        $post = Post::initPost($postId);
         
         if($result == 'login' || $_SESSION['login']){
             echo $twig->render('/frontend/editarticle.twig', [
@@ -197,20 +170,7 @@ class AdminController{
         }
     }
 
-    public function setModeration($commentId, $mode){
-        $comment = Comment::initComment($commentId);
-        if($mode == 'true'){         
-            $comment->setModeration(true);   
-            $comment->update();
-        }
-        else{
-            $comment->setModeration(false);
-            $comment->update();
-        }
-    }
-
-    public function getListsPostsToEdit($twig, $page, $sizePage = 10){
-        $usersList = $this->UsersManager->getUsers();
+    public function getListsPostsToEdit($twig, $page, $sizePage = 10){  
         $result = $this->UsersManager->getLoginPage();
 
         $posts = $this->DAO->getAllPosts();
@@ -237,18 +197,6 @@ class AdminController{
         }
     }
 
-    public function deletePost($id){
-        $post = Post::initPost($id);
-        $post->deletePost();
-        header('Location: index.php?action=listArticles');
-        die();
-    }
-
-    public function deleteComment($id){
-        $post = Comment::initComment($id);
-        $post->deleteCom();
-    }
-
     public function getUsersPage($twig){
         $result = $this->UsersManager->getLoginPage();
         $users = $this->UsersManager->getUsers();
@@ -262,59 +210,6 @@ class AdminController{
         else{
             header('Location: index.php?action=loginFail');
             die();
-        }
-    }
-
-    public function promoteUser($userId){
-        $user = User::initUser($userId);
-        $userRank = (int)$user->getRank();
-        $userRank++;
-        $user->setRank($userRank);
-        $user->updateUserRank();
-    }
-
-    public function demoteUser($userId){
-        $user = User::initUser($userId);
-        $userRank = (int)$user->getRank();
-        $userRank--;
-        $user->setRank($userRank);
-        $user->updateUserRank();
-    }
-
-    public function newUser(){
-        $result = $this->UsersManager->getLoginPage();
-        
-        $userName = $_POST['name'];
-        $userRawPwd = $_POST['raw_pwd'];
-        $userMail = $_POST['email'];
-        $userRank = $_POST['rank'];
-
-        file_put_contents('debug.html', 'create: true');
-
-        if($result == 'login' || $_SESSION['login']){            
-            if(User::userExist($userName)){
-                echo 'userexist';
-            }
-            elseif(User::mailExist($userMail)){
-                echo 'mailexist';
-            }
-            else{                
-                $user = User::createUser($userName, $userRawPwd, $userMail, $userRank);
-            }
-        }
-        else{
-            echo 'ERROR';
-        }
-    }
-
-    public function deleteUser($user){
-        $user = User::initUser($user);
-        $result = $user->deleteUser();
-        if($result){
-            echo 'success';
-        }
-        else{
-            echo 'failed';
         }
     }
 }

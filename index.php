@@ -7,8 +7,10 @@ require_once __DIR__.'/vendor/autoload.php';
 require_once __DIR__.'/controller/controller.php';
 require_once __DIR__.'/controller/AdminController.php';
 require_once __DIR__.'/controller/Security.php';
+require_once __DIR__.'/controller/AjaxController.php';
 
 use manager\PostManager;
+use entity\Post;
 use services\DAO;
 
 $loader = new Twig_Loader_Filesystem(__DIR__.'/view');
@@ -65,11 +67,11 @@ if (isset($_GET['action'])) {
             break;
 
         case 'adminanswer':
-            $AdminController->addAdminComment($_GET['answered'], $_POST['message'], $_POST['author']);
+            $AjaxController->addAdminComment($_GET['answered'], $_POST['message'], $_POST['author']);
             break;
 
         case 'applymoderation':
-            $AdminController->setModeration($_GET['Comment'], $_GET['mod']);            
+            $AjaxController->setModeration($_GET['Comment'], $_GET['mod']);            
             break;
 
         case 'create':
@@ -77,23 +79,23 @@ if (isset($_GET['action'])) {
             break;
 
         case 'deletearticle':
-            $AdminController->deletePost($_GET['article']);
+            $AjaxController->deletePost($_GET['article']);
             break;
 
         case 'deletecomment':
-            $AdminController->deleteComment($_GET['delComment']);
+            $AjaxController->deleteComment($_GET['delComment']);
             break;
 
         case 'deleteuser':
-            $AdminController->deleteUser($_GET['user']);
+            $AjaxController->deleteUser($_GET['user']);
             break;
 
         case 'demoteuser':
-            $AdminController->demoteUser($_GET['userid']);
+            $AjaxController->demoteUser($_GET['userid']);
             break;
 
         case 'displayarticle':
-            $AdminController->displayArticle($_GET['article']);
+            $AjaxController->displayArticle($_GET['article']);
             break;
 
         case 'editarticle':
@@ -101,13 +103,12 @@ if (isset($_GET['action'])) {
             break;
 
         case 'getArticleContent':
-            $DAO = new DAO();
-            $Post = $DAO->getPost($_GET['article']);
+            $Post = $AjaxController->getRawPost($_GET['article']);
             echo json_encode($Post);
             break;
 
         case 'hidearticle':
-            $AdminController->hideArticle($_GET['article']);
+            $AjaxController->hideArticle($_GET['article']);
             break;
 
         case 'listArticles':
@@ -165,7 +166,7 @@ if (isset($_GET['action'])) {
             }
 
         case 'promoteuser':
-            $AdminController->promoteUser($_GET['userid']);
+            $AjaxController->promoteUser($_GET['userid']);
             break;
             
         case 'report':
@@ -174,7 +175,7 @@ if (isset($_GET['action'])) {
 
         case 'users':
             if(isset($_GET['newuser'])){
-                $AdminController->newUser();
+                $AjaxController->newUser();
             }
             else{
                 $AdminController->getUsersPage($twig);

@@ -141,11 +141,9 @@ class Comment{
                 $statement = $db->prepare("SELECT*FROM opc_blog_comment WHERE report > 0 ORDER BY report DESC LIMIT ".$limit);
             }
 
-            $statement->execute();
-
-            
-
+            $statement->execute();  
             $Count = $statement->rowCount(); 
+            
             if ($Count  > 0){
                 $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "entity\Comment", array("id", "post_id", "comment_parent", "depth", "author", "comment", "comment_date", "report", "moderation"));
                 unset($db);
@@ -173,10 +171,8 @@ class Comment{
             }
 
             $statement->execute();
-
-            
-
             $Count = $statement->rowCount(); 
+
             if ($Count  > 0){
                 $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "entity\Comment", array("id", "post_id", "comment_parent", "depth", "author", "comment", "comment_date", "report", "moderation"));
                 unset($db);
@@ -211,20 +207,16 @@ class Comment{
                 $statement = $db->prepare("SELECT*FROM opc_blog_comment ORDER BY comment_date DESC LIMIT ".$limit);
             }
 
-            $statement->execute();
-
-            
+            $statement->execute();            
 
             $Count = $statement->rowCount(); 
             if ($Count  > 0){
                 $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "entity\Comment", array("id", "post_id", "comment_parent", "depth", "author", "comment", "comment_date", "report", "moderation"));
                 unset($db);
-
                 $obj = $statement->fetchAll();
 
                 return  $obj;                  
             }
-
         }
         catch (PDOException $e) {
             echo 'Connection failed: ' . $e->getMessage();
@@ -255,12 +247,10 @@ class Comment{
         $statement = $db->prepare("SELECT*FROM opc_blog_comment WHERE id = ?");
         $statement->execute(array($id));
 
-        $obj = $statement->fetch();
-        
+        $obj = $statement->fetch();        
         $obj = new Comment($obj['id'], $obj['post_id'], $obj['comment_parent'], $obj['depth'], $obj['author'], $obj['comment'], $obj['comment_date'], $obj['report'], $obj['moderation']);
         
         return $obj;
-
         unset($db);
     }
 
@@ -274,7 +264,6 @@ class Comment{
                                         moderation = ?
                                         WHERE id = ?");
         $statement->execute(array($this->comment, $this->author, $this->report, $this->moderation, $this->id));
-
         unset($db);
     }
 }

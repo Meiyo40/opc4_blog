@@ -21,14 +21,18 @@ $(document).ready(function(){
             email: user.email, 
             rank: user.rank
             },function(data){ 
-                if(data === 'userexist'){
+                let state = JSON.parse(data);
+                if(state.SUCCESS){
+                    alert('Utilisateur créé');
+                }
+                else if(state.ERROR === 'userexist'){
                     alert('Ce nom d\'utilisateur existe déjà');
                 }
-                else if(data === 'mailexist'){
+                else if(state.ERROR === 'mailexist'){
                     alert('Ce mail est déjà utilisé');
                 }
                 else{
-                    alert('Utilisateur créé');
+                    alert('Erreur');
                 }
         });
         
@@ -55,7 +59,8 @@ function demoteUser(userId){
 function deleteUser(userId){
     let url = "index.php?action=deleteuser&user=" + userId;
         $.post(url,null,function(data){ 
-            if(data === 'success'){
+            let state = JSON.parse(data);
+            if(state.result === 'success'){
                 deleteRow(userId);
                 alert('Utilisateur supprimé !');
             }

@@ -102,7 +102,6 @@ class User{
         if(password_verify($password, $this->getHash_pwd()))
         {
             $this->updateLastUserConnexion($this->getName());
-
             return true;
         }
         else{
@@ -155,7 +154,6 @@ class User{
         $statement->execute();
         
         $result = $statement->fetchAll();
-        file_put_contents('debug.html', 'nbcomment: '.sizeof($result));
         $this->comments = sizeof($result);
         unset($db);
 
@@ -180,7 +178,6 @@ class User{
         $statement->execute();
         
         $result = $statement->fetchAll();
-        file_put_contents('debug.html', 'nbcomment: '.sizeof($result));
         $this->articles = sizeof($result);
         unset($db);
 
@@ -191,7 +188,6 @@ class User{
         $db = new Database();
         $db = $db->connect();
         $statement = $db->prepare("UPDATE `opc_blog_users` SET `articles` = ? WHERE `name` = ?");
-
         $statement->execute(array($this->articles, $this->name));
         
         unset($db);
@@ -304,7 +300,6 @@ class User{
 
     public static function updatePostAndCommentData($userId){
         $User = User::initUser($userId);
-
         $User->countUserComments();
         $User->updateUserNbComments();
         $User->countUserPosts();

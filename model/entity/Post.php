@@ -80,7 +80,6 @@ class Post{
         $move = move_uploaded_file($_FILES['image']['tmp_name'], $path);
         if(!$move){
             $err = $this->date.": Erreur lors du deplacement de l'image <strong>name</strong>= [".$this->image."] <strong>path</strong>= [".$path."]<br>";
-            file_put_contents('debug.html', $err, FILE_APPEND);
         }
         else{                
             $this->img_ext = pathinfo($this->image, PATHINFO_EXTENSION);
@@ -205,7 +204,6 @@ class Post{
 
     public function deletePost(){
         $filename = "./resources/img/{$this->img_key}.{$this->img_ext}";
-        file_put_contents('debug.html', $filename);
         unlink($filename);
         $db = new Database();
         $db = $db->connect();

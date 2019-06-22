@@ -39,7 +39,6 @@ class DAO{
                     }
                 }
                 else{
-                    file_put_contents('debug.html', $Count);
                     $obj = $Count;
                 }
                 

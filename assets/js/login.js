@@ -5,7 +5,6 @@ function loginFail(state) {
         alert.textContent = "Identifiant ou mot de passe incorrect !";
         alert.id = 'alert-login';
         alert.setAttribute('style', 'color:red');
-        form.appendChild(alert);
-       
+        form.appendChild(alert);       
     }
 }
