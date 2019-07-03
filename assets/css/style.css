@@ -3,33 +3,45 @@
 body {
     height: 100%;
 }
-h6{
+
+h6 {
     margin-top: 50px !important;
 }
-nav{
+
+nav {
     display: flex;
     justify-content: center;
 }
+
+
 /*FOOTER*/
-footer{
+
+footer {
     background-color: #eaeaea;
 }
+
+
 /*INDEX*/
-#newsletterForm{
+
+#newsletterForm {
     text-align: center;
 }
-#page-title{
+
+#page-title {
     background-color: #eaeaea;
     padding: 1em 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
-#title-img{
+
+#title-img {
     max-height: 160px;
     max-width: 160px;
     border-radius: 30em;
 }
+
 
 /*  ADMIN PANEL  */
 
@@ -40,8 +52,10 @@ footer{
     bottom: 0;
 }
 
+
 /**/
-.smallImg{
+
+.smallImg {
     max-height: 200px;
     max-width: 200px;
     float: left;
@@ -50,7 +64,8 @@ footer{
 
 
 /* ARTICLE */
-#post{
+
+#post {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -59,22 +74,23 @@ footer{
 article,
 .comment,
 .article-signature,
-.subCommentContainer{
+.subCommentContainer {
     width: 60%;
     margin: 0 auto;
 }
-article{
+
+article {
     width: 70%;
     margin: 20px 0;
 }
 
-.article-content > p > a,
-.article-content > p > sup > a{
+.article-content>p>a,
+.article-content>p>sup>a {
     color: cadetblue;
 }
 
 .article-link,
-.article-link:hover{
+.article-link:hover {
     color: #000;
     text-decoration: none;
 }
@@ -82,7 +98,7 @@ article{
 .article-content,
 .comment,
 .subComment,
-.subSubComment{
+.subSubComment {
     border: solid 1px #000;
     border-radius: 10px;
     padding: 5px;
@@ -99,30 +115,29 @@ h6 {
     margin-top: 0;
 }
 
-.divider{
+.divider {
     margin-top: 40px;
     width: 100%;
     height: 1px;
     background-color: #000;
 }
 
-
-
-.smallArticle{
+.smallArticle {
     margin: 25px auto 25px;
     max-width: 900px;
 }
-.article-content:hover{
+
+.article-content:hover {
     animation: hover 1s forwards;
 }
 
-@keyframes hover{
-    100%{
+@keyframes hover {
+    100% {
         background-color: #edebeb;
     }
 }
 
-.article-content{
+.article-content {
     white-space: wrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -130,10 +145,12 @@ h6 {
     margin: 0 auto;
     padding: 2rem;
 }
-article{
+
+article {
     margin-left: 200px;
 }
-.btn-control{
+
+.btn-control {
     margin-top: 25px;
 }
 
@@ -141,21 +158,24 @@ article{
 /*COMMENT POST*/
 
 ul,
-li{
+li {
     list-style: none;
 }
+
 .comment,
 .subComment,
-.subSubComment{
+.subSubComment {
     margin-bottom: 15px;
 }
-.comment-signature{
+
+.comment-signature {
     margin-bottom: 0;
 }
 
-.comment-content{
+.comment-content {
     padding: 2rem;
 }
+
 
 /*COMMENT FORM*/
 
@@ -163,6 +183,7 @@ li{
     width: 60%;
     margin: 0 auto;
 }
+
 textarea {
     white-space: pre-wrap;
     word-wrap: break-word;
