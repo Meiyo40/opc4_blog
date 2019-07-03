@@ -59,13 +59,23 @@
                             <td>{{ post[i].date }}</td>
                             <td>{{ post[i].nb_comments }}</td>
                             <td class='btn-action'>
-                                <a href="javascript:void(0)" onclick="location.href='index.php?action=editarticle&article={{ post[i].id }}'"><button class='user-control' data-toggle='tooltip' title='Edit {{ post[i].title }}'><i class='far fa-edit'></i></button></a>                                
-                                <a href="javascript:void(0)" onclick="location.href='index.php?action=deletearticle&article={{ post[i].id }}'"><button class='user-control' data-toggle='tooltip' title='Supprimer {{ post[i].title }}'><i class="fas fa-trash"></i></button></a>
-                                {% if post[i].getHideState == '1' %}
-                                    <a href="javascript:void(0)" onclick="location.href='index.php?action=displayarticle&article={{ post[i].id }}'"><button class='user-control' data-toggle='tooltip' title='Afficher {{ post[i].title }}'><i class="fas fa-eye"></i></button></a>
+                                {% if userRank >= 2 %}
+                                    <a href="javascript:void(0)" onclick="location.href='index.php?action=editarticle&article={{ post[i].id }}'"><button class='user-control' data-toggle='tooltip' title='Edit {{ post[i].title }}'><i class='far fa-edit'></i></button></a>                                
+                                    <a href="javascript:void(0)" onclick="location.href='index.php?action=deletearticle&article={{ post[i].id }}'"><button class='user-control' data-toggle='tooltip' title='Supprimer {{ post[i].title }}'><i class="fas fa-trash"></i></button></a>
+                                    {% if post[i].getHideState == '1' %}
+                                        <a href="javascript:void(0)" onclick="location.href='index.php?action=displayarticle&article={{ post[i].id }}'"><button class='user-control' data-toggle='tooltip' title='Afficher {{ post[i].title }}'><i class="fas fa-eye"></i></button></a>
+                                    {% else %}
+                                    
+                                        <a href="javascript:void(0)" onclick="location.href='index.php?action=hidearticle&article={{ post[i].id }}'"><button class='user-control' data-toggle='tooltip' title='Cacher {{ post[i].title }}'><i class='far fa-eye-slash'></i></button></a>
+                                    {% endif %}
                                 {% else %}
-                                
-                                    <a href="javascript:void(0)" onclick="location.href='index.php?action=hidearticle&article={{ post[i].id }}'"><button class='user-control' data-toggle='tooltip' title='Cacher {{ post[i].title }}'><i class='far fa-eye-slash'></i></button></a>
+                                    <button class='user-control' data-toggle='tooltip' title='Edit {{ post[i].title }}' disabled><i class='far fa-edit'></i></button>                            
+                                    <button class='user-control' data-toggle='tooltip' title='Supprimer {{ post[i].title }}' disabled><i class="fas fa-trash"></i></button>
+                                    {% if post[i].getHideState == '1' %}
+                                        <button class='user-control' data-toggle='tooltip' title='Afficher {{ post[i].title }}' disabled><i class="fas fa-eye"></i></button>
+                                    {% else %}                                    
+                                        <button class='user-control' data-toggle='tooltip' title='Cacher {{ post[i].title }}' disabled><i class='far fa-eye-slash'></i></button>
+                                    {% endif %}
                                 {% endif %}
                             </td>
                         </tr>

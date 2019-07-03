@@ -56,6 +56,7 @@ class Security{
     public function getLoginPage($twig){
         echo $twig->render('/frontend/loginPage.twig', [
             'action' => $_GET['action'],
+            'year' => date('Y')
         ]);
     }
 

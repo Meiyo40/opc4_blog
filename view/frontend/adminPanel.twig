@@ -64,7 +64,7 @@
                             <strong style='color:red'>Ce commentaire a été modéré car son contenu ne respectait pas le règlement de ce site internet.</strong>
                         {% else %}
                             {% autoescape %}
-                                {{ comments[i].comment }}
+                                {{ comments[i].comment|raw }}
                             {% endautoescape %}  
                         {% endif %}                      
                         </p>

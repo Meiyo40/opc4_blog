@@ -15,7 +15,7 @@ use services\DAO;
 
 $loader = new Twig_Loader_Filesystem(__DIR__.'/view');
 $twig = new Twig_Environment($loader, [
-    'cache'=> false,
+    'cache' => __DIR__ . '/cache',
 ]);
 
 if (isset($_GET['action'])) {

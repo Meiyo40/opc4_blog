@@ -189,6 +189,7 @@ class AdminController{
                 'page' => $page,
                 'sizePage' => $sizePage,
                 'post' => $posts,
+                'userRank' => $_SESSION['rank'],
                 'nbPage' => $nbPage]);
         }
         else{
