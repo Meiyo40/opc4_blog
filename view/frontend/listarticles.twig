@@ -24,25 +24,26 @@
             {% for i in sizePage*(page-1)..sizePage*page-1 %}
 
                 {% if posts[i] is defined %}
-                     <article class='smallArticle'>
+                    <article class='smallArticle'>
+                      
                         <h3> {{ posts[i].title }} </h3>
-                        <a class='article-link' href='index.php?action=post&id={{ posts[i].id }}'>                            
-                            <div class='content-container'>
-                                <div class='article-content' style='display: block'>
-                                    <a class='article-link' href='index.php?action=post&id={{ posts[i].id }}'>    
-                                        <img class='smallImg' src='./resources/img/{{ posts[i].img_key }}.{{ posts[i].img_ext }}' alt="Image d'illustration de l'article: {{ posts[i].title }}">
-                                        {% autoescape %}
-                                            {{ posts[i].content|raw }}
-                                        {% endautoescape %} 
-                                    </a>
+                            <a class='article-link' href='index.php?action=post&id={{ posts[i].id }}'>                 
+                                <div class='content-container'>                                
+                                    <div class='article-content' style='display: block'>                                        
+                                            <img class='smallImg' src='./resources/img/{{ posts[i].img_key }}.{{ posts[i].img_ext }}' alt="Image d'illustration de l'article: {{ posts[i].title }}">
+                                            {% autoescape %}
+                                                {{ posts[i].content|raw }}
+                                            {% endautoescape %} 
+                                    </div>
+                                    <div class='article-signature'>
+                                        Rédigé par: "{{ posts[i].author }}", le ["{{ posts[i].date }}"] <a href='index.php?action=post&id={{ posts[i].id }}'>[{{ posts[i].nb_comments }}] Commentaires</a>
+                                    </div>
+                                    <br>                                    
                                 </div>
-                                <div class='article-signature'>
-                                    Rédigé par: "{{ posts[i].author }}", le ["{{ posts[i].date }}"] <a href='index.php?action=post&id={{ posts[i].id }}'>[{{ posts[i].nb_comments }}] Commentaires</a>
-                                </div>
-                                <br>
-                            </div>
-                        
+                            </a>
+                                                
                     </article> 
+                    
                 {% endif %}
             
             {% endfor %}
