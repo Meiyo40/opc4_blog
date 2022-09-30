@@ -8,7 +8,7 @@
     }],
     "minimum-stability": "stable",
     "require": {
-        "twig/twig": "2.0",
+        "twig/twig": "2.15.3",
         "ezyang/htmlpurifier": "^4.10"
     },
     "autoload": {
